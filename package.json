@@ -1,0 +1,68 @@
+{
+  "name": "@dra2020/kiwysi-compactness",
+  "version": "0.1.0",
+  "description": "Know it when you see it compactness",
+  "main": "dist/main.js",
+  "files": [
+    "dist/"
+  ],
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "webpack": "node_modules/.bin/webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dra2020/kiwysi-compactness.git"
+  },
+  "keywords": [
+    "Typescript"
+  ],
+  "author": "Alec Ramsay",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dra2020/kiwysi-compactness/issues"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "shared"
+    ]
+  },
+  "homepage": "https://github.com/dra2020/kiwysi-compactness#readme",
+  "devDependencies": {
+    "@types/geojson": "^7946.0.7",
+    "@types/jest": "^24.0.17",
+    "@types/node": "10.12.23",
+    "@types/yargs": "^12.0.12",
+    "jest": "^24.8.0",
+    "json-loader": "^0.5.7",
+    "prettier": "1.18.2",
+    "source-map-loader": "^0.2.4",
+    "ts-jest": "^24.0.2",
+    "ts-loader": "^6.1.0",
+    "tsify": "^4.0.1",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
+    "yargs": "^12.0.5"
+  },
+  "dependencies": {
+    "@dra2020/poly": "1.0.9",
+    "@dra2020/util": "1.0.24",
+    "csv-parse": "^4.4.5",
+    "geojson": "^0.5.0",
+    "polygon-clipping": "^0.14.0",
+    "simple-statistics": "^7.0.5"
+  }
+}

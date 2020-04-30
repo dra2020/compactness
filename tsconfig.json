@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "declarationDir": "dist/",
+    "strict": true,
+    "types": [
+      "node",
+      "jest"
+    ],
+    "lib": [
+      "es2016"
+    ],
+    "sourceMap": true
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/_tests__/*"
+  ]
+}
