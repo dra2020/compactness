@@ -2,7 +2,7 @@
 // THE NODE PACKAGE API
 //
 
-import { hello } from './compact'
+import { scoreShape } from './compact'
 
 export class Scorer
 {
@@ -11,6 +11,6 @@ export class Scorer
   }
   score(): void
   {
-    hello();
+    scoreShape();
   }
 }

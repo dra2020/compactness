@@ -3,7 +3,7 @@
 //
 /* Example (from the project directory):
 
-$ utils/main.js <command>
+$ utils/main.js score
 
 */
 
@@ -12,7 +12,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import parse from 'csv-parse/lib/sync';
 
-import { hello } from '../src/compact';
+import { scoreShape } from '../src/compact';
 
 
 // BEGIN COMMAND LINE IMPLEMENTATION
@@ -46,8 +46,8 @@ let command = argv._[0]
 
 switch (command) {
   // TODO
-  case 'hello': {
-    hello();
+  case 'score': {
+    scoreShape();
 
     break;
   }
