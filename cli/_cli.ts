@@ -1,9 +1,9 @@
 //
 // A COMMAND-LINE INTERFACE FOR EXERCISING ROUTINES
 //
-/* Example:
+/* Example (from the project directory):
 
-$ ./main.js command
+$ utils/main.js <command>
 
 */
 
