@@ -1,3 +1,6 @@
+import * as FU from '../testutil/fileutils';
+import '../testutil/match-closeto-array';
+
 import { scoreFeatures } from '../src/compact';
 
 describe('Score feature', () => {
