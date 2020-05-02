@@ -7,6 +7,8 @@ import * as path from 'path';
 import parse from 'csv-parse/lib/sync';
 
 
+// READ SAMPLE FEATURE-IZED SHAPES
+
 export type ShapeFeatures = FeatureEntry[];
 
 export type FeatureEntry = [
@@ -56,6 +58,10 @@ export function readFeaturesCSV(file: string): ShapeFeatures
 
   return shapes;
 }
+
+
+// READ SAMPLE SHAPES
+// https://www.npmjs.com/package/shp2json
 
 
 // HELPERS TO LOAD SAMPLE DATA FROM DISK
