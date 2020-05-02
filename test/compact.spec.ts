@@ -1,12 +1,17 @@
 import * as FU from '../testutil/fileutils';
-import '../testutil/match-closeto-array';
 
 import { scoreFeatures } from '../src/compact';
 
 describe('Score feature', () => {
-  test('Reference shape #1', () =>
+  const shapes = FU.readFeaturesCSV('testdata/smartfeats_first20.csv');
+
+  test('Reference shapes loop', () =>
   {
-    const features: number[] = [1.40982845893268, 1.46233715704051, 0.293969427544707, 0.576015395500123, 0.228918698162065, 0.70676215091718, 2.09006294795715];
-    expect(scoreFeatures(features)).toBeCloseTo(77.6086471426305);
+    for (let i in shapes)
+    {
+      const features: number[] = shapes[i].slice(0, -1);
+      const score: number = shapes[i].slice(-1)[0];
+      expect(scoreFeatures(features)).toBeCloseTo(score);
+    }
   });
 });
