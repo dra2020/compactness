@@ -62,10 +62,12 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 
 
 // READ SAMPLE SHAPES
-/*
-const toJSON = require('shp2json');
+// https://www.npmjs.com/package/shapefile
+// https://stackoverflow.com/questions/29548558/how-to-iterate-over-a-shapefile-in-node-js
 
-export function readSampleShapes(file: string): GeoJSON.FeatureCollection
+var shp = require('shapefile');
+
+export function readSampleShapes(file: string, encoding: string): GeoJSON.FeatureCollection
 {
   let fullPath: string;
   if (path.isAbsolute(file))
@@ -77,11 +79,13 @@ export function readSampleShapes(file: string): GeoJSON.FeatureCollection
     fullPath = path.resolve(file);
   }
 
-  const shapes: GeoJSON.FeatureCollection = toJSON.fromShpFile(fullPath);
+  let shapes = {} as GeoJSON.FeatureCollection;
+
+  // TODO - Read the shapefile and convert it into a FeatureCollection 
 
   return shapes;
 }
-*/
+
 
 // HELPERS TO LOAD SAMPLE DATA FROM DISK
 
