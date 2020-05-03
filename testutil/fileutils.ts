@@ -67,7 +67,7 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 
 var shp = require('shapefile');
 
-export function readSampleShapes(file: string, encoding: string): GeoJSON.FeatureCollection
+export function readSampleShapes(file: string): GeoJSON.FeatureCollection
 {
   let fullPath: string;
   if (path.isAbsolute(file))
