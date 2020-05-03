@@ -5,6 +5,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import parse from 'csv-parse/lib/sync';
+import * as GeoJSON from 'geojson';
 
 
 // READ SAMPLE FEATURE-IZED SHAPES
@@ -22,7 +23,7 @@ export type FeatureEntry = [
   number   // score
 ];
 
-export function readFeaturesCSV(file: string): ShapeFeatures
+export function readSampleFeatureSets(file: string): ShapeFeatures
 {
   let shapes: ShapeFeatures = []; 
 
@@ -61,8 +62,27 @@ export function readFeaturesCSV(file: string): ShapeFeatures
 
 
 // READ SAMPLE SHAPES
-// https://www.npmjs.com/package/shp2json
 
+/*
+const toJSON = require('shp2json');
+
+export function readSampleShapes(file: string): GeoJSON.FeatureCollection
+{
+  let fullPath: string;
+  if (path.isAbsolute(file))
+  {
+    fullPath = file;
+  }
+  else
+  {
+    fullPath = path.resolve(file);
+  }
+
+  const shapes: GeoJSON.FeatureCollection = toJSON.fromShpFile(fullPath);
+
+  return shapes;
+}
+*/
 
 // HELPERS TO LOAD SAMPLE DATA FROM DISK
 

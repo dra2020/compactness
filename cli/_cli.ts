@@ -11,6 +11,8 @@ import yargs from 'yargs';
 import * as fs from 'fs';
 import * as path from 'path';
 import parse from 'csv-parse/lib/sync';
+import * as FU from '../testutil/fileutils';
+import * as GeoJSON from 'geojson';
 
 import { scoreShape } from '../src/compact';
 
@@ -48,6 +50,12 @@ switch (command) {
   // TODO
   case 'score': {
     scoreShape();
+
+    break;
+  }
+  case 'featureize': {
+    console.log('Feature-ize shape');
+    // const shapes: GeoJSON.FeatureCollection = FU.readSampleShapes('./testdata/first20/first20.shp');
 
     break;
   }

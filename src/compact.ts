@@ -2,6 +2,10 @@
 // KIWYSI COMPACTNESS
 //
 
+// TODO - For testing
+import * as Poly from '@dra2020/poly';
+import * as GeoJSON from 'geojson';
+
 
 // TODO
 export function scoreShape(): number
@@ -13,6 +17,16 @@ export function scoreShape(): number
 
 // TODO
 // FEATURE-IZE A SHAPE
+
+export function featureizeShape(poly: GeoJSON.Feature): any
+{
+
+  const area: number = Poly.polyAreaFlat(poly);
+  const perimeter: number = Poly.polyPerimeterFlat(poly);
+  const diameter: number = Poly.polyDiameterFlat(poly);
+
+  return [area, perimeter, diameter];
+}
 
 
 // SCORE THE FEATURES FROM A FEATURE-IZED SHAPE
