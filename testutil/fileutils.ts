@@ -62,7 +62,6 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 
 
 // READ SAMPLE SHAPES
-
 /*
 const toJSON = require('shp2json');
 

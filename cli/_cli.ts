@@ -11,9 +11,9 @@ import yargs from 'yargs';
 import * as fs from 'fs';
 import * as path from 'path';
 import parse from 'csv-parse/lib/sync';
-import * as FU from '../testutil/fileutils';
 import * as GeoJSON from 'geojson';
 
+import * as FU from '../testutil/fileutils';
 import { scoreShape } from '../src/compact';
 
 
