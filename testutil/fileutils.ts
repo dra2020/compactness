@@ -63,7 +63,7 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 
 // READ SAMPLE SHAPES
 // https://www.npmjs.com/package/shapefile
-// https://stackoverflow.com/questions/29548558/how-to-iterate-over-a-shapefile-in-node-js
+// https://stackoverflow.com/questions/29548558/how-to-iterate-over-a-shapefile-in-node-js 
 
 var shp = require('shapefile');
 
