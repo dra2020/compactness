@@ -81,7 +81,7 @@ export function readSampleShapes(file: string): GeoJSON.FeatureCollection
 
   let shapes = {} as GeoJSON.FeatureCollection;
 
-  // TODO - Read the shapefile and convert it into a FeatureCollection 
+  // TODO - Read the shapefile and convert it into a FeatureCollection here
 
   return shapes;
 }
