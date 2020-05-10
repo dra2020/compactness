@@ -22,8 +22,8 @@ describe('Score reference feature sets', () => {
 });
 
 describe('Feature-ize reference shapes', () => {
-  // const shapes: GeoJSON.FeatureCollection = FU.readSampleShapes('./testdata/first20/first20.shp');
-  // const shape: GeoJSON.Feature = shapes.features[0];
+  const shapes: GeoJSON.FeatureCollection = FU.readSampleShapes('./testdata/first20/first20.shp');
+  console.log(shapes.features[0]);
 
   test('Loop', () =>
   {

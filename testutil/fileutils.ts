@@ -62,8 +62,6 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 
 
 // READ SAMPLE SHAPES
-// https://www.npmjs.com/package/shapefile
-// https://stackoverflow.com/questions/29548558/how-to-iterate-over-a-shapefile-in-node-js 
 
 var shp = require('shapefile');
 
@@ -81,7 +79,17 @@ export function readSampleShapes(file: string): GeoJSON.FeatureCollection
 
   let shapes = {} as GeoJSON.FeatureCollection;
 
-  // TODO - Read the shapefile and convert it into a FeatureCollection here
+  // Read the shapefile and convert it into a FeatureCollection
+
+  shp.open(fullPath)
+    .then((source: any) =>
+    {
+      return source.read();
+    })
+    .catch((err: any) =>
+    {
+      console.error(err.stack)
+    })
 
   return shapes;
 }

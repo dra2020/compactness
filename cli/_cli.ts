@@ -4,6 +4,7 @@
 /* Example (from the project directory):
 
 $ utils/main.js score
+$ utils/main.js featureize
 
 */
 
@@ -55,7 +56,7 @@ switch (command) {
   }
   case 'featureize': {
     console.log('Feature-ize shape');
-    // const shapes: GeoJSON.FeatureCollection = FU.readSampleShapes('./testdata/first20/first20.shp');
+    const shapes: GeoJSON.FeatureCollection = FU.readSampleShapes('./testdata/first20/first20.shp');
 
     break;
   }
