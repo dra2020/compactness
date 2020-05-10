@@ -61,7 +61,11 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 }
 
 
-// READ SAMPLE SHAPES
+// TODO - READ SAMPLE SHAPES
+// * This is close, I think.
+// * But 'shapefile' thinks I'm trying to do this in a browser, I think.
+// * Once I can read the shapes from the file system, I need to stuff them in
+//   the shapes var and return that.
 
 var shp = require('shapefile');
 
@@ -82,14 +86,21 @@ export function readSampleShapes(file: string): GeoJSON.FeatureCollection
   // Read the shapefile and convert it into a FeatureCollection
 
   shp.open(fullPath)
-    .then((source: any) =>
-    {
-      return source.read();
-    })
+    .then((source: any) => source.read()
+      .then(function log(result: any)
+      {
+        if (result.done) return;
+        console.log(result.value);
+        return source.read().then(log);
+      }))
+    // .then((source: any) =>
+    // {
+    //   return source.read();
+    // })
     .catch((err: any) =>
     {
       console.error(err.stack)
-    })
+    });
 
   return shapes;
 }
