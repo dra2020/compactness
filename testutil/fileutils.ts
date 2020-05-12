@@ -69,15 +69,10 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 // * Once I can read the shapes from the file system, I need to stuff them in
 //   the shapes var and return that.
 //
-/*  To test the function, run:
-
-$ utils/main.js read-shapefile
-
-*/
 
 var shp = require('shapefile');
 
-export function readAndProcessShapefile(file: string, callback: (shapes: GeoJSON.FeatureCollection) => void): void
+export function readAndProcessShapefile(file: string): void
 {
   let fullPath: string;
   if (path.isAbsolute(file))
@@ -89,20 +84,12 @@ export function readAndProcessShapefile(file: string, callback: (shapes: GeoJSON
     fullPath = path.resolve(file);
   }
 
-  // let shapes = {} as GeoJSON.FeatureCollection;
-
   // Read the shapefile and convert it into a FeatureCollection
 
   var promiseObj = shp.open(fullPath)
     .then((source: any) => source.read()
-      .then(function done(result: GeoJSON.FeatureCollection) {
-        processShapes(result);
-        // callback(result);
-      }))
+      .then(processShapes))
     .catch((err: any) => console.error(err.stack));
-  
-  // I expected to do this here ...
-  // callback(shapes);
 }
 
 

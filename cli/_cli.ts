@@ -55,7 +55,7 @@ switch (command) {
     break;
   }
   case 'read-shp': {
-    FU.readAndProcessShapefile('./testdata/first20/first20.shp', processShapes);
+    FU.readAndProcessShapefile('./testdata/first20/first20.shp');
 
     break;
   }
