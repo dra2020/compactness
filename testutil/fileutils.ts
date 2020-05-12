@@ -24,10 +24,8 @@ export type FeatureEntry = [
   number   // score
 ];
 
-export function readSampleFeatureSets(file: string): ShapeFeatures
+function fileToPath(file: string): string
 {
-  let shapes: ShapeFeatures = []; 
-
   let fullPath: string;
   if (path.isAbsolute(file))
   {
@@ -38,6 +36,14 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
     fullPath = path.resolve(file);
   }
 
+  return fullPath;
+}
+
+export function readSampleFeatureSets(file: string): ShapeFeatures
+{
+  let shapes: ShapeFeatures = []; 
+
+  const fullPath: string = fileToPath(file);
   const csvArray: any = readCSV(fullPath);
 
   for (let dictRow of csvArray)
@@ -62,27 +68,30 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 }
 
 
-// TODO - READ SAMPLE SHAPES
+// READ SAMPLE SHAPES
 
 var shp = require('shapefile');
 
 export function readAndProcessShapefile(file: string): void
 {
-  let fullPath: string;
-  if (path.isAbsolute(file))
-  {
-    fullPath = file;
-  }
-  else
-  {
-    fullPath = path.resolve(file);
-  }
+  const fullPath: string = fileToPath(file);
+  const buf = fs.readFileSync(fullPath);
 
-  // Read the shapefile and convert it into a FeatureCollection
+  let shapes = {} as GeoJSON.FeatureCollection;
+  shapes.type = "FeatureCollection";
+  shapes.features = [] as GeoJSON.Feature[];
 
-  shp.open(fullPath)
+  shp.open(buf)
     .then((source: any) => source.read()
-      .then(processShapes))
+      .then(function readOne(result: any) {
+        if (result.done)
+        {
+          processShapes(shapes);
+          return;
+        }
+        shapes.features.push(result.value);
+        return source.read().then(readOne);
+      }))
     .catch((err: any) => console.error(err.stack));
 }
 
