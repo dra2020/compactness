@@ -63,12 +63,6 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 
 
 // TODO - READ SAMPLE SHAPES
-//
-// * This is close, I think.
-// * But 'shapefile' thinks I'm trying to do this in a browser, I think.
-// * Once I can read the shapes from the file system, I need to stuff them in
-//   the shapes var and return that.
-//
 
 var shp = require('shapefile');
 
@@ -86,7 +80,7 @@ export function readAndProcessShapefile(file: string): void
 
   // Read the shapefile and convert it into a FeatureCollection
 
-  var promiseObj = shp.open(fullPath)
+  shp.open(fullPath)
     .then((source: any) => source.read()
       .then(processShapes))
     .catch((err: any) => console.error(err.stack));
