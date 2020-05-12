@@ -30,7 +30,7 @@ export function featureizeShape(poly: GeoJSON.Feature): any
 
 /*  To test the function, run:
 
-$ utils/main.js geojson
+$ utils/main.js read-geojson
 
 */
 export function processShapes(shapes: GeoJSON.FeatureCollection): void

@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import parse from 'csv-parse/lib/sync';
 import * as GeoJSON from 'geojson';
+import {processShapes} from '../src/compact';
 
 
 // READ SAMPLE FEATURE-IZED SHAPES
@@ -70,13 +71,13 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 //
 /*  To test the function, run:
 
-$ utils/main.js featureize
+$ utils/main.js read-shapefile
 
 */
 
 var shp = require('shapefile');
 
-export function readSampleShapes(file: string): GeoJSON.FeatureCollection
+export function readAndProcessShapefile(file: string, callback: (shapes: GeoJSON.FeatureCollection) => void): void
 {
   let fullPath: string;
   if (path.isAbsolute(file))
@@ -88,28 +89,20 @@ export function readSampleShapes(file: string): GeoJSON.FeatureCollection
     fullPath = path.resolve(file);
   }
 
-  let shapes = {} as GeoJSON.FeatureCollection;
+  // let shapes = {} as GeoJSON.FeatureCollection;
 
   // Read the shapefile and convert it into a FeatureCollection
 
-  shp.open(fullPath)
+  var promiseObj = shp.open(fullPath)
     .then((source: any) => source.read()
-      .then(function log(result: any)
-      {
-        if (result.done) return;
-        console.log(result.value);
-        return source.read().then(log);
+      .then(function done(result: GeoJSON.FeatureCollection) {
+        processShapes(result);
+        // callback(result);
       }))
-    // .then((source: any) =>
-    // {
-    //   return source.read();
-    // })
-    .catch((err: any) =>
-    {
-      console.error(err.stack)
-    });
-
-  return shapes;
+    .catch((err: any) => console.error(err.stack));
+  
+  // I expected to do this here ...
+  // callback(shapes);
 }
 
 

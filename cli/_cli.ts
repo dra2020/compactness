@@ -54,15 +54,19 @@ switch (command) {
 
     break;
   }
-  case 'featureize': {
-    console.log('Feature-ize shape');
-    const shapes: GeoJSON.FeatureCollection = FU.readSampleShapes('./testdata/first20/first20.shp');
+  case 'read-shp': {
+    FU.readAndProcessShapefile('./testdata/first20/first20.shp', processShapes);
 
     break;
   }
-  case 'geojson': {
+  case 'read-geojson': {
     const shapes = FU.readJSON('./testdata/sample.geojson') as GeoJSON.FeatureCollection;
     processShapes(shapes);
+
+    break;
+  }
+  case 'verify': {
+    console.log('TODO: Verify scoring features & feature-izing shapes');
 
     break;
   }
