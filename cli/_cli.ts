@@ -15,7 +15,7 @@ import parse from 'csv-parse/lib/sync';
 import * as GeoJSON from 'geojson';
 
 import * as FU from '../testutil/fileutils';
-import { scoreShape } from '../src/compact';
+import { scoreShape, processShapes } from '../src/compact';
 
 
 // BEGIN COMMAND LINE IMPLEMENTATION
@@ -57,6 +57,12 @@ switch (command) {
   case 'featureize': {
     console.log('Feature-ize shape');
     const shapes: GeoJSON.FeatureCollection = FU.readSampleShapes('./testdata/first20/first20.shp');
+
+    break;
+  }
+  case 'geojson': {
+    const shapes = FU.readJSON('./testdata/sample.geojson') as GeoJSON.FeatureCollection;
+    processShapes(shapes);
 
     break;
   }

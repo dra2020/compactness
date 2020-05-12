@@ -28,6 +28,21 @@ export function featureizeShape(poly: GeoJSON.Feature): any
   return [area, perimeter, diameter];
 }
 
+/*  To test the function, run:
+
+$ utils/main.js geojson
+
+*/
+export function processShapes(shapes: GeoJSON.FeatureCollection): void
+{
+  console.log(`Processing ${shapes.features.length} shapes:`);
+  for (let i = 0; i < shapes.features.length; i++)
+  {
+    console.log('Processing shape:', i + 1, '=', shapes.features[i]);
+    // let a = Poly.polyArea(shapes.features[i]);
+  }
+}
+
 
 // SCORE THE FEATURES FROM A FEATURE-IZED SHAPE
 

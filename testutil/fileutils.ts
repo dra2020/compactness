@@ -62,12 +62,13 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 
 
 // TODO - READ SAMPLE SHAPES
+//
 // * This is close, I think.
 // * But 'shapefile' thinks I'm trying to do this in a browser, I think.
 // * Once I can read the shapes from the file system, I need to stuff them in
 //   the shapes var and return that.
 //
-/*  To rest the function, run:
+/*  To test the function, run:
 
 $ utils/main.js featureize
 
