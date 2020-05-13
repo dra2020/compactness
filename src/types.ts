@@ -2,12 +2,37 @@
 // TYPE DEFINITIONS
 //
 
-export type FeatureSet = {
-  sym_x: number;
-  sym_y: number
-  reock: number;
-  bbox: number;
-  polsby: number;
-  hull: number;
-  schwartzberg: number;
+export const enum Feature
+{
+  Sym_x,
+  Sym_y,
+  Reock,
+  Bbox,
+  Polsby,
+  Hull,
+  Schwartzberg,
+  Score
 }
+
+export type ShapeFeatures = FeatureSet[];
+
+export type FeatureSet = [
+  number,  // sym_x
+  number,  // sym_y
+  number,  // reock
+  number,  // bbox
+  number,  // polsby
+  number,  // hull
+  number,  // schwartzberg
+  number?  // score
+];
+
+// export type FeatureSet = {
+//   sym_x: number;
+//   sym_y: number
+//   reock: number;
+//   bbox: number;
+//   polsby: number;
+//   hull: number;
+//   schwartzberg: number;
+// }

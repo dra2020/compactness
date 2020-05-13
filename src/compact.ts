@@ -19,23 +19,22 @@ export function scoreShape(): number
 }
 
 
-// FEATURE-IZE A SHAPE
+// TODO - FEATURE-IZE A SHAPE
 
 export function featureizeShape(poly: GeoJSON.Feature): T.FeatureSet
 {
+  // Calc Reock & Polsby-Popper features
   const result = Poly.polyCompactness(poly);
 
-  // TODO - HERE
-
-  const features: T.FeatureSet = {
-    sym_x: 0,
-    sym_y: 0,
-    reock: result.reock,
-    bbox: 0,
-    polsby: result.polsby_popper,
-    hull: 0,
-    schwartzberg: 0
-  };
+  const features: T.FeatureSet = [
+    0,  // sym_x
+    0,  // sym_y
+    result.reock,
+    0,  // bbox
+    result.polsby_popper,
+    result.convex_hull,
+    result.schwartzberg
+  ];
 
   return features;
 }
@@ -45,7 +44,7 @@ export function featureizeShape(poly: GeoJSON.Feature): T.FeatureSet
 
 const { multiply } = require('mathjs');
 
-export function scoreFeatureSet(features: number[]): number
+export function scoreFeatureSet(features: T.FeatureSet): number
 {
   const model: number[] = [
     0.317566717356693,  // sym_x

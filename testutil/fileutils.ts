@@ -7,21 +7,9 @@ import * as path from 'path';
 import parse from 'csv-parse/lib/sync';
 import * as GeoJSON from 'geojson';
 
+import * as T from '../src/types'
 
 // READ SAMPLE FEATURE-IZED SHAPES
-
-export type ShapeFeatures = FeatureEntry[];
-
-export type FeatureEntry = [
-  number,  // sym_x
-  number,  // sym_y
-  number,  // reock
-  number,  // bbox
-  number,  // polsby
-  number,  // hull
-  number,  // schwartzberg
-  number   // score
-];
 
 function fileToPath(file: string): string
 {
@@ -38,9 +26,9 @@ function fileToPath(file: string): string
   return fullPath;
 }
 
-export function readFeatureSets(file: string): ShapeFeatures
+export function readFeatureSets(file: string): T.ShapeFeatures
 {
-  let shapes: ShapeFeatures = []; 
+  let shapes: T.ShapeFeatures = []; 
 
   const fullPath: string = fileToPath(file);
   const csvArray: any = readCSV(fullPath);
@@ -49,7 +37,7 @@ export function readFeatureSets(file: string): ShapeFeatures
   {
     // const n: number = Number(dictRow['n']);
 
-    const f: FeatureEntry = [
+    const featureSet: T.FeatureSet = [
       Number(dictRow['sym_x']),
       Number(dictRow['sym_y']),
       Number(dictRow['reock']),
@@ -60,7 +48,7 @@ export function readFeatureSets(file: string): ShapeFeatures
       Number(dictRow['score'])
     ];
 
-    shapes.push(f);
+    shapes.push(featureSet);
   }
 
   return shapes;

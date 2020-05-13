@@ -13,10 +13,10 @@ describe('Score reference feature sets', () => {
   {
     for (let i in shapes)
     {
-      const features: number[] = shapes[i].slice(0, -1);
-      const prediction: number = scoreFeatureSet(features);
+      const featureSet = shapes[i].slice(0, -1) as T.FeatureSet;
+      const prediction: number = scoreFeatureSet(featureSet);
 
-      const score: number = shapes[i].slice(-1)[0];
+      const score: number = shapes[i].slice(-1)[0] as number;
 
       expect(prediction).toBeCloseTo(score);
       if (verbose) console.log(`Sample: Prediction = ${prediction}, Answer = ${score}`);
@@ -24,33 +24,35 @@ describe('Score reference feature sets', () => {
   });
 });
 
-export function testSampleShapes(shapes: GeoJSON.FeatureCollection): void
+// TODO - Here
+// * Pass the correct featureSets in
+// * Extend T.FeatureSet to include the 'score'
+export function testFeatureizeShapes(shapes: GeoJSON.FeatureCollection): void
 {
+  const verbose = false;
+  const featureSets = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+
   // console.log(`Processing ${shapes.features.length} shapes:`);
-  for (let i = 0; i < shapes.features.length; i++)
+  for (let i = 0; i < 1 /* TODO - shapes.features.length */; i++)
   {
+    const correct: T.FeatureSet = featureSets[i];
+
     // console.log('Processing shape:', i + 1, '=', shapes.features[i]);
-    const features = featureizeShape(shapes.features[i]);
+    const features: T.FeatureSet = featureizeShape(shapes.features[i]);
 
-    // TODO - HERE
-    let correct: T.FeatureSet = {
-      sym_x: 0,
-      sym_y: 0,
-      reock: 0,
-      bbox: 0,
-      polsby: 0,
-      hull: 0,
-      schwartzberg: 0
-    };
+    // Compare feature values
+    expect(features[T.Feature.Reock]).toEqual(correct[T.Feature.Reock]);
+    expect(features[T.Feature.Polsby]).toEqual(correct[T.Feature.Polsby]);
+    expect(features[T.Feature.Hull]).toEqual(correct[T.Feature.Hull]);
+    expect(features[T.Feature.Schwartzberg]).toEqual(correct[T.Feature.Schwartzberg]);
 
-    // TODO - What should this be?
-    expect(features).toEqual(correct);
+    // TODO - More ...
   }
 }
 
 describe('Feature-ize reference shapes', () => {
   test('Loop', () =>
   {
-    FU.readAndProcessShapes('./testdata/first20/first20.shp', testSampleShapes);
+    FU.readAndProcessShapes('./testdata/first20/first20.shp', testFeatureizeShapes);
   });
 });
