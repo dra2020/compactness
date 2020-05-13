@@ -32,17 +32,18 @@ export function testSampleShapes(shapes: GeoJSON.FeatureCollection): void
     // console.log('Processing shape:', i + 1, '=', shapes.features[i]);
     const features = featureizeShape(shapes.features[i]);
 
-    // TODO
-    const correct: T.FeatureSet = {
-      sym_x: 1,
-      sym_y: 2,
-      reock: 3,
-      bbox: 4,
-      polsby: 5,
-      hull: 6,
-      schwartzberg: 7
+    // TODO - HERE
+    let correct: T.FeatureSet = {
+      sym_x: 0,
+      sym_y: 0,
+      reock: 0,
+      bbox: 0,
+      polsby: 0,
+      hull: 0,
+      schwartzberg: 0
     };
 
+    // TODO - What should this be?
     expect(features).toEqual(correct);
   }
 }

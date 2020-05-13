@@ -19,24 +19,22 @@ export function scoreShape(): number
 }
 
 
-// TODO
 // FEATURE-IZE A SHAPE
 
 export function featureizeShape(poly: GeoJSON.Feature): T.FeatureSet
 {
+  const result = Poly.polyCompactness(poly);
 
-  const area: number = Poly.polyAreaFlat(poly);
-  const perimeter: number = Poly.polyPerimeterFlat(poly);
-  const diameter: number = Poly.polyDiameterFlat(poly);
+  // TODO - HERE
 
   const features: T.FeatureSet = {
-    sym_x: 1,
-    sym_y: 2,
-    reock: 3,
-    bbox: 4,
-    polsby: 5,
-    hull: 6,
-    schwartzberg: 7
+    sym_x: 0,
+    sym_y: 0,
+    reock: result.reock,
+    bbox: 0,
+    polsby: result.polsby_popper,
+    hull: 0,
+    schwartzberg: 0
   };
 
   return features;

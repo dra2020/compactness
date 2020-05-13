@@ -6,7 +6,7 @@ import yargs from 'yargs';
 import * as GeoJSON from 'geojson';
 
 import * as FU from '../testutil/fileutils';
-import { scoreShape } from '../src/compact';
+import { scoreShape, featureizeShape } from '../src/compact';
 
 
 // BEGIN COMMAND LINE IMPLEMENTATION
@@ -82,5 +82,6 @@ function processShapes(shapes: GeoJSON.FeatureCollection): void
   for (let i = 0; i < shapes.features.length; i++)
   {
     console.log('Processing shape:', i + 1, '=', shapes.features[i]);
+    featureizeShape(shapes.features[i]);
   }
 }
