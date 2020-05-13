@@ -2,7 +2,6 @@
 // KIWYSI COMPACTNESS
 //
 
-// TODO - For testing
 import * as Poly from '@dra2020/poly';
 import * as GeoJSON from 'geojson';
 
@@ -26,16 +25,6 @@ export function featureizeShape(poly: GeoJSON.Feature): any
   const diameter: number = Poly.polyDiameterFlat(poly);
 
   return [area, perimeter, diameter];
-}
-
-// TODO
-export function processShapes(shapes: GeoJSON.FeatureCollection): void
-{
-  console.log(`Processing ${shapes.features.length} shapes:`);
-  for (let i = 0; i < shapes.features.length; i++)
-  {
-    console.log('Processing shape:', i + 1, '=', shapes.features[i]);
-  }
 }
 
 

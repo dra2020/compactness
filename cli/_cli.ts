@@ -15,7 +15,8 @@ import parse from 'csv-parse/lib/sync';
 import * as GeoJSON from 'geojson';
 
 import * as FU from '../testutil/fileutils';
-import { scoreShape, processShapes } from '../src/compact';
+import { scoreShape } from '../src/compact';
+// import { processShapes } from '../test/compact.spec';
 
 
 // BEGIN COMMAND LINE IMPLEMENTATION
@@ -55,7 +56,7 @@ switch (command) {
     break;
   }
   case 'read-shp': {
-    FU.readAndProcessShapefile('./testdata/first20/first20.shp');
+    FU.readAndProcessShapes('./testdata/first20/first20.shp', processShapes) as GeoJSON.FeatureCollection;
 
     break;
   }
@@ -73,5 +74,17 @@ switch (command) {
   default: {
     console.log("Command not recognized.");
     break;
+  }
+}
+
+
+// HELPERS
+
+function processShapes(shapes: GeoJSON.FeatureCollection): void
+{
+  console.log(`Processing ${shapes.features.length} shapes:`);
+  for (let i = 0; i < shapes.features.length; i++)
+  {
+    console.log('Processing shape:', i + 1, '=', shapes.features[i]);
   }
 }

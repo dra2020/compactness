@@ -6,7 +6,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import parse from 'csv-parse/lib/sync';
 import * as GeoJSON from 'geojson';
-import {processShapes} from '../src/compact';
 
 
 // READ SAMPLE FEATURE-IZED SHAPES
@@ -39,7 +38,7 @@ function fileToPath(file: string): string
   return fullPath;
 }
 
-export function readSampleFeatureSets(file: string): ShapeFeatures
+export function readFeatureSets(file: string): ShapeFeatures
 {
   let shapes: ShapeFeatures = []; 
 
@@ -72,7 +71,7 @@ export function readSampleFeatureSets(file: string): ShapeFeatures
 
 var shp = require('shapefile');
 
-export function readAndProcessShapefile(file: string): void
+export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.FeatureCollection) => void): GeoJSON.FeatureCollection
 {
   const fullPath: string = fileToPath(file);
   const buf = fs.readFileSync(fullPath);
@@ -80,19 +79,21 @@ export function readAndProcessShapefile(file: string): void
   let shapes = {} as GeoJSON.FeatureCollection;
   shapes.type = "FeatureCollection";
   shapes.features = [] as GeoJSON.Feature[];
-
+  
   shp.open(buf)
     .then((source: any) => source.read()
       .then(function readOne(result: any) {
         if (result.done)
         {
-          processShapes(shapes);
+          callback(shapes);
           return;
-        }
+        };
         shapes.features.push(result.value);
         return source.read().then(readOne);
       }))
     .catch((err: any) => console.error(err.stack));
+
+  return shapes;
 }
 
 
