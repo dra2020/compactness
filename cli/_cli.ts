@@ -1,22 +1,12 @@
 //
 // A COMMAND-LINE INTERFACE FOR EXERCISING ROUTINES
 //
-/* Example (from the project directory):
-
-$ utils/main.js score
-$ utils/main.js featureize
-
-*/
 
 import yargs from 'yargs';
-import * as fs from 'fs';
-import * as path from 'path';
-import parse from 'csv-parse/lib/sync';
 import * as GeoJSON from 'geojson';
 
 import * as FU from '../testutil/fileutils';
 import { scoreShape } from '../src/compact';
-// import { processShapes } from '../test/compact.spec';
 
 
 // BEGIN COMMAND LINE IMPLEMENTATION
@@ -48,26 +38,32 @@ let command = argv._[0]
 
 // TODO
 
+// Run from the project directory (sample commands inline below).
 switch (command) {
   // TODO
+  // $ utils/main.js score <shapefile>
   case 'score': {
     scoreShape();
 
     break;
   }
+  // $ utils/main.js read-shp
   case 'read-shp': {
     FU.readAndProcessShapes('./testdata/first20/first20.shp', processShapes) as GeoJSON.FeatureCollection;
 
     break;
   }
+  // $ utils/main.js read-geojson
   case 'read-geojson': {
     const shapes = FU.readJSON('./testdata/sample.geojson') as GeoJSON.FeatureCollection;
     processShapes(shapes);
 
     break;
   }
+  // TODO
+  // $ utils/main.js verify
   case 'verify': {
-    console.log('TODO: Verify scoring features & feature-izing shapes');
+    console.log('Verify scoring features & feature-izing shapes');
 
     break;
   }

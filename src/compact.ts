@@ -6,10 +6,13 @@ import * as Poly from '@dra2020/poly';
 import * as GeoJSON from 'geojson';
 
 
-// TODO
 export function scoreShape(): number
 {
   console.log("Hello, world!");
+
+  // TODO - Feature-ize the shape
+  // TODO - Score the feature set
+
   return 42;
 }
 
@@ -17,7 +20,7 @@ export function scoreShape(): number
 // TODO
 // FEATURE-IZE A SHAPE
 
-export function featureizeShape(poly: GeoJSON.Feature): any
+export function featureizeShape(poly: GeoJSON.Feature): number[]
 {
 
   const area: number = Poly.polyAreaFlat(poly);
@@ -32,7 +35,7 @@ export function featureizeShape(poly: GeoJSON.Feature): any
 
 const { multiply } = require('mathjs');
 
-export function scoreFeatures(features: number[]): number
+export function scoreFeatureSet(features: number[]): number
 {
   const model: number[] = [
     0.317566717356693,  // sym_x
