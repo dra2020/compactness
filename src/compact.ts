@@ -5,6 +5,8 @@
 import * as Poly from '@dra2020/poly';
 import * as GeoJSON from 'geojson';
 
+import * as T from './types'
+
 
 export function scoreShape(): number
 {
@@ -20,14 +22,24 @@ export function scoreShape(): number
 // TODO
 // FEATURE-IZE A SHAPE
 
-export function featureizeShape(poly: GeoJSON.Feature): number[]
+export function featureizeShape(poly: GeoJSON.Feature): T.FeatureSet
 {
 
   const area: number = Poly.polyAreaFlat(poly);
   const perimeter: number = Poly.polyPerimeterFlat(poly);
   const diameter: number = Poly.polyDiameterFlat(poly);
 
-  return [area, perimeter, diameter];
+  const features: T.FeatureSet = {
+    sym_x: 1,
+    sym_y: 2,
+    reock: 3,
+    bbox: 4,
+    polsby: 5,
+    hull: 6,
+    schwartzberg: 7
+  };
+
+  return features;
 }
 
 

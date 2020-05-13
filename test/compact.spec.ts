@@ -1,6 +1,8 @@
 import * as FU from '../testutil/fileutils';
 import * as GeoJSON from 'geojson';
 
+import * as T from '../src/types'
+
 import { scoreFeatureSet, featureizeShape } from '../src/compact';
 
 describe('Score reference feature sets', () => {
@@ -29,8 +31,19 @@ export function testSampleShapes(shapes: GeoJSON.FeatureCollection): void
   {
     // console.log('Processing shape:', i + 1, '=', shapes.features[i]);
     const features = featureizeShape(shapes.features[i]);
+
     // TODO
-    expect(features).toEqual(expect.anything());
+    const correct: T.FeatureSet = {
+      sym_x: 1,
+      sym_y: 2,
+      reock: 3,
+      bbox: 4,
+      polsby: 5,
+      hull: 6,
+      schwartzberg: 7
+    };
+
+    expect(features).toEqual(correct);
   }
 }
 
