@@ -38,8 +38,6 @@ let command = argv._[0]
 
 // EXECUTE THE COMMAND
 
-// TODO
-
 // Run from the project directory (sample commands inline below).
 switch (command) {
   // TODO

@@ -19,8 +19,8 @@ export function scoreShape(): number
 }
 
 
-// TODO - FEATURE-IZE A SHAPE
-
+// FEATURE-IZE A SHAPE
+// TODO
 export function featureizeShape(poly: GeoJSON.Feature): T.FeatureSet
 {
   // Calc Reock & Polsby-Popper features

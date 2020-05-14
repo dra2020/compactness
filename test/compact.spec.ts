@@ -45,7 +45,7 @@ export function testFeatureizeShapes(shapes: GeoJSON.FeatureCollection, featureE
     expect(features[T.Feature.Hull]).toEqual(correct[T.Feature.Hull]);
     expect(features[T.Feature.Schwartzberg]).toEqual(correct[T.Feature.Schwartzberg]);
 
-    // TODO - More ...
+    // More ...
   }
 }
 
