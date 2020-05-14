@@ -62,7 +62,7 @@ export function testFeatureizeShapes(shapes: GeoJSON.FeatureCollection, featureE
 }
 
 
-/* TODO - ALTERNATIVE: I want to read the shapefile from disk and then process it.
+// TODO - ALTERNATIVE: I want to read the shapefile from disk and then process it.
 
 describe('Exploring an alternative approach', () => {
   test('Using async/await', async () =>
@@ -92,4 +92,4 @@ describe('Exploring an alternative approach', () => {
     }
   });
 });
-*/
+
