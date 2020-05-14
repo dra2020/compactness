@@ -7,16 +7,17 @@ import { scoreFeatureSet, featureizeShape } from '../src/compact';
 
 describe('Score reference feature sets', () => {
   const verbose = false;
-  const shapes = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+  const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
 
   test('Loop', () =>
   {
-    for (let i in shapes)
+    for (let i in featureEntries)
     {
-      const featureSet = shapes[i].slice(0, -1) as T.FeatureSet;
-      const prediction: number = scoreFeatureSet(featureSet);
+      const featureEntry: number[] = featureEntries[i];
+      const featureSet = featureEntry.slice(1, -1) as T.FeatureSet;
+      const score: number = featureEntry[featureEntry.length-1];
 
-      const score: number = shapes[i].slice(-1)[0] as number;
+      const prediction: number = scoreFeatureSet(featureSet);
 
       expect(prediction).toBeCloseTo(score);
       if (verbose) console.log(`Sample: Prediction = ${prediction}, Answer = ${score}`);
@@ -24,18 +25,16 @@ describe('Score reference feature sets', () => {
   });
 });
 
-// TODO - Here
-// * Pass the correct featureSets in
-// * Extend T.FeatureSet to include the 'score'
-export function testFeatureizeShapes(shapes: GeoJSON.FeatureCollection): void
+export function testFeatureizeShapes(shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]): void
 {
   const verbose = false;
-  const featureSets = FU.readFeatureSets('testdata/smartfeats_first20.csv');
 
   // console.log(`Processing ${shapes.features.length} shapes:`);
   for (let i = 0; i < 1 /* TODO - shapes.features.length */; i++)
   {
-    const correct: T.FeatureSet = featureSets[i];
+    const n = featureEntries[i][0];
+    const correct = featureEntries[i].slice(1, -1) as T.FeatureSet;
+    const score = featureEntries[i][-1];
 
     // console.log('Processing shape:', i + 1, '=', shapes.features[i]);
     const features: T.FeatureSet = featureizeShape(shapes.features[i]);
@@ -53,6 +52,9 @@ export function testFeatureizeShapes(shapes: GeoJSON.FeatureCollection): void
 describe('Feature-ize reference shapes', () => {
   test('Loop', () =>
   {
-    FU.readAndProcessShapes('./testdata/first20/first20.shp', testFeatureizeShapes);
+    const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+    FU.readAndProcessShapes('./testdata/first20/first20.shp', testFeatureizeShapes, featureEntries);
+
+    // expect(true).toBe(true);
   });
 });

@@ -6,6 +6,8 @@ import yargs from 'yargs';
 import * as GeoJSON from 'geojson';
 
 import * as FU from '../testutil/fileutils';
+
+import * as T from '../src/types'
 import { scoreShape, featureizeShape } from '../src/compact';
 
 
@@ -49,14 +51,16 @@ switch (command) {
   }
   // $ utils/main.js read-shp
   case 'read-shp': {
-    FU.readAndProcessShapes('./testdata/first20/first20.shp', processShapes) as GeoJSON.FeatureCollection;
+    const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+    FU.readAndProcessShapes('./testdata/first20/first20.shp', processShapes, featureEntries) as GeoJSON.FeatureCollection;
 
     break;
   }
   // $ utils/main.js read-geojson
   case 'read-geojson': {
+    const nothing: T.FeaturesEntry[] = [];
     const shapes = FU.readJSON('./testdata/sample.geojson') as GeoJSON.FeatureCollection;
-    processShapes(shapes);
+    processShapes(shapes, nothing);
 
     break;
   }
@@ -76,7 +80,7 @@ switch (command) {
 
 // HELPERS
 
-function processShapes(shapes: GeoJSON.FeatureCollection): void
+function processShapes(shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]): void
 {
   console.log(`Processing ${shapes.features.length} shapes:`);
   for (let i = 0; i < shapes.features.length; i++)

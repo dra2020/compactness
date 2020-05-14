@@ -10,8 +10,7 @@ export const enum Feature
   Bbox,
   Polsby,
   Hull,
-  Schwartzberg,
-  Score
+  Schwartzberg
 }
 
 export type ShapeFeatures = FeatureSet[];
@@ -23,16 +22,7 @@ export type FeatureSet = [
   number,  // bbox
   number,  // polsby
   number,  // hull
-  number,  // schwartzberg
-  number?  // score
+  number   // schwartzberg
 ];
 
-// export type FeatureSet = {
-//   sym_x: number;
-//   sym_y: number
-//   reock: number;
-//   bbox: number;
-//   polsby: number;
-//   hull: number;
-//   schwartzberg: number;
-// }
+export type FeaturesEntry = number[];

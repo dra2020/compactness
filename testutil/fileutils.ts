@@ -26,18 +26,17 @@ function fileToPath(file: string): string
   return fullPath;
 }
 
-export function readFeatureSets(file: string): T.ShapeFeatures
+export function readFeatureSets(file: string): T.FeaturesEntry[]
 {
-  let shapes: T.ShapeFeatures = []; 
+  let featureEntries: T.FeaturesEntry[] = []; 
 
   const fullPath: string = fileToPath(file);
   const csvArray: any = readCSV(fullPath);
 
   for (let dictRow of csvArray)
   {
-    // const n: number = Number(dictRow['n']);
-
-    const featureSet: T.FeatureSet = [
+    const featuresEntry: T.FeaturesEntry = [
+      Number(dictRow['n']),
       Number(dictRow['sym_x']),
       Number(dictRow['sym_y']),
       Number(dictRow['reock']),
@@ -48,10 +47,10 @@ export function readFeatureSets(file: string): T.ShapeFeatures
       Number(dictRow['score'])
     ];
 
-    shapes.push(featureSet);
+    featureEntries.push(featuresEntry);
   }
 
-  return shapes;
+  return featureEntries;
 }
 
 
@@ -59,7 +58,7 @@ export function readFeatureSets(file: string): T.ShapeFeatures
 
 var shp = require('shapefile');
 
-export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.FeatureCollection) => void): GeoJSON.FeatureCollection
+export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]) => void, featureEntries: T.FeaturesEntry[]): GeoJSON.FeatureCollection
 {
   const fullPath: string = fileToPath(file);
   const buf = fs.readFileSync(fullPath);
@@ -73,7 +72,7 @@ export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.Fe
       .then(function readOne(result: any) {
         if (result.done)
         {
-          callback(shapes);
+          callback(shapes, featureEntries);
           return;
         };
         shapes.features.push(result.value);
