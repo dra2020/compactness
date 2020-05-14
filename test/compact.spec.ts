@@ -62,7 +62,7 @@ export function testFeatureizeShapes(shapes: GeoJSON.FeatureCollection, featureE
 }
 
 
-// TODO - ALTERNATIVE
+/* TODO - ALTERNATIVE: I want to read the shapefile from disk and then process it.
 
 describe('Exploring an alternative approach', () => {
   test('Using async/await', async () =>
@@ -71,7 +71,7 @@ describe('Exploring an alternative approach', () => {
     const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
 
     console.log('Processing shapes:');
-    for (let i = 0; i < 1 /* TODO - shapes.features.length */; i++)
+    for (let i = 0; i < shapes.features.length; i++)
     {
       const n = featureEntries[i][0];
       const correct = featureEntries[i].slice(1, -1) as T.FeatureSet;
@@ -92,3 +92,4 @@ describe('Exploring an alternative approach', () => {
     }
   });
 });
+*/

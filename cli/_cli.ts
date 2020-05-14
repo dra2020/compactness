@@ -54,6 +54,12 @@ switch (command) {
 
     break;
   }
+  // $ utils/main.js straight-read
+  case 'straight-read': {
+    const shapesGeoJSON = FU.readShapefile('./testdata/first20/first20.shp');
+
+    break;
+  }
   // $ utils/main.js read-geojson
   case 'read-geojson': {
     const nothing: T.FeaturesEntry[] = [];

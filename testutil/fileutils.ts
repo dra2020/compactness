@@ -58,6 +58,9 @@ export function readFeatureSets(file: string): T.FeaturesEntry[]
 // READ SAMPLE SHAPES
 
 var shp = require('shapefile');
+// https://www.npmjs.com/package/shapefile
+// https://digital-geography.com/gis-with-javascript-tutorial-part-1/
+
 
 // TODO - It's not clear to me that I have this idiom exactly right.
 export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]) => void, featureEntries: T.FeaturesEntry[]): GeoJSON.FeatureCollection
@@ -85,7 +88,38 @@ export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.Fe
   return shapes;
 }
 
-// TODO - I want to be able to read a whole shapefile and then process the shapes.
+// TODO - Take 4
+export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
+{
+  const fullPath: string = fileToPath(file);
+  const buf = fs.readFileSync(fullPath);
+
+  return await shp.open(buf)
+    .then((source: any) => source.read()
+      .then(function (result: any) {
+        console.log(result);
+      }))
+    .catch((err: any) => console.error(err.stack));
+}
+
+/* TODO - Take 2
+export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
+{
+  const fullPath: string = fileToPath(file);
+  const buf = fs.readFileSync(fullPath);
+
+  return await shp.open(buf)
+    .then((source: any) => source.read()
+      .then(function (result: any) {
+        return result;
+          // console.log("GeoJSON:");
+          // console.log(result);
+      }))
+    .catch((err: any) => console.error(err.stack));
+}
+*/
+
+/* TODO - Take 3
 export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
 {
   const fullPath: string = fileToPath(file);
@@ -111,6 +145,7 @@ export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollec
 
   return shapes;
 }
+*/
 
 
 // HELPERS TO LOAD SAMPLE DATA FROM DISK
