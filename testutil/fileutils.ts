@@ -61,6 +61,13 @@ var shp = require('shapefile');
 // https://www.npmjs.com/package/shapefile
 // https://digital-geography.com/gis-with-javascript-tutorial-part-1/
 
+export function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
+{
+  const fullPath: string = fileToPath(file);
+  const buf = fs.readFileSync(fullPath);
+
+  return shp.read(buf).catch((err: any) => console.error(err.stack));
+}
 
 /* TODO - DELETE: First crack
 export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]) => void, featureEntries: T.FeaturesEntry[]): GeoJSON.FeatureCollection
@@ -88,14 +95,6 @@ export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.Fe
   return shapes;
 }
 */
-
-export function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
-{
-  const fullPath: string = fileToPath(file);
-  const buf = fs.readFileSync(fullPath);
-
-  return shp.read(buf).catch((err: any) => console.error(err.stack));
-}
 
 
 // HELPERS TO LOAD SAMPLE DATA FROM DISK
