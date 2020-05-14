@@ -9,6 +9,7 @@ import * as GeoJSON from 'geojson';
 
 import * as T from '../src/types'
 
+
 // READ SAMPLE FEATURE-IZED SHAPES
 
 function fileToPath(file: string): string
@@ -58,6 +59,7 @@ export function readFeatureSets(file: string): T.FeaturesEntry[]
 
 var shp = require('shapefile');
 
+// TODO - It's not clear to me that I have this idiom exactly right.
 export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]) => void, featureEntries: T.FeaturesEntry[]): GeoJSON.FeatureCollection
 {
   const fullPath: string = fileToPath(file);
@@ -78,6 +80,33 @@ export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.Fe
         shapes.features.push(result.value);
         return source.read().then(readOne);
       }))
+    .catch((err: any) => console.error(err.stack));
+
+  return shapes;
+}
+
+// TODO - I want to be able to read a whole shapefile and then process the shapes.
+export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
+{
+  const fullPath: string = fileToPath(file);
+  const buf = fs.readFileSync(fullPath);
+
+  let shapes = {} as GeoJSON.FeatureCollection;
+  shapes.type = "FeatureCollection";
+  shapes.features = [] as GeoJSON.Feature[];
+  
+  shp.open(buf)
+    .then((source: any) => source.read()
+      .then(function readOne(result: any) 
+        {
+          if (result.done)
+          {
+            return;
+          };
+          shapes.features.push(result.value);
+          return source.read().then(readOne);
+        }
+      ))
     .catch((err: any) => console.error(err.stack));
 
   return shapes;
