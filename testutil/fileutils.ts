@@ -88,7 +88,7 @@ export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.Fe
   return shapes;
 }
 
-// TODO - Take 4
+/* TODO - Take 4
 export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
 {
   const fullPath: string = fileToPath(file);
@@ -101,8 +101,9 @@ export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollec
       }))
     .catch((err: any) => console.error(err.stack));
 }
+*/
 
-/* TODO - Take 2
+// TODO - Take 2
 export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
 {
   const fullPath: string = fileToPath(file);
@@ -117,7 +118,6 @@ export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollec
       }))
     .catch((err: any) => console.error(err.stack));
 }
-*/
 
 /* TODO - Take 3
 export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
