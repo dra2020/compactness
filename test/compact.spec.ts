@@ -31,6 +31,38 @@ describe('Score reference feature sets', () => {
 
 // TEST FEATURE-IZING SHAPES
 
+describe('Exploring an alternative approach', () => {
+  test('Using async/await', async () =>
+  {
+    const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+    const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
+
+    console.log('Processing shapes:');
+    for (let i = 0; i < 1 /* shapes.features.length */; i++)
+    {
+      const n = featureEntries[i][0];
+      const correct = featureEntries[i].slice(1, -1) as T.FeatureSet;
+      const score = featureEntries[i][-1];
+
+      console.log(i, shapes.features[i]);
+  
+      const features: T.FeatureSet = featureizeShape(shapes.features[i]);
+  
+      // Compare feature values
+      expect(features[T.Feature.Reock]).toEqual(correct[T.Feature.Reock]);
+      expect(features[T.Feature.Polsby]).toEqual(correct[T.Feature.Polsby]);
+      expect(features[T.Feature.Hull]).toEqual(correct[T.Feature.Hull]);
+      expect(features[T.Feature.Schwartzberg]).toEqual(correct[T.Feature.Schwartzberg]);
+
+      // expect(true).toBe(true);
+  
+      // More ...
+    }
+  });
+});
+
+
+/* TODO - DELETE: First crack
 describe('Feature-ize reference shapes', () => {
   test('Loop', () =>
   {
@@ -41,7 +73,7 @@ describe('Feature-ize reference shapes', () => {
 
 export function testFeatureizeShapes(shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]): void
 {
-  for (let i = 0; i < 1 /* TODO - shapes.features.length */; i++)
+  for (let i = 0; i < shapes.features.length ; i++)
   {
     const n = featureEntries[i][0];
     const correct = featureEntries[i].slice(1, -1) as T.FeatureSet;
@@ -60,36 +92,6 @@ export function testFeatureizeShapes(shapes: GeoJSON.FeatureCollection, featureE
     expect(true).toBe(true);
   }
 }
+*/
 
-
-// TODO - ALTERNATIVE: I want to read the shapefile from disk and then process it.
-
-describe('Exploring an alternative approach', () => {
-  test('Using async/await', async () =>
-  {
-    const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
-    const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
-
-    console.log('Processing shapes:');
-    for (let i = 0; i < shapes.features.length; i++)
-    {
-      const n = featureEntries[i][0];
-      const correct = featureEntries[i].slice(1, -1) as T.FeatureSet;
-      const score = featureEntries[i][-1];
-
-      console.log(i, shapes.features[i]);
-  
-      const features: T.FeatureSet = featureizeShape(shapes.features[i]);
-  
-      // TODO - Compare feature values
-      // expect(features[T.Feature.Reock]).toEqual(correct[T.Feature.Reock]);
-      // expect(features[T.Feature.Polsby]).toEqual(correct[T.Feature.Polsby]);
-      // expect(features[T.Feature.Hull]).toEqual(correct[T.Feature.Hull]);
-      // expect(features[T.Feature.Schwartzberg]).toEqual(correct[T.Feature.Schwartzberg]);
-      expect(true).toBe(true);
-  
-      // More ...
-    }
-  });
-});
 

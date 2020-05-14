@@ -62,7 +62,7 @@ var shp = require('shapefile');
 // https://digital-geography.com/gis-with-javascript-tutorial-part-1/
 
 
-// TODO - It's not clear to me that I have this idiom exactly right.
+/* TODO - DELETE: First crack
 export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]) => void, featureEntries: T.FeaturesEntry[]): GeoJSON.FeatureCollection
 {
   const fullPath: string = fileToPath(file);
@@ -87,65 +87,15 @@ export function readAndProcessShapes(file: string, callback: (shapes: GeoJSON.Fe
 
   return shapes;
 }
-
-/* TODO - Take 4
-export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
-{
-  const fullPath: string = fileToPath(file);
-  const buf = fs.readFileSync(fullPath);
-
-  return await shp.open(buf)
-    .then((source: any) => source.read()
-      .then(function (result: any) {
-        console.log(result);
-      }))
-    .catch((err: any) => console.error(err.stack));
-}
 */
 
-// TODO - Take 2
-export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
+export function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
 {
   const fullPath: string = fileToPath(file);
   const buf = fs.readFileSync(fullPath);
 
-  return await shp.open(buf)
-    .then((source: any) => source.read()
-      .then(function (result: any) {
-        return result;
-          // console.log("GeoJSON:");
-          // console.log(result);
-      }))
-    .catch((err: any) => console.error(err.stack));
+  return shp.read(buf).catch((err: any) => console.error(err.stack));
 }
-
-/* TODO - Take 3
-export async function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
-{
-  const fullPath: string = fileToPath(file);
-  const buf = fs.readFileSync(fullPath);
-
-  let shapes = {} as GeoJSON.FeatureCollection;
-  shapes.type = "FeatureCollection";
-  shapes.features = [] as GeoJSON.Feature[];
-  
-  shp.open(buf)
-    .then((source: any) => source.read()
-      .then(function readOne(result: any) 
-        {
-          if (result.done)
-          {
-            return;
-          };
-          shapes.features.push(result.value);
-          return source.read().then(readOne);
-        }
-      ))
-    .catch((err: any) => console.error(err.stack));
-
-  return shapes;
-}
-*/
 
 
 // HELPERS TO LOAD SAMPLE DATA FROM DISK

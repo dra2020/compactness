@@ -47,17 +47,24 @@ switch (command) {
 
     break;
   }
+  // TODO - DELETE: First crack
   // $ utils/main.js read-shp
-  case 'read-shp': {
-    const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
-    FU.readAndProcessShapes('./testdata/first20/first20.shp', processShapes, featureEntries) as GeoJSON.FeatureCollection;
+  // case 'read-shp': {
+  //   const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+  //   FU.readAndProcessShapes('./testdata/first20/first20.shp', processShapes, featureEntries) as GeoJSON.FeatureCollection;
 
-    break;
-  }
+  //   break;
+  // }
   // $ utils/main.js straight-read
   case 'straight-read': {
-    const shapesGeoJSON = FU.readShapefile('./testdata/first20/first20.shp');
-
+    // const shapesGeoJSON = FU.readShapefile('./testdata/first20/first20.shp');
+    async function doit()
+    {
+      const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
+      console.log('After reading shapes ...');
+    }
+    doit();
+  
     break;
   }
   // $ utils/main.js read-geojson
