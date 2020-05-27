@@ -68,9 +68,16 @@ switch (command) {
       if (input)
       {
         const shapes: GeoJSON.FeatureCollection = await FU.readShapefile(input);
-        // const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
+        console.log(`Processing ${shapes.features.length} shapes in ${input}.`);
+        console.log('');
+        console.log('#', 'sym_x', 'sym_y', 'reock', 'bbox', 'polsby', 'hull', 'schwartzberg');
 
-        console.log('TODO: Score shapes in shapefile:', input as string);
+        for (let i = 0; i < shapes.features.length; i++)
+        {
+          // console.log('Processing shape:', i + 1, '=', shapes.features[i]);
+          const features = featureizeShape(shapes.features[i]);
+          console.log(i + 1, features[T.Feature.Reock]);  // TODO
+        }
       }
     }
     doit();
