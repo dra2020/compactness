@@ -31,7 +31,7 @@ describe('Score reference feature sets', () => {
 
 // TEST FEATURE-IZING SHAPES 
 
-describe('Exploring an alternative approach', () => {
+describe('Feature-ize sample shapes', () => {
   test('Using async/await', async () =>
   {
     const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
@@ -60,38 +60,4 @@ describe('Exploring an alternative approach', () => {
     }
   });
 });
-
-
-/* TODO - DELETE: First crack
-describe('Feature-ize reference shapes', () => {
-  test('Loop', () =>
-  {
-    const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
-    FU.readAndProcessShapes('./testdata/first20/first20.shp', testFeatureizeShapes, featureEntries);
-  });
-});
-
-export function testFeatureizeShapes(shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]): void
-{
-  for (let i = 0; i < shapes.features.length ; i++)
-  {
-    const n = featureEntries[i][0];
-    const correct = featureEntries[i].slice(1, -1) as T.FeatureSet;
-    const score = featureEntries[i][-1];
-
-    const features: T.FeatureSet = featureizeShape(shapes.features[i]);
-
-    // TODO - Compare feature values: These don't match yet ...
-    // expect(features[T.Feature.Reock]).toEqual(correct[T.Feature.Reock]);
-    // expect(features[T.Feature.Polsby]).toEqual(correct[T.Feature.Polsby]);
-    // expect(features[T.Feature.Hull]).toEqual(correct[T.Feature.Hull]);
-    // expect(features[T.Feature.Schwartzberg]).toEqual(correct[T.Feature.Schwartzberg]);
-
-    // More ...
-
-    expect(true).toBe(true);
-  }
-}
-*/
-
 

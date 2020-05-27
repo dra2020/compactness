@@ -15,17 +15,21 @@ import { scoreShape, featureizeShape } from '../src/compact';
 
 let argv = yargs
   .usage('Usage: $0 command [options]')
-  .example('$0 score -p foo.txt -d bar.csv', 'Score a plan.')  // TODO
+  .example('$0 score -i foo.shp', 'Score a set of shapes.')
   .demandCommand(1, 'You must specify a command to execute.')
-  .command('score', 'Score a plan.')  // TODO
-  // TODO
+  .command('score', 'Score a set of shapes.')
   .option('verbose', {
     alias: 'v',
     describe: 'Specify whether code should log to STDOUT.',
     type: 'boolean',
     default: false
   })
-  .demandOption([],
+  .option('input', {
+    alias: 'i',
+    describe: 'The name of the shapefile or geojson',
+    type: 'string'
+  })
+  .demandOption([],  // None, so naked 'verify' command works
     'Please specify all the args.')
   .help()
   .argv;
@@ -35,49 +39,63 @@ let argv = yargs
 
 let command = argv._[0]
 
+const input = argv.input;
+
 
 // EXECUTE THE COMMAND
 
 // Run from the project directory (sample commands inline below).
 switch (command) {
-  // TODO
-  // $ utils/main.js score <shapefile>
   case 'score': {
-    scoreShape();
+    // TODO
+    // $ utils/main.js score -i <shapefile>
+    // $ utils/main.js score -i './testdata/first20/first20.shp'
+
+    // scoreShape();
+    if (input)
+    {
+      console.log('TODO: Score shapes in file:', input as string);
+    }
 
     break;
   }
-  // TODO - DELETE: First crack
-  // $ utils/main.js read-shp
-  // case 'read-shp': {
-  //   const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
-  //   FU.readAndProcessShapes('./testdata/first20/first20.shp', processShapes, featureEntries) as GeoJSON.FeatureCollection;
-
-  //   break;
-  // }
-  // $ utils/main.js straight-read
-  case 'straight-read': {
-    // const shapesGeoJSON = FU.readShapefile('./testdata/first20/first20.shp');
+  case 'score-shp': {
+    // TODO
+    // $ utils/main.js score-shp -i <shapefile>
+    // $ utils/main.js score-shp -i './testdata/first20/first20.shp'
     async function doit()
     {
-      const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
-      console.log('After reading shapes ...');
+      if (input)
+      {
+        const shapes: GeoJSON.FeatureCollection = await FU.readShapefile(input);
+        // const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
+
+        console.log('TODO: Score shapes in shapefile:', input as string);
+      }
     }
     doit();
   
     break;
   }
-  // $ utils/main.js read-geojson
-  case 'read-geojson': {
-    const nothing: T.FeaturesEntry[] = [];
-    const shapes = FU.readJSON('./testdata/sample.geojson') as GeoJSON.FeatureCollection;
-    processShapes(shapes, nothing);
+  case 'score-geojson': {
+    // $ utils/main.js score-geojson -i <geojson>
+    // $ utils/main.js score-geojson -i './testdata/sample.geojson'
+    if (input)
+    {
+      const shapes = FU.readJSON(input) as GeoJSON.FeatureCollection;
+      // const nothing: T.FeaturesEntry[] = [];
+      // const shapes = FU.readJSON('./testdata/sample.geojson') as GeoJSON.FeatureCollection;
+
+      // processShapes(shapes, nothing);
+
+      console.log('TODO: Score shapes in geojson:', input as string);
+    }
 
     break;
   }
-  // TODO
-  // $ utils/main.js verify
   case 'verify': {
+    // TODO
+    // $ utils/main.js verify
     console.log('Verify scoring features & feature-izing shapes');
 
     break;
