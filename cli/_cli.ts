@@ -60,7 +60,6 @@ switch (command) {
     break;
   }
   case 'score-shp': {
-    // TODO
     // $ utils/main.js score-shp -i <shapefile>
     // $ utils/main.js score-shp -i './testdata/first20/first20.shp'
     async function doit()
@@ -76,7 +75,19 @@ switch (command) {
         {
           // console.log('Processing shape:', i + 1, '=', shapes.features[i]);
           const features = featureizeShape(shapes.features[i]);
-          console.log(i + 1, features[T.Feature.Reock]);  // TODO
+          console.log("%d, %s, %s, %s, %s, %s, %s, %s",
+            i + 1,
+            // TODO - Add x_sym
+            'N/A',
+            // TODO - Add y_sym
+            'N/A',
+            features[T.Feature.Reock].toFixed(4),
+            // TODO - Add bbox
+            'N/A',
+            features[T.Feature.Polsby].toFixed(4),
+            features[T.Feature.Hull].toFixed(4),
+            features[T.Feature.Schwartzberg].toFixed(4)
+          );
         }
       }
     }
