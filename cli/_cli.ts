@@ -67,28 +67,7 @@ switch (command) {
       if (input)
       {
         const shapes: GeoJSON.FeatureCollection = await FU.readShapefile(input);
-        console.log(`Processing ${shapes.features.length} shapes in ${input}.`);
-        console.log('');
-        console.log('#', 'sym_x', 'sym_y', 'reock', 'bbox', 'polsby', 'hull', 'schwartzberg');
-
-        for (let i = 0; i < shapes.features.length; i++)
-        {
-          // console.log('Processing shape:', i + 1, '=', shapes.features[i]);
-          const features = featureizeShape(shapes.features[i]);
-          console.log("%d, %s, %s, %s, %s, %s, %s, %s",
-            i + 1,
-            // TODO - Add x_sym
-            'N/A',
-            // TODO - Add y_sym
-            'N/A',
-            features[T.Feature.Reock].toFixed(4),
-            // TODO - Add bbox
-            'N/A',
-            features[T.Feature.Polsby].toFixed(4),
-            features[T.Feature.Hull].toFixed(4),
-            features[T.Feature.Schwartzberg].toFixed(4)
-          );
-        }
+        reportFeatures(shapes);
       }
     }
     doit();
@@ -98,16 +77,15 @@ switch (command) {
   case 'score-geojson': {
     // $ utils/main.js score-geojson -i <geojson>
     // $ utils/main.js score-geojson -i './testdata/sample.geojson'
-    if (input)
+    async function doit()
     {
-      const shapes = FU.readJSON(input) as GeoJSON.FeatureCollection;
-      // const nothing: T.FeaturesEntry[] = [];
-      // const shapes = FU.readJSON('./testdata/sample.geojson') as GeoJSON.FeatureCollection;
-
-      // processShapes(shapes, nothing);
-
-      console.log('TODO: Score shapes in geojson:', input as string);
+      if (input)
+      {
+        const shapes = FU.readJSON(input) as GeoJSON.FeatureCollection;
+        reportFeatures(shapes);
+      }
     }
+    doit();
 
     break;
   }
@@ -127,12 +105,40 @@ switch (command) {
 
 // HELPERS
 
-function processShapes(shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]): void
+function reportFeatures(shapes: GeoJSON.FeatureCollection): void 
 {
-  console.log(`Processing ${shapes.features.length} shapes:`);
+  // console.log(`Processing ${shapes.features.length} shapes in ${input}.`);
+  // console.log('');
+  console.log('#', 'sym_x', 'sym_y', 'reock', 'bbox', 'polsby', 'hull', 'schwartzberg');
+
   for (let i = 0; i < shapes.features.length; i++)
   {
-    console.log('Processing shape:', i + 1, '=', shapes.features[i]);
-    featureizeShape(shapes.features[i]);
+    // console.log('Processing shape:', i + 1, '=', shapes.features[i]);
+    const features = featureizeShape(shapes.features[i]);
+    console.log("%d, %s, %s, %s, %s, %s, %s, %s",
+      i + 1,
+      // TODO - Add x_sym
+      'N/A',
+      // TODO - Add y_sym
+      'N/A',
+      features[T.Feature.Reock].toFixed(4),
+      // TODO - Add bbox
+      'N/A',
+      features[T.Feature.Polsby].toFixed(4),
+      features[T.Feature.Hull].toFixed(4),
+      features[T.Feature.Schwartzberg].toFixed(4)
+    );
   }
 }
+
+// function processShapes(shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]): void
+// {
+//   console.log(`Processing ${shapes.features.length} shapes:`);
+//   for (let i = 0; i < shapes.features.length; i++)
+//   {
+//     console.log('Processing shape:', i + 1, '=', shapes.features[i]);
+//     featureizeShape(shapes.features[i]);
+//   }
+// }
+
+
