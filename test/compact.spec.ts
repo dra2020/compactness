@@ -48,15 +48,13 @@ describe('Feature-ize sample shapes', () => {
   
       const features: T.FeatureSet = featureizeShape(shapes.features[i]);
   
-      // Compare feature values
+      // Compare computed feature values to the correct answers
       expect(features[T.Feature.Reock]).toEqual(correct[T.Feature.Reock]);
       expect(features[T.Feature.Polsby]).toEqual(correct[T.Feature.Polsby]);
       expect(features[T.Feature.Hull]).toEqual(correct[T.Feature.Hull]);
       expect(features[T.Feature.Schwartzberg]).toEqual(correct[T.Feature.Schwartzberg]);
-
-      // expect(true).toBe(true);
   
-      // More ...
+      // TODO - Add the other features
     }
   });
 });

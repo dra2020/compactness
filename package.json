@@ -60,7 +60,7 @@
     "yargs": "^12.0.5"
   },
   "dependencies": {
-    "@dra2020/poly": "^1.0.47",
+    "@dra2020/poly": "^1.1.7",
     "geojson": "^0.5.0",
     "mathjs": "^6.6.4"
   }
