@@ -51,11 +51,11 @@ describe('Feature-ize sample shapes', () => {
       // Compare computed feature values to the correct answers
       expect(features[T.Feature.Reock]).toBeCloseTo(correct[T.Feature.Reock]);
       expect(features[T.Feature.Polsby]).toBeCloseTo(correct[T.Feature.Polsby]);
-      // TOOD
-      // expect(features[T.Feature.Hull]).toEqual(correct[T.Feature.Hull]);
-      // expect(features[T.Feature.Schwartzberg]).toEqual(correct[T.Feature.Schwartzberg]);
-  
+
       // TODO - Add the other features
+      expect(features[T.Feature.Hull]).toBeCloseTo(correct[T.Feature.Hull]);
+      // expect(features[T.Feature.Schwartzberg]).toBeCloseTo(correct[T.Feature.Schwartzberg]);
+  
     }
   });
 });
