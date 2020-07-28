@@ -19,34 +19,6 @@ export function scoreShape(): number
 }
 
 
-// FEATURE-IZE A SHAPE
-// TODO
-export function featureizeShape(poly: GeoJSON.Feature): Poly.CompactnessFeatures
-{
-  const features: Poly.CompactnessFeatures = Poly.featureizePoly(poly);
-
-  // DELETE
-  // // Geodesic poly attributes
-  // // const area: number = Poly.polyAreaFlat(poly);
-  // // const perimeter: number = Poly.polyPerimeterFlat(poly);
-  // // const diameter: number = Poly.polyDiameterFlat(poly);
-
-  // const features: T.FeatureSet = [
-  //   0,  // sym_x
-  //   0,  // sym_y
-  //   result.reock,                          // Geodesic
-  //   // calcReock(area, diameter),          // Cartesian
-  //   0,  // bbox
-  //   result.polsby_popper,                  // Geodesic
-  //   // calcPolsbyPopper(area, perimeter),  // Cartesian
-  //   result.convex_hull,
-  //   result.schwartzberg
-  // ];
-
-  return features;
-}
-
-
 // SCORE THE FEATURES FROM A FEATURE-IZED SHAPE
 
 const { multiply } = require('mathjs');

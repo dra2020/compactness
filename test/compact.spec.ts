@@ -4,7 +4,7 @@ import * as Poly from '@dra2020/poly';
 
 import * as T from '../src/types'
 
-import { scoreFeatureSet, featureizeShape } from '../src/compact';
+import { scoreFeatureSet } from '../src/compact';
 
 
 // TEST SCORING SETS OF SHAPE FEATURES
@@ -46,8 +46,9 @@ describe('Feature-ize sample shapes', () => {
       const score = featureEntries[i][-1];
 
       // console.log(i, shapes.features[i]);
-  
-      const features: Poly.CompactnessFeatures = featureizeShape(shapes.features[i]);
+
+      const features: Poly.CompactnessFeatures = Poly.featureizePoly(shapes.features[i]);
+      // const features: Poly.CompactnessFeatures = featureizeShape(shapes.features[i]);
   
       // Compare computed feature values to the correct answers
       expect(features[Poly.CompactnessFeature.Reock]).toBeCloseTo(correct[Poly.CompactnessFeature.Reock]);
