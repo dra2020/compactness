@@ -21,41 +21,29 @@ export function scoreShape(): number
 
 // FEATURE-IZE A SHAPE
 // TODO
-export function featureizeShape(poly: GeoJSON.Feature): T.FeatureSet
+export function featureizeShape(poly: GeoJSON.Feature): Poly.CompactnessFeatures
 {
-  // Calc Reock & Polsby-Popper features
-  const result = Poly.polyCompactness(poly);
+  const features: Poly.CompactnessFeatures = Poly.featureizePoly(poly);
 
-  // Geodesic poly attributes
-  // const area: number = Poly.polyAreaFlat(poly);
-  // const perimeter: number = Poly.polyPerimeterFlat(poly);
-  // const diameter: number = Poly.polyDiameterFlat(poly);
+  // DELETE
+  // // Geodesic poly attributes
+  // // const area: number = Poly.polyAreaFlat(poly);
+  // // const perimeter: number = Poly.polyPerimeterFlat(poly);
+  // // const diameter: number = Poly.polyDiameterFlat(poly);
 
-  const features: T.FeatureSet = [
-    0,  // sym_x
-    0,  // sym_y
-    result.reock,                          // Geodesic
-    // calcReock(area, diameter),          // Cartesian
-    0,  // bbox
-    result.polsby_popper,                  // Geodesic
-    // calcPolsbyPopper(area, perimeter),  // Cartesian
-    result.convex_hull,
-    result.schwartzberg
-  ];
+  // const features: T.FeatureSet = [
+  //   0,  // sym_x
+  //   0,  // sym_y
+  //   result.reock,                          // Geodesic
+  //   // calcReock(area, diameter),          // Cartesian
+  //   0,  // bbox
+  //   result.polsby_popper,                  // Geodesic
+  //   // calcPolsbyPopper(area, perimeter),  // Cartesian
+  //   result.convex_hull,
+  //   result.schwartzberg
+  // ];
 
   return features;
-}
-
-// Cloned from dra-score/compact.ts
-function calcReock(area: number, diameter: number): number
-{
-  return (4 * area) / (Math.PI * diameter ** 2);
-}
-
-// Cloned from dra-score/compact.ts
-function calcPolsbyPopper(area: number, perimeter: number): number
-{
-  return (4 * Math.PI) * (area / perimeter ** 2);
 }
 
 
@@ -63,7 +51,7 @@ function calcPolsbyPopper(area: number, perimeter: number): number
 
 const { multiply } = require('mathjs');
 
-export function scoreFeatureSet(features: T.FeatureSet): number
+export function scoreFeatureSet(features: Poly.CompactnessFeatures): number
 {
   const model: number[] = [
     0.317566717356693,  // sym_x

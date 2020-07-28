@@ -4,10 +4,9 @@
 
 import yargs from 'yargs';
 import * as GeoJSON from 'geojson';
-
+import * as Poly from '@dra2020/poly';
 import * as FU from '../testutil/fileutils';
 
-import * as T from '../src/types'
 import { scoreShape, featureizeShape } from '../src/compact';
 
 
@@ -121,16 +120,17 @@ function reportFeatures(shapes: GeoJSON.FeatureCollection): void
       'N/A',
       // TODO - Add y_sym
       'N/A',
-      features[T.Feature.Reock].toFixed(4),
+      features[Poly.CompactnessFeature.Reock].toFixed(4),
       // TODO - Add bbox
       'N/A',
-      features[T.Feature.Polsby].toFixed(4),
-      features[T.Feature.Hull].toFixed(4),
-      features[T.Feature.Schwartzberg].toFixed(4)
+      features[Poly.CompactnessFeature.Polsby].toFixed(4),
+      features[Poly.CompactnessFeature.Hull].toFixed(4),
+      features[Poly.CompactnessFeature.Schwartzberg].toFixed(4)
     );
   }
 }
 
+// DELETE
 // function processShapes(shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]): void
 // {
 //   console.log(`Processing ${shapes.features.length} shapes:`);
