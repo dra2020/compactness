@@ -1,5 +1,5 @@
 {
-  "name": "@dra2020/kiwysi-compactness",
+  "name": "@dra2020/compactness",
   "version": "0.1.0",
   "description": "Know it when you see it compactness",
   "main": "dist/main.js",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dra2020/kiwysi-compactness.git"
+    "url": "git+https://github.com/dra2020/compactness.git"
   },
   "keywords": [
     "Typescript"
@@ -25,7 +25,7 @@
   "author": "Alec Ramsay",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dra2020/kiwysi-compactness/issues"
+    "url": "https://github.com/dra2020/compactness/issues"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -37,7 +37,7 @@
       "shared"
     ]
   },
-  "homepage": "https://github.com/dra2020/kiwysi-compactness#readme",
+  "homepage": "https://github.com/dra2020/compactness#readme",
   "devDependencies": {
     "@types/geojson": "^7946.0.7",
     "@types/node": "10.12.23",

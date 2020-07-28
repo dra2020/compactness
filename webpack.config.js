@@ -15,10 +15,10 @@ var libConfig = {
     target: 'node',
     mode: 'development',
     output: {
-        library: 'kiwysi-compactness',
+        library: 'compactness',
         libraryTarget: 'umd',
         path: path.resolve(__dirname, 'dist'),
-        filename: 'kiwysi-compactness.bundle.js'
+        filename: 'compactness.bundle.js'
     },
 
     // Enable source maps
