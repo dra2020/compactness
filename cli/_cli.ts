@@ -103,13 +103,13 @@ switch (command) {
       {
         const shapes = FU.readJSON(input) as GeoJSON.FeatureCollection;
 
-        const feature1 = shapes.features[0];
-        const feature2 = shapes.features[1];
+        let geom1: GeoJSON.Geometry = shapes.features[0].geometry;
+        let geom2: GeoJSON.Geometry = shapes.features[1].geometry;
     
         // console.log("feature1 =", feature1.geometry);
         // console.log("feature2 =", feature2.geometry);
     
-        combineTwoPolys(feature1.geometry, feature2.geometry);
+        // combineTwoPolys(geom1.coordinates, geom2.coordinates);
       }
     }
     doit();

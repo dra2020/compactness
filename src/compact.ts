@@ -50,14 +50,13 @@ type Point = [number, number];
 // Cloned from district-analytics/cli.ts
 export function combineTwoPolys(poly1: any, poly2: any): any
 {
-  const polys = [poly2];
+  // Terry's workaround
+  let _union: any = undefined;
+  let anyPC: any = PC;
+  if (anyPC.union) _union = anyPC.union;
+  if (anyPC.default.union) _union = anyPC.default.union;
+  if (_union === undefined) throw 'Unable to load union function from polygon-clipping';
 
-  // TODO - POLY: Fix 'poly' import, so I don't have to do this workaround.
-  // return PC.union(poly, ...polys);
-  let union: any = PC.union;
-  if (union === undefined)
-    union = PC.union; // union = PC.default.union;
-
-  return union(poly1, ...polys);
+  return _union(poly1, poly2);
 }
 
