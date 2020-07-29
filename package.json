@@ -62,6 +62,7 @@
   "dependencies": {
     "@dra2020/poly": "^1.1.7",
     "geojson": "^0.5.0",
-    "mathjs": "^6.6.4"
+    "mathjs": "^6.6.4",
+    "polygon-clipping": "^0.14.3"
   }
 }

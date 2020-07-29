@@ -7,7 +7,7 @@ import * as GeoJSON from 'geojson';
 import * as Poly from '@dra2020/poly';
 import * as FU from '../testutil/fileutils';
 
-import { scoreShape } from '../src/compact';
+import { scoreShape, combineTwoPolys } from '../src/compact';
 
 
 // BEGIN COMMAND LINE IMPLEMENTATION
@@ -92,6 +92,27 @@ switch (command) {
     // TODO
     // $ utils/main.js verify
     console.log('Verify scoring features & feature-izing shapes');
+
+    break;
+  }
+  case 'test': {
+    // $ utils/main.js test -i './testdata/sample.geojson'
+    async function doit()
+    {
+      if (input)
+      {
+        const shapes = FU.readJSON(input) as GeoJSON.FeatureCollection;
+
+        const feature1 = shapes.features[0];
+        const feature2 = shapes.features[1];
+    
+        // console.log("feature1 =", feature1.geometry);
+        // console.log("feature2 =", feature2.geometry);
+    
+        combineTwoPolys(feature1.geometry, feature2.geometry);
+      }
+    }
+    doit();
 
     break;
   }

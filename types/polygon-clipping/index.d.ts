@@ -1,0 +1,2 @@
+declare module 'polygon-clipping';
+
