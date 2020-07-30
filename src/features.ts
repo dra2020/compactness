@@ -7,7 +7,8 @@
 import * as PC from 'polygon-clipping';
 import * as Poly from '@dra2020/poly';
 
-type Point = [number, number];
+import * as T from './types';
+
 
 // The 6 "smart" features from Kaufman & King's "know it when you see it" (KIWYSI)
 // compactness model plus Schwartzberg:
@@ -57,7 +58,7 @@ export function calcXSymmetry(poly: any): number
 // X/Y symmetry helpers
 
 // TODO - Do I need to check for no points? If so, how?
-function meanCentroid(poly: any): Point
+function meanCentroid(poly: any): T.Point
 {
   let n: number = 0;
   let x_tot: number = 0;
@@ -73,14 +74,14 @@ function meanCentroid(poly: any): Point
     y_tot += b[iOffset+1];
   });
 
-  const centroid: Point = [x_tot / n, y_tot / n];
+  const centroid: T.Point = [x_tot / n, y_tot / n];
  
   return centroid;
 }
 
 function reflectOverX(x0: number): any
 {
-  return function (pt: Point): Point
+  return function (pt: T.Point): T.Point
   {
     const [x, y] = pt;
 
@@ -90,7 +91,7 @@ function reflectOverX(x0: number): any
 
 function reflectOverY(y0: number): any
 {
-  return function (pt: Point): Point
+  return function (pt: T.Point): T.Point
   {
     const [x, y] = pt;
 
@@ -98,20 +99,23 @@ function reflectOverY(y0: number): any
   }
 }
 
+// Combine two polygons using PC.union:
+// - https://www.npmjs.com/package/polygon-clipping
+// - https://en.wikipedia.org/wiki/GeoJSON#Geometries
+// - https://www.npmjs.com/package/geojson
+// - https://www.npmjs.com/package/shapefile
 
-/* TODO - Get 'polygon-clipping' integrated and this working.
-// Cloned from district-analytics/cli.ts
-function addToPoly(poly: any, polys: any[]): any
+export function combineTwoPolys(poly1: any, poly2: any): any
 {
-  // TODO - POLY: Fix 'poly' import, so I don't have to do this workaround.
-  // return PC.union(poly, ...polys);
-  let union: any = PC.union;
-  if (union === undefined)
-    union = PC.default.union;
+  // Terry's workaround
+  let _union: any = undefined;
+  let anyPC: any = PC;
+  if (anyPC.union) _union = anyPC.union;
+  if (anyPC.default.union) _union = anyPC.default.union;
+  if (_union === undefined) throw 'Unable to load union function from polygon-clipping';
 
-  return union(poly, ...polys);
+  return _union(poly1, poly2);
 }
-*/
 
 
 // FEATURE 3: REOCK -- Reock is the primary measure of the dispersion of district
@@ -206,28 +210,7 @@ export function calcSchwartzberg(area: number, perimeter: number): number
   return perimeter / ((2 * Math.PI) * Math.sqrt(area / Math.PI));
 }
 
-export const enum CompactnessFeature
-{
-  Sym_x,
-  Sym_y,
-  Reock,
-  Bbox,
-  Polsby,
-  Hull,
-  Schwartzberg
-}
-
-export type CompactnessFeatures = [
-  number,  // sym_x
-  number,  // sym_y
-  number,  // reock
-  number,  // bbox
-  number,  // polsby
-  number,  // hull
-  number   // schwartzberg
-];
-
-export function featureizePoly(poly: any, options?: Poly.PolyOptions): CompactnessFeatures
+export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.CompactnessFeatures
 {
   if (options === undefined) options = Poly.DefaultOptions;
 
@@ -239,7 +222,7 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): Compactne
 
   const hullArea: number = Poly.polyArea(Poly.polyConvexHull(pp));
 
-  const result: CompactnessFeatures = [
+  const result: T.CompactnessFeatures = [
     0,  // sym_x
     0,  // sym_y
     calcReock(area, diameter),
@@ -251,3 +234,4 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): Compactne
 
   return result;
 }
+

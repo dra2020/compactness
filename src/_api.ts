@@ -2,7 +2,7 @@
 // THE NODE PACKAGE API
 //
 
-import { scoreShape } from './compact'
+import { scoreShape } from './kiwysi'
 
 // TODO - Take an array, return an array
 export class Scorer

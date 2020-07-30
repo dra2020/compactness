@@ -4,11 +4,12 @@
 
 import yargs from 'yargs';
 import * as GeoJSON from 'geojson';
-import * as Poly from '@dra2020/poly';
 import * as FU from '../testutil/fileutils';
 
-import { scoreShape, combineTwoPolys } from '../src/compact';
-import { CompactnessFeatures, CompactnessFeature, featureizePoly } from '../src/compactness';
+import { scoreShape  } from '../src/kiwysi';
+import { featureizePoly, combineTwoPolys } from '../src/features';
+
+import * as T from '../src/types';
 
 
 // BEGIN COMMAND LINE IMPLEMENTATION
@@ -106,10 +107,7 @@ switch (command) {
 
         let geom1: any = shapes.features[0].geometry;
         let geom2: any = shapes.features[1].geometry;
-    
-        // console.log("feature1 =", feature1.geometry);
-        // console.log("feature2 =", feature2.geometry);
-    
+        
         combineTwoPolys(geom1.coordinates, geom2.coordinates);
       }
     }
@@ -134,21 +132,19 @@ function reportFeatures(shapes: GeoJSON.FeatureCollection): void
 
   for (let i = 0; i < shapes.features.length; i++)
   {
-    // console.log('Processing shape:', i + 1, '=', shapes.features[i]);
-    const features = featureizePoly(shapes.features[i]);
-    // const features = Poly.featureizePoly(shapes.features[i]);
+    const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
     console.log("%d, %s, %s, %s, %s, %s, %s, %s",
       i + 1,
       // TODO - Add x_sym
       'N/A',
       // TODO - Add y_sym
       'N/A',
-      features[CompactnessFeature.Reock].toFixed(4),
+      features[T.CompactnessFeature.Reock].toFixed(4),
       // TODO - Add bbox
       'N/A',
-      features[CompactnessFeature.Polsby].toFixed(4),
-      features[CompactnessFeature.Hull].toFixed(4),
-      features[CompactnessFeature.Schwartzberg].toFixed(4)
+      features[T.CompactnessFeature.Polsby].toFixed(4),
+      features[T.CompactnessFeature.Hull].toFixed(4),
+      features[T.CompactnessFeature.Schwartzberg].toFixed(4)
     );
   }
 }
