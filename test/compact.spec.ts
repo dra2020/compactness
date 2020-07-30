@@ -5,6 +5,7 @@ import * as Poly from '@dra2020/poly';
 import * as T from '../src/types'
 
 import { scoreFeatureSet, combineTwoPolys } from '../src/compact';
+import { featureizePoly } from '../src/compactness';
 
 
 // TEST SCORING SETS OF SHAPE FEATURES
@@ -47,8 +48,8 @@ describe('Feature-ize sample shapes', () => {
 
       // console.log(i, shapes.features[i]);
 
-      const features: Poly.CompactnessFeatures = Poly.featureizePoly(shapes.features[i]);
-      // const features: Poly.CompactnessFeatures = featureizeShape(shapes.features[i]);
+      // const features: Poly.CompactnessFeatures = Poly.featureizePoly(shapes.features[i]);
+      const features: Poly.CompactnessFeatures = featureizePoly(shapes.features[i]);
   
       // Compare computed feature values to the correct answers
       expect(features[Poly.CompactnessFeature.Reock]).toBeCloseTo(correct[Poly.CompactnessFeature.Reock]);
@@ -82,6 +83,6 @@ describe('Testing union ...', () => {
     // console.log("feature1 =", feature1.geometry);
     // console.log("feature2 =", feature2.geometry);
 
-    combineTwoPolys(feature1.geometry, feature2.geometry);
+    // combineTwoPolys(feature1.geometry, feature2.geometry);
   });
 });

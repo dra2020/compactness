@@ -8,6 +8,7 @@ import * as Poly from '@dra2020/poly';
 import * as FU from '../testutil/fileutils';
 
 import { scoreShape, combineTwoPolys } from '../src/compact';
+import { featureizePoly } from '../src/compactness';
 
 
 // BEGIN COMMAND LINE IMPLEMENTATION
@@ -134,7 +135,8 @@ function reportFeatures(shapes: GeoJSON.FeatureCollection): void
   for (let i = 0; i < shapes.features.length; i++)
   {
     // console.log('Processing shape:', i + 1, '=', shapes.features[i]);
-    const features = Poly.featureizePoly(shapes.features[i]);
+    const features = featureizePoly(shapes.features[i]);
+    // const features = Poly.featureizePoly(shapes.features[i]);
     console.log("%d, %s, %s, %s, %s, %s, %s, %s",
       i + 1,
       // TODO - Add x_sym
