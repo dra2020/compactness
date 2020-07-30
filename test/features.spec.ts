@@ -2,7 +2,7 @@ import * as FU from '../testutil/fileutils';
 import * as GeoJSON from 'geojson';
 
 import { scoreFeatureSet } from '../src/kiwysi';
-import { featureizePoly, combineTwoPolys } from '../src/features';
+import { featureizePoly } from '../src/features';
 
 import * as T from '../src/types'
 
@@ -38,16 +38,12 @@ describe('Feature-ize sample shapes', () => {
     const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
     const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
 
-    // console.log('Processing shapes:');
-    for (let i = 0; i < 1 /* shapes.features.length */; i++)
+    for (let i = 0; i < 1 /* TODO - shapes.features.length */; i++)
     {
       const n = featureEntries[i][0];
       const correct = featureEntries[i].slice(1, -1) as T.CompactnessFeatures;
       const score = featureEntries[i][-1];
 
-      // console.log(i, shapes.features[i]);
-
-      // const features: CompactnessFeatures = Poly.featureizePoly(shapes.features[i]);
       const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
   
       // Compare computed feature values to the correct answers
@@ -58,8 +54,9 @@ describe('Feature-ize sample shapes', () => {
       expect(features[T.CompactnessFeature.Hull]).toBeCloseTo(correct[T.CompactnessFeature.Hull], 1);
       expect(features[T.CompactnessFeature.Schwartzberg]).toBeCloseTo(correct[T.CompactnessFeature.Schwartzberg]);
 
-      // TODO - More ...
-      
+      expect(features[T.CompactnessFeature.Sym_x]).toBeCloseTo(correct[T.CompactnessFeature.Sym_x]);
+      expect(features[T.CompactnessFeature.Sym_y]).toBeCloseTo(correct[T.CompactnessFeature.Sym_y]);
+      // expect(features[T.CompactnessFeature.Bbox]).toBeCloseTo(correct[T.CompactnessFeature.Bbox]);
     }
   });
 });

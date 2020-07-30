@@ -25,6 +25,33 @@ import * as T from './types';
 // FEATURE 1: X-SYMMETRY - The same as Y-SYMMETRY except reflect the district D
 // around a horizontal line going through the centroid. See below.
 
+export function calcXSymmetry(poly: any): number
+{
+  let pp = Poly.polyNormalize(poly);
+
+  const [, cy] = meanCentroid(pp);
+  const sym_y = calcSymmetry(poly, reflectOverY(cy))
+
+  return sym_y;
+}
+
+// TODO - DELETE
+// export function calcXSymmetry(poly: any): number
+// {
+//   let pp = Poly.polyNormalize(poly);
+
+//   const [, cy ] = meanCentroid(pp);
+//   const reflectedPoints = Poly.polyTransform(pp, reflectOverY(cy));
+
+//   const polyPoints = poly.geometry.coordinates;
+//   const unionedPoly = combineTwoPolys(polyPoints, reflectedPoints);
+
+//   const area: number = Poly.polyArea(poly);
+//   const unionedArea: number = Poly.polyArea(unionedPoly);
+
+//   return unionedArea / area;
+// }
+
 
 // TODO
 // FEATURE 2: Y-SYMMETRY - The area of a district overlapping with its
@@ -37,25 +64,48 @@ import * as T from './types';
 // 4. Calculate the union of the original shape and its mirror
 // 5. Take the ratio of the area of that union* and the area of the original shape
 
-export function calcXSymmetry(poly: any): number
+export function calcYSymmetry(poly: any): number
 {
-  // Normalize input
   let pp = Poly.polyNormalize(poly);
 
-  const [cx, ] = meanCentroid(pp);
-  const reflectedPoly = Poly.polyTransform(pp, reflectOverX(cx));
+  const [cx,] = meanCentroid(pp);
+  const sym_x = calcSymmetry(poly, reflectOverX(cx))
 
-  // TODO - Union the two shapes together
-  // const unionedPoly = addToPoly(pp, [Poly.polyNormalize(reflectedPoly)]);
+  return sym_x;
+}
+// TODO - DELETE
+// export function calcYSymmetry(poly: any): number
+// {
+//   let pp = Poly.polyNormalize(poly);
+
+//   const [cx, ] = meanCentroid(pp);
+//   const reflectedPoints = Poly.polyTransform(pp, reflectOverX(cx));
+
+//   const polyPoints = poly.geometry.coordinates;
+//   const unionedPoly = combineTwoPolys(polyPoints, reflectedPoints);
+
+//   const area: number = Poly.polyArea(poly);
+//   const unionedArea: number = Poly.polyArea(unionedPoly);
+
+//   return unionedArea / area;
+// }
+
+// X/Y symmetry helpers
+
+export function calcSymmetry(poly: any, transformFn: any): number
+{
+  let pp = Poly.polyNormalize(poly);
+
+  const reflectedPoints = Poly.polyTransform(pp, transformFn);
+
+  const polyPoints = poly.geometry.coordinates;
+  const unionedPoly = combineTwoPolys(polyPoints, reflectedPoints);
 
   const area: number = Poly.polyArea(poly);
-  const unionedArea: number = Poly.polyArea(reflectedPoly /*unionedPoly*/);
+  const unionedArea: number = Poly.polyArea(unionedPoly);
 
   return unionedArea / area;
 }
-
-
-// X/Y symmetry helpers
 
 // TODO - Do I need to check for no points? If so, how?
 function meanCentroid(poly: any): T.Point
@@ -210,6 +260,7 @@ export function calcSchwartzberg(area: number, perimeter: number): number
   return perimeter / ((2 * Math.PI) * Math.sqrt(area / Math.PI));
 }
 
+
 export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.CompactnessFeatures
 {
   if (options === undefined) options = Poly.DefaultOptions;
@@ -223,8 +274,8 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
   const hullArea: number = Poly.polyArea(Poly.polyConvexHull(pp));
 
   const result: T.CompactnessFeatures = [
-    0,  // sym_x
-    0,  // sym_y
+    calcXSymmetry(poly),
+    calcYSymmetry(poly),
     calcReock(area, diameter),
     0,  // bbox
     calcPolsbyPopper(area, perimeter),
