@@ -7,6 +7,7 @@ import * as PC from 'polygon-clipping';
 import * as Poly from '@dra2020/poly';
 import * as GeoJSON from 'geojson';
 
+import { CompactnessFeatures } from '../src/compactness';
 import * as T from './types'
 
 
@@ -25,7 +26,7 @@ export function scoreShape(): number
 
 const { multiply } = require('mathjs');
 
-export function scoreFeatureSet(features: Poly.CompactnessFeatures): number
+export function scoreFeatureSet(features: CompactnessFeatures): number
 {
   const model: number[] = [
     0.317566717356693,  // sym_x

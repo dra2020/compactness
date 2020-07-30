@@ -5,7 +5,7 @@ import * as Poly from '@dra2020/poly';
 import * as T from '../src/types'
 
 import { scoreFeatureSet, combineTwoPolys } from '../src/compact';
-import { featureizePoly } from '../src/compactness';
+import { CompactnessFeatures, CompactnessFeature, featureizePoly } from '../src/compactness';
 
 
 // TEST SCORING SETS OF SHAPE FEATURES
@@ -19,7 +19,7 @@ describe('Score reference feature sets', () => {
     for (let i in featureEntries)
     {
       const featureEntry: number[] = featureEntries[i];
-      const featureSet = featureEntry.slice(1, -1) as Poly.CompactnessFeatures;
+      const featureSet = featureEntry.slice(1, -1) as CompactnessFeatures;
       const score: number = featureEntry[featureEntry.length-1];
 
       const prediction: number = scoreFeatureSet(featureSet);
@@ -43,21 +43,21 @@ describe('Feature-ize sample shapes', () => {
     for (let i = 0; i < 1 /* shapes.features.length */; i++)
     {
       const n = featureEntries[i][0];
-      const correct = featureEntries[i].slice(1, -1) as Poly.CompactnessFeatures;
+      const correct = featureEntries[i].slice(1, -1) as CompactnessFeatures;
       const score = featureEntries[i][-1];
 
       // console.log(i, shapes.features[i]);
 
-      // const features: Poly.CompactnessFeatures = Poly.featureizePoly(shapes.features[i]);
-      const features: Poly.CompactnessFeatures = featureizePoly(shapes.features[i]);
+      // const features: CompactnessFeatures = Poly.featureizePoly(shapes.features[i]);
+      const features: CompactnessFeatures = featureizePoly(shapes.features[i]);
   
       // Compare computed feature values to the correct answers
-      expect(features[Poly.CompactnessFeature.Reock]).toBeCloseTo(correct[Poly.CompactnessFeature.Reock]);
-      expect(features[Poly.CompactnessFeature.Polsby]).toBeCloseTo(correct[Poly.CompactnessFeature.Polsby]);
+      expect(features[CompactnessFeature.Reock]).toBeCloseTo(correct[CompactnessFeature.Reock]);
+      expect(features[CompactnessFeature.Polsby]).toBeCloseTo(correct[CompactnessFeature.Polsby]);
       // NOTE - The convex hull algorithm used by the 'poly' code is different
       //   than the algorithm used by the base R code & the 'shapely' Python code.
-      expect(features[Poly.CompactnessFeature.Hull]).toBeCloseTo(correct[Poly.CompactnessFeature.Hull], 1);
-      expect(features[Poly.CompactnessFeature.Schwartzberg]).toBeCloseTo(correct[Poly.CompactnessFeature.Schwartzberg]);
+      expect(features[CompactnessFeature.Hull]).toBeCloseTo(correct[CompactnessFeature.Hull], 1);
+      expect(features[CompactnessFeature.Schwartzberg]).toBeCloseTo(correct[CompactnessFeature.Schwartzberg]);
 
       // TODO - More ...
       

@@ -8,7 +8,7 @@ import * as Poly from '@dra2020/poly';
 import * as FU from '../testutil/fileutils';
 
 import { scoreShape, combineTwoPolys } from '../src/compact';
-import { featureizePoly } from '../src/compactness';
+import { CompactnessFeatures, CompactnessFeature, featureizePoly } from '../src/compactness';
 
 
 // BEGIN COMMAND LINE IMPLEMENTATION
@@ -104,13 +104,13 @@ switch (command) {
       {
         const shapes = FU.readJSON(input) as GeoJSON.FeatureCollection;
 
-        let geom1: GeoJSON.Geometry = shapes.features[0].geometry;
-        let geom2: GeoJSON.Geometry = shapes.features[1].geometry;
+        let geom1: any = shapes.features[0].geometry;
+        let geom2: any = shapes.features[1].geometry;
     
         // console.log("feature1 =", feature1.geometry);
         // console.log("feature2 =", feature2.geometry);
     
-        // combineTwoPolys(geom1.coordinates, geom2.coordinates);
+        combineTwoPolys(geom1.coordinates, geom2.coordinates);
       }
     }
     doit();
@@ -143,12 +143,12 @@ function reportFeatures(shapes: GeoJSON.FeatureCollection): void
       'N/A',
       // TODO - Add y_sym
       'N/A',
-      features[Poly.CompactnessFeature.Reock].toFixed(4),
+      features[CompactnessFeature.Reock].toFixed(4),
       // TODO - Add bbox
       'N/A',
-      features[Poly.CompactnessFeature.Polsby].toFixed(4),
-      features[Poly.CompactnessFeature.Hull].toFixed(4),
-      features[Poly.CompactnessFeature.Schwartzberg].toFixed(4)
+      features[CompactnessFeature.Polsby].toFixed(4),
+      features[CompactnessFeature.Hull].toFixed(4),
+      features[CompactnessFeature.Schwartzberg].toFixed(4)
     );
   }
 }
