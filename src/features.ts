@@ -29,28 +29,11 @@ export function calcXSymmetry(poly: any): number
 {
   let pp = Poly.polyNormalize(poly);
 
-  const [, cy] = meanCentroid(pp);
-  const sym_y = calcSymmetry(poly, reflectOverY(cy))
+  const [cx, ] = meanCentroid(pp);
+  const sym_x = calcSymmetry(poly, reflectOverY(cx))
 
-  return sym_y;
+  return sym_x;
 }
-
-// TODO - DELETE
-// export function calcXSymmetry(poly: any): number
-// {
-//   let pp = Poly.polyNormalize(poly);
-
-//   const [, cy ] = meanCentroid(pp);
-//   const reflectedPoints = Poly.polyTransform(pp, reflectOverY(cy));
-
-//   const polyPoints = poly.geometry.coordinates;
-//   const unionedPoly = combineTwoPolys(polyPoints, reflectedPoints);
-
-//   const area: number = Poly.polyArea(poly);
-//   const unionedArea: number = Poly.polyArea(unionedPoly);
-
-//   return unionedArea / area;
-// }
 
 
 // TODO
@@ -63,34 +46,18 @@ export function calcXSymmetry(poly: any): number
 // 3. Flip the shape about its x or y axis, running through the centroid
 // 4. Calculate the union of the original shape and its mirror
 // 5. Take the ratio of the area of that union* and the area of the original shape
+//
+// https://www.npmjs.com/package/polygon-clipping
 
 export function calcYSymmetry(poly: any): number
 {
   let pp = Poly.polyNormalize(poly);
 
-  const [cx,] = meanCentroid(pp);
-  const sym_x = calcSymmetry(poly, reflectOverX(cx))
+  const [, cy] = meanCentroid(pp);
+  const sym_y = calcSymmetry(poly, reflectOverX(cy))
 
-  return sym_x;
+  return sym_y;
 }
-// TODO - DELETE
-// export function calcYSymmetry(poly: any): number
-// {
-//   let pp = Poly.polyNormalize(poly);
-
-//   const [cx, ] = meanCentroid(pp);
-//   const reflectedPoints = Poly.polyTransform(pp, reflectOverX(cx));
-
-//   const polyPoints = poly.geometry.coordinates;
-//   const unionedPoly = combineTwoPolys(polyPoints, reflectedPoints);
-
-//   const area: number = Poly.polyArea(poly);
-//   const unionedArea: number = Poly.polyArea(unionedPoly);
-
-//   return unionedArea / area;
-// }
-
-// X/Y symmetry helpers
 
 export function calcSymmetry(poly: any, transformFn: any): number
 {
