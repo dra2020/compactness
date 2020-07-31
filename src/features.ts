@@ -21,7 +21,6 @@ import * as T from './types';
 // 6 - hull (Hull(D))
 // 7 - schwartzberg (SCHWARTZBERG)
 
-// TODO
 // FEATURE 1: X-SYMMETRY - The same as Y-SYMMETRY except reflect the district D
 // around a horizontal line going through the centroid. See below.
 
@@ -30,13 +29,12 @@ export function calcXSymmetry(poly: any): number
   let pp = Poly.polyNormalize(poly);
 
   const [cx, ] = meanCentroid(pp);
-  const sym_x = calcSymmetry(poly, reflectOverY(cx))
+  const sym_x = calcSymmetry(poly, reflectOverX(cx))
 
   return sym_x;
 }
 
 
-// TODO
 // FEATURE 2: Y-SYMMETRY - The area of a district overlapping with its
 // reflection around a vertical line going through the centroid, divided by
 // the area of the district. Values range [1–2].
@@ -46,15 +44,13 @@ export function calcXSymmetry(poly: any): number
 // 3. Flip the shape about its x or y axis, running through the centroid
 // 4. Calculate the union of the original shape and its mirror
 // 5. Take the ratio of the area of that union* and the area of the original shape
-//
-// https://www.npmjs.com/package/polygon-clipping
 
 export function calcYSymmetry(poly: any): number
 {
   let pp = Poly.polyNormalize(poly);
 
   const [, cy] = meanCentroid(pp);
-  const sym_y = calcSymmetry(poly, reflectOverX(cy))
+  const sym_y = calcSymmetry(poly, reflectOverY(cy))
 
   return sym_y;
 }
