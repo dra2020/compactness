@@ -135,7 +135,7 @@ function reportFeatures(shapes: GeoJSON.FeatureCollection): void
     const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
     console.log("%d, %s, %s, %s, %s, %s, %s, %s",
       i + 1,
-      'N/A',  // TODO - Add x_sym
+      features[T.CompactnessFeature.Sym_x].toFixed(4),
       features[T.CompactnessFeature.Sym_y].toFixed(4),
       features[T.CompactnessFeature.Reock].toFixed(4),
       'N/A',  // TODO - Add bbox
