@@ -234,6 +234,8 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
   const perimeter: number = Poly.polyPerimeter(pp, options);
   const diameter = Poly.polyDiameter(pp, options);
 
+  console.log(`Area = ${(area / 1000000).toFixed(4)}, Perimeter = ${(perimeter / 1000).toFixed(4)}, Diameter = ${(diameter / 1000).toFixed(4)}`);
+
   const hullArea: number = Poly.polyArea(Poly.polyConvexHull(pp));
 
   const result: T.CompactnessFeatures = [
