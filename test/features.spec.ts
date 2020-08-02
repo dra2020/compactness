@@ -59,8 +59,8 @@ describe('Feature-ize sample shapes', () => {
       // TODO - Why only one digit matching?
       expect(features[T.CompactnessFeature.Schwartzberg]).toBeCloseTo(correct[T.CompactnessFeature.Schwartzberg], 1);
 
+      expect(features[T.CompactnessFeature.Sym_x]).toBeCloseTo(correct[T.CompactnessFeature.Sym_x]);
       // TODO - Why only one digit matching?
-      expect(features[T.CompactnessFeature.Sym_x]).toBeCloseTo(correct[T.CompactnessFeature.Sym_x], 1);
       expect(features[T.CompactnessFeature.Sym_y]).toBeCloseTo(correct[T.CompactnessFeature.Sym_y], 1);
 
       // TODO
