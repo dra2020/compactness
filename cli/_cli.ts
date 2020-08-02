@@ -91,9 +91,15 @@ switch (command) {
     break;
   }
   case 'verify': {
-    // TODO
     // $ utils/main.js verify
-    console.log('Verify scoring features & feature-izing shapes');
+    async function doit()
+    {
+      const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
+      const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+      // TODO
+      compareFeatures(shapes, featureEntries);
+    }
+    doit();
 
     break;
   }
@@ -146,5 +152,81 @@ function reportFeatures(shapes: GeoJSON.FeatureCollection): void
   }
 }
 
+function compareFeatures(shapes: GeoJSON.FeatureCollection, featureEntries: T.FeaturesEntry[]): void 
+{
+  const hr = new Array(92 + 1).join('-');
 
+  console.log('Computed features for shapes:');
+  console.log('');
+  console.log('## = sym_x    | sym_y    | reock    | bbox     | polsby   | hull     | schwartz  ');
 
+  for (let i = 0; i < shapes.features.length; i++)
+  {
+    console.log(hr);
+
+    // The calculated results
+    const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
+    console.log("%s = %s | %s | %s | %s | %s | %s | %s <<< Calc'd",
+      pad(i + 1, 2),
+      features[T.CompactnessFeature.Sym_x].toFixed(6),
+      features[T.CompactnessFeature.Sym_y].toFixed(6),
+      features[T.CompactnessFeature.Reock].toFixed(6),
+      'xxxxxxxx',  // TODO - Add bbox
+      features[T.CompactnessFeature.Polsby].toFixed(6),
+      features[T.CompactnessFeature.Hull].toFixed(6),
+      features[T.CompactnessFeature.Schwartzberg].toFixed(6)
+    );
+
+    // The correct results
+    const n = featureEntries[i][0];
+    const correct = featureEntries[i].slice(1, -1) as T.CompactnessFeatures;
+    const score = featureEntries[i][-1];
+
+    console.log("     %s | %s | %s | %s | %s | %s | %s <<< Correct",
+      correct[T.CompactnessFeature.Sym_x].toFixed(6),
+      correct[T.CompactnessFeature.Sym_y].toFixed(6),
+      correct[T.CompactnessFeature.Reock].toFixed(6),
+      correct[T.CompactnessFeature.Bbox].toFixed(6),
+      correct[T.CompactnessFeature.Polsby].toFixed(6),
+      correct[T.CompactnessFeature.Hull].toFixed(6),
+      correct[T.CompactnessFeature.Schwartzberg].toFixed(6)
+    );
+
+    // Delta percentages
+    let delta: number[] = [];
+    for (let j = 0; j < features.length; j++)
+    {
+      delta.push(((features[j] - correct[j]) / correct[j]) * 100);
+    }
+
+    console.log("     %s | %s | %s | %s | %s | %s | %s <<< Delta %",
+      getNumberWithSign(delta[T.CompactnessFeature.Sym_x], 1) + "%   ",
+      getNumberWithSign(delta[T.CompactnessFeature.Sym_y], 1) + "%   ",
+      getNumberWithSign(delta[T.CompactnessFeature.Reock], 1) + "%   ",
+      // TODO
+      "        ",
+      // getNumberWithSign(delta[T.CompactnessFeature.Bbox], 1) + "%   ",
+      getNumberWithSign(delta[T.CompactnessFeature.Polsby], 1) + "%   ",
+      getNumberWithSign(delta[T.CompactnessFeature.Hull], 1) + "%   ",
+      getNumberWithSign(delta[T.CompactnessFeature.Schwartzberg], 1)  + "%   "
+    );
+  }
+
+  console.log(hr);
+}
+
+function pad(num: number, size: number): string {
+  var s = num+"";
+  while (s.length < size) s = " " + s;
+  return s;
+}
+
+function getNumberWithSign(input: number, decimals: number): string {
+  if (input === 0) {
+    return "0"
+  }
+
+  const sign = input < 0 ? '-' : '+';
+
+  return `${sign}${Math.abs(input).toFixed(decimals)}`;
+}

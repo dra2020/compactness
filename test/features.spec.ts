@@ -35,7 +35,7 @@ describe('Score reference feature sets', () => {
 describe('Feature-ize sample shapes', () => {
   test('Using async/await', async () =>
   {
-    const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+    const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/smartfeats_first20.csv');
     const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
 
     for (let i = 0; shapes.features.length; i++)
