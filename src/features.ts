@@ -7,6 +7,8 @@
 import * as PC from 'polygon-clipping';
 import * as Poly from '@dra2020/poly';
 
+import { GrahamScanner } from './graham-scan';
+
 import * as T from './types';
 
 
@@ -185,7 +187,8 @@ export function calcPolsbyPopper(area: number, perimeter: number): number
 // where a convex hull is the minimum perimeter that encloses all points in a shape, basically the shortest
 // unstretched rubber band that fits around the shape.
 
-export function calcConvexHull(area: number, chArea: number): number
+// Note: This is not THE convex hull, but rather a metric based on it.
+export function calcConvexHullFeature(area: number, chArea: number): number
 {
   return area / chArea;
 }
@@ -236,7 +239,11 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
 
   console.log(`Area = ${(area / 1000000).toFixed(4)}, Perimeter = ${(perimeter / 1000).toFixed(4)}, Diameter = ${(diameter / 1000).toFixed(4)}`);
 
-  const hullArea: number = Poly.polyArea(Poly.polyConvexHull(pp));
+  // TODO - Discuss w/ Terry
+  const bUseAltHull: boolean = true;
+  const ch = bUseAltHull ? makeConvexHull(poly) : Poly.polyConvexHull(pp); 
+
+  const hullArea: number = Poly.polyArea(ch);
 
   const result: T.CompactnessFeatures = [
     calcXSymmetry(poly),
@@ -244,10 +251,45 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
     calcReock(area, diameter),
     0,  // bbox
     calcPolsbyPopper(area, perimeter),
-    calcConvexHull(area, hullArea),
+    calcConvexHullFeature(area, hullArea),
     calcSchwartzberg(area, perimeter)
   ]
 
   return result;
 }
 
+
+// Alternate implementation of Convex Hull
+// - https://en.wikipedia.org/wiki/Graham_scan
+// - https://www.tutorialspoint.com/Graham-Scan-Algorithm
+// - http://brian3kb.github.io/graham_scan_js/
+
+function makeConvexHull(poly: any, options?: Poly.PolyOptions): any
+{
+  // Normalize input
+  let points = Poly.polyToExteriorPoints(poly);
+  if (points == null) return null;
+
+  let scanner = new GrahamScanner();
+
+  for (let pt of points) {
+    scanner.addPoint(pt);
+  }
+
+  const ch: T.Point[] = scanner.getHull();
+
+  return pointsToPoly(ch);
+}
+
+
+// TODO - Discuss w/ Terry
+function pointsToPoly(points: T.Point[]): any
+{
+  let p: any = [];
+  const X = 0, Y = 1;
+
+  for (let i: number = 0; i < points.length; i++)
+    p.push( [ points[i][X], points[i][Y] ] );
+  
+  return [ p ];
+}
