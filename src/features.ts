@@ -28,9 +28,11 @@ import * as T from './types';
 
 export function calcXSymmetry(poly: any): number
 {
-  let pp = Poly.polyNormalize(poly);
+  // TODO - DELETE
+  // let pp = Poly.polyNormalize(poly);
 
-  const [cx, ] = meanCentroid(pp);
+  // const [cx, ] = meanCentroid(pp);
+  const [cx, ] = meanCentroid(poly);
   const sym_x = calcSymmetry(poly, reflectOverX(cx))
 
   return sym_x;
@@ -49,9 +51,11 @@ export function calcXSymmetry(poly: any): number
 
 export function calcYSymmetry(poly: any): number
 {
-  let pp = Poly.polyNormalize(poly);
+  // TODO - DELETE
+  // let pp = Poly.polyNormalize(poly);
 
-  const [, cy] = meanCentroid(pp);
+  // const [, cy] = meanCentroid(pp);
+  const [, cy] = meanCentroid(poly);
   const sym_y = calcSymmetry(poly, reflectOverY(cy))
 
   return sym_y;
@@ -59,9 +63,11 @@ export function calcYSymmetry(poly: any): number
 
 export function calcSymmetry(poly: any, transformFn: any): number
 {
-  let pp = Poly.polyNormalize(poly);
-
-  const reflectedPoints = Poly.polyTransform(pp, transformFn);
+  const reflectedPoints = Poly.polyUnpack(Poly.polyTransform(poly, transformFn));
+  // const reflectedPoints = Poly.polyNormalize(Poly.polyTransform(poly, transformFn));
+  // TODO -DELETE
+  // let pp = Poly.polyNormalize(poly);
+  // const reflectedPoints = Poly.polyTransform(pp, transformFn);
 
   const polyPoints = poly.geometry.coordinates;
   const unionedPoly = combineTwoPolys(polyPoints, reflectedPoints);
@@ -72,6 +78,7 @@ export function calcSymmetry(poly: any, transformFn: any): number
   return unionedArea / area;
 }
 
+// TODO - Reimplement this on the polygon directly w/o packing it & iterating on that,
 // TODO - Do I need to check for no points? If so, how?
 function meanCentroid(poly: any): T.Point
 {
@@ -231,17 +238,18 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
 {
   if (options === undefined) options = Poly.DefaultOptions;
 
-  const pp = Poly.polyNormalize(poly);
+  // TODO - DELETE
+  // const pp = Poly.polyNormalize(poly);
 
-  const area: number = Poly.polyArea(pp);
-  const perimeter: number = Poly.polyPerimeter(pp, options);
-  const diameter = Poly.polyDiameter(pp, options);
+  const area: number = Poly.polyArea(poly);
+  const perimeter: number = Poly.polyPerimeter(poly, options);
+  const diameter = Poly.polyDiameter(poly, options);
 
-  console.log(`Area = ${(area / 1000000).toFixed(4)}, Perimeter = ${(perimeter / 1000).toFixed(4)}, Diameter = ${(diameter / 1000).toFixed(4)}`);
+  // console.log(`Area = ${(area / 1000000).toFixed(4)}, Perimeter = ${(perimeter / 1000).toFixed(4)}, Diameter = ${(diameter / 1000).toFixed(4)}`);
 
   // TODO - Discuss w/ Terry
   const bUseAltHull: boolean = false;
-  const ch = bUseAltHull ? makeConvexHull(poly) : Poly.polyConvexHull(pp); 
+  const ch = bUseAltHull ? makeConvexHull(poly) : Poly.polyConvexHull(poly); 
 
   const hullArea: number = Poly.polyArea(ch);
 
