@@ -271,8 +271,7 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
 
 function makeConvexHull(poly: any, options?: Poly.PolyOptions): any
 {
-  // Normalize input
-  let points = Poly.polyToExteriorPoints(poly);
+  let points = getExteriorPoints(poly);
   if (points == null) return null;
 
   let scanner = new GrahamScanner();
@@ -283,18 +282,48 @@ function makeConvexHull(poly: any, options?: Poly.PolyOptions): any
 
   const ch: T.Point[] = scanner.getHull();
 
-  return pointsToPoly(ch);
+  return ch;
+  // TODO - DELETE
+  // return pointsToPoly(ch);
 }
 
 
-// TODO - Discuss w/ Terry
-function pointsToPoly(points: T.Point[]): any
+// TODO - DELETE
+// function pointsToPoly(points: T.Point[]): any
+// {
+//   let p: any = [];
+//   const X = 0, Y = 1;
+
+//   for (let i: number = 0; i < points.length; i++)
+//     p.push( [ points[i][X], points[i][Y] ] );
+  
+//   return [ p ];
+// }
+
+function getExteriorPoints(poly: any): T.Point[]
 {
-  let p: any = [];
   const X = 0, Y = 1;
 
-  for (let i: number = 0; i < points.length; i++)
-    p.push( [ points[i][X], points[i][Y] ] );
+  let coords: any = poly.geometry.coordinates;
+  if (Util.depthof(coords) == 4) coords = [ coords ];  // normalize to multipolygon
   
-  return [ p ];
+  let points: T.Point[] = [];
+
+  const nPolys: number = coords.length;
+  for (let i = 0; i < nPolys; i++)                     // for each polygon
+  {
+    const nRings: number = coords[i].length;
+
+    for (let j = 0; j < nRings; j++)                   // for each ring
+    {                                                  // do
+      if (j > 0) continue;                             // skip the holes
+
+      for (let pt of coords[i][j])                     // for each point
+      {                                                // do
+        points.push(pt);
+      }
+    }
+  }
+ 
+  return points;
 }
