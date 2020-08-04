@@ -6,6 +6,7 @@
 
 import * as PC from 'polygon-clipping';
 import * as Poly from '@dra2020/poly';
+import * as Util from '@dra2020/util';
 
 import { GrahamScanner } from './graham-scan';
 
@@ -68,21 +69,32 @@ export function calcSymmetry(poly: any, transformFn: any): number
 
 function meanCentroid(poly: any): T.Point
 {
+  const X = 0, Y = 1;
+
   let n: number = 0;
   let x_tot: number = 0;
   let y_tot: number = 0;
 
-  // TODO - Reimplement this on the polygon directly w/o packing it & iterating on that.
-  // - https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry
-  const pp = Poly.polyNormalize(poly);
-  Poly.polyPackEachPoint(pp, (b: Float64Array, iPoly: number, iRing: number, iOffset: number) =>
-  {
-    if (iRing > 0) return;  // skip holes
+  let coords: any = poly.geometry.coordinates;
+  if (Util.depthof(coords) == 4) coords = [ coords ];  // normalize to multipolygon
 
-    n += 1;
-    x_tot += b[iOffset];
-    y_tot += b[iOffset+1];
-  });
+  const nPolys: number = coords.length;
+  for (let i = 0; i < nPolys; i++)                     // for each polygon
+  {
+    const nRings: number = coords[i].length;
+
+    for (let j = 0; j < nRings; j++)                   // for each ring
+    {                                                  // do
+      if (j > 0) continue;                             // skip the holes
+
+      for (let pt of coords[i][j])                     // for each point
+      {                                                // do
+        n += 1;
+        x_tot += pt[X];
+        y_tot += pt[Y];
+      }
+    }
+  }
 
   const centroid: T.Point = [x_tot / n, y_tot / n];
  
