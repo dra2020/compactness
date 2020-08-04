@@ -28,10 +28,6 @@ import * as T from './types';
 
 export function calcXSymmetry(poly: any): number
 {
-  // TODO - DELETE
-  // let pp = Poly.polyNormalize(poly);
-
-  // const [cx, ] = meanCentroid(pp);
   const [cx, ] = meanCentroid(poly);
   const sym_x = calcSymmetry(poly, reflectOverX(cx))
 
@@ -51,10 +47,6 @@ export function calcXSymmetry(poly: any): number
 
 export function calcYSymmetry(poly: any): number
 {
-  // TODO - DELETE
-  // let pp = Poly.polyNormalize(poly);
-
-  // const [, cy] = meanCentroid(pp);
   const [, cy] = meanCentroid(poly);
   const sym_y = calcSymmetry(poly, reflectOverY(cy))
 
@@ -64,12 +56,8 @@ export function calcYSymmetry(poly: any): number
 export function calcSymmetry(poly: any, transformFn: any): number
 {
   const reflectedPoints = Poly.polyUnpack(Poly.polyTransform(poly, transformFn));
-  // const reflectedPoints = Poly.polyNormalize(Poly.polyTransform(poly, transformFn));
-  // TODO -DELETE
-  // let pp = Poly.polyNormalize(poly);
-  // const reflectedPoints = Poly.polyTransform(pp, transformFn);
-
   const polyPoints = poly.geometry.coordinates;
+
   const unionedPoly = combineTwoPolys(polyPoints, reflectedPoints);
 
   const area: number = Poly.polyArea(poly);
@@ -78,14 +66,14 @@ export function calcSymmetry(poly: any, transformFn: any): number
   return unionedArea / area;
 }
 
-// TODO - Reimplement this on the polygon directly w/o packing it & iterating on that,
-// TODO - Do I need to check for no points? If so, how?
 function meanCentroid(poly: any): T.Point
 {
   let n: number = 0;
   let x_tot: number = 0;
   let y_tot: number = 0;
 
+  // TODO - Reimplement this on the polygon directly w/o packing it & iterating on that.
+  // - https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry
   const pp = Poly.polyNormalize(poly);
   Poly.polyPackEachPoint(pp, (b: Float64Array, iPoly: number, iRing: number, iOffset: number) =>
   {
@@ -237,9 +225,6 @@ export function calcSchwartzberg(area: number, perimeter: number): number
 export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.CompactnessFeatures
 {
   if (options === undefined) options = Poly.DefaultOptions;
-
-  // TODO - DELETE
-  // const pp = Poly.polyNormalize(poly);
 
   const area: number = Poly.polyArea(poly);
   const perimeter: number = Poly.polyPerimeter(poly, options);
