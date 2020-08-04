@@ -14,7 +14,7 @@ const X = 0, Y = 1;
 export class GrahamScanner
 {
   anchorPoint: T.Point | undefined;
-  reverse: boolean | any;
+  reverse: boolean;
   points: T.Point[];
 
   constructor()
@@ -23,18 +23,19 @@ export class GrahamScanner
     this.reverse = false;
     this.points = [];
   }
-  Point(x: number, y: number)
-  {
-    const pt: T.Point = [x, y];
+  // TODO - DELETE
+  // Point(x: number, y: number)
+  // {
+  //   const pt: T.Point = [x, y];
 
-    return pt;
-  }
+  //   return pt;
+  // }
   _findPolarAngle(a: T.Point, b: T.Point): number
   {
     const ONE_RADIAN = 57.295779513082;
     let deltaX, deltaY;
 
-    //if the points are undefined, return a zero difference angle.
+    // If the points are undefined, return a zero difference angle.
     if (!a || !b) return 0;
 
     deltaX = (b[X] - a[X]);
@@ -62,7 +63,7 @@ export class GrahamScanner
   }
   addPoint(pt: T.Point): void
   {
-    //Check for a new anchor
+    // Check for a new anchor
     const newAnchor =
         ( this.anchorPoint === undefined ) ||
         ( this.anchorPoint[Y] > pt[Y] ) ||
@@ -79,25 +80,24 @@ export class GrahamScanner
       this.points.push(pt);
     }
   }
-  _pointCompare(a: T.Point, b: T.Point) 
-  {
-    const polarA = this._findPolarAngle(this.anchorPoint as T.Point, a);
-    const polarB = this._findPolarAngle(this.anchorPoint as T.Point, b);
-  
-    if (polarA < polarB) {
-        return -1;
-    }
-    if (polarA > polarB) {
-        return 1;
-    }
-  
-    return 0;
-  }
   _sortPoints(): T.Point[] 
   {
     var self = this;
 
-    return this.points.sort(this._pointCompare);
+    return this.points.sort(function(a: T.Point, b: T.Point) 
+    {
+      const polarA = self._findPolarAngle(self.anchorPoint as T.Point, a);
+      const polarB = self._findPolarAngle(self.anchorPoint as T.Point, b);
+    
+      if (polarA < polarB) {
+          return -1;
+      }
+      if (polarA > polarB) {
+          return 1;
+      }
+    
+      return 0;
+    });
   }
   _checkPoints(p0: T.Point, p1: T.Point, p2: T.Point): boolean 
   {
@@ -132,21 +132,21 @@ export class GrahamScanner
       }
     );
 
-    points = this._sortPoints() as T.Point[];
+    points = this._sortPoints();
     pointsLength = points.length;
 
-    //If there are less than 3 points, joining these points creates a correct hull.
+    // If there are less than 3 points, joining these points creates a correct hull.
     if (pointsLength < 3) {
         points.unshift(this.anchorPoint as T.Point);
         return points;
     }
 
-    //move first two points to output array
+    // Move first two points to output array
     const first: T.Point = points.shift() as T.Point;
     const second: T.Point = points.shift() as T.Point;
     hullPoints.push(first, second);
 
-    //scan is repeated until no concave points are present.
+    // Scan is repeated until no concave points are present.
     while (true) {
       let p0: T.Point;
       let p1: T.Point;
@@ -166,9 +166,9 @@ export class GrahamScanner
       {
         if (pointsLength == hullPoints.length) 
         {
-          //check for duplicate anchorPoint edge-case, if not found, add the anchorpoint as the first item.
+          // Check for duplicate anchorPoint edge-case, if not found, add the anchorpoint as the first item.
           const ap: T.Point = this.anchorPoint as T.Point;
-          //remove any udefined elements in the hullPoints array.
+          // Remove any udefined elements in the hullPoints array.
           hullPoints = hullPoints.filter(function(p) { return !!p; });
           if (!hullPoints.some(function(p){
                   return(p[X] == ap[X] && p[Y] == ap[Y]);

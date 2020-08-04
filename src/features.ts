@@ -245,7 +245,7 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
   // console.log(`Area = ${(area / 1000000).toFixed(4)}, Perimeter = ${(perimeter / 1000).toFixed(4)}, Diameter = ${(diameter / 1000).toFixed(4)}`);
 
   // TODO - Discuss w/ Terry
-  const bUseAltHull: boolean = false;
+  const bUseAltHull: boolean = true;
   const ch = bUseAltHull ? makeConvexHull(poly) : Poly.polyConvexHull(poly); 
 
   const hullArea: number = Poly.polyArea(ch);
@@ -282,7 +282,7 @@ function makeConvexHull(poly: any, options?: Poly.PolyOptions): any
 
   const ch: T.Point[] = scanner.getHull();
 
-  return ch;
+  return [ ch ];
   // TODO - DELETE
   // return pointsToPoly(ch);
 }

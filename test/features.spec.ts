@@ -52,10 +52,7 @@ describe('Feature-ize sample shapes', () => {
       // Compare computed feature values to the correct answers
       expect(features[T.CompactnessFeature.Reock]).toBeCloseTo(correct[T.CompactnessFeature.Reock]);
       expect(features[T.CompactnessFeature.Polsby]).toBeCloseTo(correct[T.CompactnessFeature.Polsby]);
-      // TODO - Why only one digit matching?
-      // NOTE - The convex hull algorithm used by the 'poly' code is different
-      //   than the algorithm used by the base R code & the 'shapely' Python code.
-      expect(features[T.CompactnessFeature.Hull]).toBeCloseTo(correct[T.CompactnessFeature.Hull], 1);
+      expect(features[T.CompactnessFeature.Hull]).toBeCloseTo(correct[T.CompactnessFeature.Hull]);
       // TODO - Why only one digit matching?
       expect(features[T.CompactnessFeature.Schwartzberg]).toBeCloseTo(correct[T.CompactnessFeature.Schwartzberg], 1);
 
