@@ -1,6 +1,11 @@
 //
 // CONVEX HULL USING GRAHAM SCAN ALGORITHM
 //
+/* Resources:
+ * https://en.wikipedia.org/wiki/Graham_scan
+ * https://www.tutorialspoint.com/Graham-Scan-Algorithm <<< pseudo code
+ * http://brian3kb.github.io/graham_scan_js/ <<< basis for this implementation
+ */
 
 import * as T from './types';
 
@@ -190,11 +195,6 @@ export class GrahamScanner
  * @desc An implementation of the Graham's Scan Convex Hull algorithm in JavaScript.
  * @author Brian Barnett, brian@3kb.co.uk, http://brianbar.net/ || http://3kb.co.uk/
  * @version 1.0.5
- */
-
-/* From:
- * https://www.tutorialspoint.com/Graham-Scan-Algorithm
- * http://brian3kb.github.io/graham_scan_js/
  */
 
 /*

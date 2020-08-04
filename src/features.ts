@@ -240,7 +240,7 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
   console.log(`Area = ${(area / 1000000).toFixed(4)}, Perimeter = ${(perimeter / 1000).toFixed(4)}, Diameter = ${(diameter / 1000).toFixed(4)}`);
 
   // TODO - Discuss w/ Terry
-  const bUseAltHull: boolean = true;
+  const bUseAltHull: boolean = false;
   const ch = bUseAltHull ? makeConvexHull(poly) : Poly.polyConvexHull(pp); 
 
   const hullArea: number = Poly.polyArea(ch);
