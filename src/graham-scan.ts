@@ -23,13 +23,6 @@ export class GrahamScanner
     this.reverse = false;
     this.points = [];
   }
-  // TODO - DELETE
-  // Point(x: number, y: number)
-  // {
-  //   const pt: T.Point = [x, y];
-
-  //   return pt;
-  // }
   _findPolarAngle(a: T.Point, b: T.Point): number
   {
     const ONE_RADIAN = 57.295779513082;

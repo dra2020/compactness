@@ -283,22 +283,7 @@ function makeConvexHull(poly: any, options?: Poly.PolyOptions): any
   const ch: T.Point[] = scanner.getHull();
 
   return [ ch ];
-  // TODO - DELETE
-  // return pointsToPoly(ch);
 }
-
-
-// TODO - DELETE
-// function pointsToPoly(points: T.Point[]): any
-// {
-//   let p: any = [];
-//   const X = 0, Y = 1;
-
-//   for (let i: number = 0; i < points.length; i++)
-//     p.push( [ points[i][X], points[i][Y] ] );
-  
-//   return [ p ];
-// }
 
 function getExteriorPoints(poly: any): T.Point[]
 {
