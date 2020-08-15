@@ -4,6 +4,12 @@
 //   Measures of compactness compare district shapes to various ideally compact
 //   benchmarks, such as circles. All else equal, more compact districts are better.
 
+
+// MathJS:
+// - https://mathjs.org/docs/datatypes/matrices.html
+// - https://mathjs.org/docs/reference/functions.html#matrix-functions
+const { array, matrix, multiply, transpose, min, max } = require('mathjs');
+
 import * as PC from 'polygon-clipping';
 import * as Poly from '@dra2020/poly';
 import * as Util from '@dra2020/util';
@@ -327,21 +333,22 @@ function getExteriorPoints(poly: any): T.Point[]
 // Minimum Bounding Rectangle:
 // * AKA minimum area rectangle -or- smallest enclosing rectangle
 // * Patterned after whuber’s elegant, trig-free R implementation below
+
 export function minimumBoundingRectangle(poly: any): number
 {
   // For point addressing
   const X = 0, Y = 1;
 
-  // Get the convex hull points in standard form
+  // Get the convex hull polygon in standard form
   const ch: any = makeConvexHull(poly);
 
-  // Get the exterior points
+  // Select the exterior points
   let chExt: T.Point[] = ch[0];
 
-  // Close the loop
+  // Close the loop (ring)
   chExt.push(chExt[0]);
 
-  // Edge directions
+  // Edge directions - note the implict offset array indexing
   const e: T.Point[] = chExt.slice(1).map((pt, i) => [(pt[X] - chExt[i][X]), (pt[Y] - chExt[i][Y])]);
 
   // Edge lengths
@@ -353,17 +360,29 @@ export function minimumBoundingRectangle(poly: any): number
   // Normal directions to the edges
   const w: T.Point[] = v.map(pt => [-pt[Y], pt[X]]);
 
-  // Find the MBR
+  // FIND THE MBR - switch to matrices & matrix operations
 
   // Convex hull vertices
-  const vertices: T.Point[] = chExt;
+  const vertices = matrix(chExt);
 
-  // TODO
+  const vT = transpose(matrix(v));
+  const wT = transpose(matrix(w));
+
+  // TODO - Extremes along edges
+  const x = multiply(vertices, vT);
+
+  // TODO - Extremes normal to edges
+  const y = multiply(vertices, wT);
+
+  // TODO - Areas
+
+  // TODO - Index of the best edge (smallest area)
+
+  // TODO - Form a rectangle from the extremes of the best edge
 
   return ch;
 }
 
-// https://mathjs.org/docs/datatypes/matrices.html
 // Test case @ https://stackoverflow.com/questions/13542855/algorithm-to-find-the-minimum-area-rectangle-for-given-points-in-order-to-comput/14675742#14675742
 
 /* See: https://gis.stackexchange.com/questions/22895/finding-minimum-area-rectangle-for-given-points
