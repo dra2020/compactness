@@ -355,11 +355,15 @@ export function minimumBoundingRectangle(poly: any): number
 
   // Find the MBR
 
+  // Convex hull vertices
+  const vertices: T.Point[] = chExt;
+
   // TODO
 
   return ch;
 }
 
+// https://mathjs.org/docs/datatypes/matrices.html
 // Test case @ https://stackoverflow.com/questions/13542855/algorithm-to-find-the-minimum-area-rectangle-for-given-points-in-order-to-comput/14675742#14675742
 
 /* See: https://gis.stackexchange.com/questions/22895/finding-minimum-area-rectangle-for-given-points
