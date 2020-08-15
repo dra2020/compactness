@@ -264,10 +264,7 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
 }
 
 
-// Alternate implementation of Convex Hull
-// - https://en.wikipedia.org/wiki/Graham_scan
-// - https://www.tutorialspoint.com/Graham-Scan-Algorithm
-// - http://brian3kb.github.io/graham_scan_js/
+// An alternate implementation of Convex Hull using the Graham Scan algorithm
 
 function makeConvexHull(poly: any, options?: Poly.PolyOptions): any
 {
@@ -287,8 +284,6 @@ function makeConvexHull(poly: any, options?: Poly.PolyOptions): any
 
 function getExteriorPoints(poly: any): T.Point[]
 {
-  const X = 0, Y = 1;
-
   let coords: any = poly.geometry.coordinates;
   if (Util.depthof(coords) == 4) coords = [ coords ];  // normalize to multipolygon
   
@@ -312,3 +307,37 @@ function getExteriorPoints(poly: any): T.Point[]
  
   return points;
 }
+
+
+// MINIMUM BOUNDING RECTANGLE (aka smallest enclosing rectangle)
+// * Patterned after whuber’s R implementation below
+export function minimumBoundingRectangle(poly: any): number
+{
+  const ch: any = makeConvexHull(poly);
+
+  return 42;
+}
+
+/* See: https://gis.stackexchange.com/questions/22895/finding-minimum-area-rectangle-for-given-points
+
+MBR <- function(p) {
+  # Analyze the convex hull edges     
+  a <- chull(p)                                   # Indexes of extremal points
+  a <- c(a, a[1])                                 # Close the loop
+  e <- p[a[-1],] - p[a[-length(a)], ]             # Edge directions
+  norms <- sqrt(rowSums(e^2))                     # Edge lengths
+  v <- e / norms                                  # Unit edge directions
+  w <- cbind(-v[,2], v[,1])                       # Normal directions to the edges
+
+  # Find the MBR
+  vertices <- p[a, ]                              # Convex hull vertices
+  x <- apply(vertices %*% t(v), 2, range)         # Extremes along edges
+  y <- apply(vertices %*% t(w), 2, range)         # Extremes normal to edges
+  areas <- (y[1,]-y[2,])*(x[1,]-x[2,])            # Areas
+  k <- which.min(areas)                           # Index of the best edge (smallest area)
+
+  # Form a rectangle from the extremes of the best edge
+  cbind(x[c(1,2,2,1,1),k], y[c(1,1,2,2,1),k]) %*% rbind(v[k,], w[k,])
+}
+
+*/
