@@ -144,7 +144,7 @@ function reportFeatures(shapes: GeoJSON.FeatureCollection): void
       features[T.CompactnessFeature.Sym_x].toFixed(4),
       features[T.CompactnessFeature.Sym_y].toFixed(4),
       features[T.CompactnessFeature.Reock].toFixed(4),
-      'N/A',  // TODO - Add bbox
+      features[T.CompactnessFeature.Bbox].toFixed(4),
       features[T.CompactnessFeature.Polsby].toFixed(4),
       features[T.CompactnessFeature.Hull].toFixed(4),
       features[T.CompactnessFeature.Schwartzberg].toFixed(4)
@@ -171,7 +171,7 @@ function compareFeatures(shapes: GeoJSON.FeatureCollection, featureEntries: T.Fe
       features[T.CompactnessFeature.Sym_x].toFixed(6),
       features[T.CompactnessFeature.Sym_y].toFixed(6),
       features[T.CompactnessFeature.Reock].toFixed(6),
-      'xxxxxxxx',  // TODO - Add bbox
+      features[T.CompactnessFeature.Bbox].toFixed(6),
       features[T.CompactnessFeature.Polsby].toFixed(6),
       features[T.CompactnessFeature.Hull].toFixed(6),
       features[T.CompactnessFeature.Schwartzberg].toFixed(6)
@@ -203,9 +203,7 @@ function compareFeatures(shapes: GeoJSON.FeatureCollection, featureEntries: T.Fe
       getNumberWithSign(delta[T.CompactnessFeature.Sym_x], 1) + "%   ",
       getNumberWithSign(delta[T.CompactnessFeature.Sym_y], 1) + "%   ",
       getNumberWithSign(delta[T.CompactnessFeature.Reock], 1) + "%   ",
-      // TODO
-      "        ",
-      // getNumberWithSign(delta[T.CompactnessFeature.Bbox], 1) + "%   ",
+      getNumberWithSign(delta[T.CompactnessFeature.Bbox], 1) + "%   ",
       getNumberWithSign(delta[T.CompactnessFeature.Polsby], 1) + "%   ",
       getNumberWithSign(delta[T.CompactnessFeature.Hull], 1) + "%   ",
       getNumberWithSign(delta[T.CompactnessFeature.Schwartzberg], 1)  + "%   "

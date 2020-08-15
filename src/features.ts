@@ -2,7 +2,7 @@
 // COMPACTNESS FEATURES
 //
 //   Measures of compactness compare district shapes to various ideally compact
-//   benchmarks, such as circles.All else equal, more compact districts are better.
+//   benchmarks, such as circles. All else equal, more compact districts are better.
 
 import * as PC from 'polygon-clipping';
 import * as Poly from '@dra2020/poly';
@@ -13,6 +13,8 @@ import { GrahamScanner } from './graham-scan';
 import * as T from './types';
 
 
+// FEATURES (FOR AN ML MODEL)
+//
 // The 6 "smart" features from Kaufman & King's "know it when you see it" (KIWYSI)
 // compactness model plus Schwartzberg:
 //
@@ -157,9 +159,18 @@ export function calcReock(area: number, diameter: number): number
 }
 
 
-// TODO
-// FEATURE 4: "BOUNDING-BOX" is shorthand for the ratio of the area of the
-// district to the area of the minimum bounding box of the district.
+// FEATURE 4: "BOUNDING-BOX" is shorthand here for the ratio of the area of the
+// district to the area of the minimum bounding box of the district. It's not a
+// simple bounding box.
+
+export function calcBoundingBox(poly: any): number
+{
+  const polyArea: number = Poly.polyArea(poly);
+  const MBR: any = minimumBoundingRectangle(poly);
+  const bboxArea: number = Poly.polyArea(MBR);
+
+  return polyArea / bboxArea;
+}
 
 
 // FEATURE 5: POLSBYPOPPER - Polsby-Popper is the primary measure of the indendentation
@@ -234,6 +245,8 @@ export function calcSchwartzberg(area: number, perimeter: number): number
 }
 
 
+// CALCULATE THE 7 COMPACTNESS "FEATURES" FOR A POLYGON FOR THE KIWYSI COMPACTNESS MODEL
+
 export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.CompactnessFeatures
 {
   if (options === undefined) options = Poly.DefaultOptions;
@@ -254,7 +267,7 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
     calcXSymmetry(poly),
     calcYSymmetry(poly),
     calcReock(area, diameter),
-    0,  // bbox
+    calcBoundingBox(poly),
     calcPolsbyPopper(area, perimeter),
     calcConvexHullFeature(area, hullArea),
     calcSchwartzberg(area, perimeter)
@@ -263,6 +276,8 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
   return result;
 }
 
+
+// TODO - Move to 'poly'
 
 // An alternate implementation of Convex Hull using the Graham Scan algorithm
 
@@ -308,15 +323,44 @@ function getExteriorPoints(poly: any): T.Point[]
   return points;
 }
 
-
-// MINIMUM BOUNDING RECTANGLE (aka smallest enclosing rectangle)
-// * Patterned after whuber’s R implementation below
+// TODO
+// Minimum Bounding Rectangle:
+// * AKA minimum area rectangle -or- smallest enclosing rectangle
+// * Patterned after whuber’s elegant, trig-free R implementation below
 export function minimumBoundingRectangle(poly: any): number
 {
+  // For point addressing
+  const X = 0, Y = 1;
+
+  // Get the convex hull points in standard form
   const ch: any = makeConvexHull(poly);
 
-  return 42;
+  // Get the exterior points
+  let chExt: T.Point[] = ch[0];
+
+  // Close the loop
+  chExt.push(chExt[0]);
+
+  // Edge directions
+  const e: T.Point[] = chExt.slice(1).map((pt, i) => [(pt[X] - chExt[i][X]), (pt[Y] - chExt[i][Y])]);
+
+  // Edge lengths
+  const norms: number[] = e.map(pt => Math.sqrt((pt[X] ** 2) + (pt[Y] ** 2)));
+
+  // Unit edge directions
+  const v: T.Point[] = e.map((pt, i) => [(pt[X] / norms[i]), (pt[Y] / norms[i])]);
+
+  // Normal directions to the edges
+  const w: T.Point[] = v.map(pt => [-pt[Y], pt[X]]);
+
+  // Find the MBR
+
+  // TODO
+
+  return ch;
 }
+
+// Test case @ https://stackoverflow.com/questions/13542855/algorithm-to-find-the-minimum-area-rectangle-for-given-points-in-order-to-comput/14675742#14675742
 
 /* See: https://gis.stackexchange.com/questions/22895/finding-minimum-area-rectangle-for-given-points
 
