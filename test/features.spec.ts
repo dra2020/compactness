@@ -7,10 +7,9 @@ import { featureizePoly } from '../src/features';
 import * as T from '../src/types'
 
 
-// TEST SCORING SETS OF SHAPE FEATURES
+// TEST SCORING REFERENCE FEATURE-IZED SHAPES
 
 describe('Score reference feature sets', () => {
-  const verbose = false;
   const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
 
   test('Loop', () =>
@@ -24,13 +23,12 @@ describe('Score reference feature sets', () => {
       const prediction: number = scoreFeatureSet(featureSet);
 
       expect(prediction).toBeCloseTo(score);
-      if (verbose) console.log(`Sample: Prediction = ${prediction}, Answer = ${score}`);
     }
   });
 });
 
 
-// TEST FEATURE-IZING SHAPES 
+// TEST FEATURE-IZING REFERENCE SHAPES 
 
 describe('Feature-ize sample shapes', () => {
   test('Using async/await', async () =>
@@ -62,3 +60,26 @@ describe('Feature-ize sample shapes', () => {
   });
 });
 
+
+// TEST SCORING REFERENCE SHAPES (FEATURE-IZE + SCORE)
+
+describe('Score reference shapes', () => {
+  test('Using async/await', async () =>
+  {
+    const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+    const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
+
+    for (let i in featureEntries)
+    {
+      const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
+
+      const featureEntry: number[] = featureEntries[i];
+      const score: number = featureEntry[featureEntry.length-1];
+
+      const prediction: number = scoreFeatureSet(features);
+
+      // TODO - Why only one digit matching?
+      expect(prediction).toBeCloseTo(score, 1);
+    }
+  });
+});
