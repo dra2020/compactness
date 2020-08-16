@@ -324,15 +324,11 @@ function getExteriorPoints(poly: any): T.Point[]
   return points;
 }
 
-// TODO
+
 // Minimum Bounding Rectangle:
 // * AKA minimum area rectangle -or- smallest enclosing rectangle
-// * Patterned after whuber’s elegant, trig-free R implementation below
-
-// Uses MathJS:
-// - https://mathjs.org/docs/datatypes/matrices.html
-// - https://mathjs.org/docs/reference/functions.html#matrix-functions
-// - https://mathjs.org/examples/matrices.js.html
+// * Patterned after whuber’s elegant, trig-free R implementation copies below
+// * Using MathJS for the matrix operations
 
 const { matrix, multiply, transpose, apply, min, max, concat, row, subtract, dotMultiply, index, range, subset } = require('mathjs');
 
@@ -383,7 +379,7 @@ export function minimumBoundingRectangle(poly: any): any
   const areas = dotMultiply(subtract(row(y, 0), row(y, 1)), subtract(row(x, 0), row(x, 1)));
 
   // Index of the best edge (smallest area)
-  const areasArr = areas.valueOf()[0];           // HACK - Why do I need to do this here and not below?
+  const areasArr = areas.valueOf()[0];           // Make the 2D matrix a 1D array
   const smallestArea = Math.min( ...areasArr );
   const k = areasArr.indexOf(smallestArea);
 

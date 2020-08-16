@@ -38,14 +38,11 @@ describe('Feature-ize sample shapes', () => {
     const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/smartfeats_first20.csv');
     const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
 
-    for (let i = 0; shapes.features.length; i++)
+    for (let i = 0; i < shapes.features.length; i++)
     {
-      // TODO - Skip shape # 12
-      if (i + 1 == 12) return;
-
-      const n = featureEntries[i][0];
+      // const n = featureEntries[i][0];       IGNORE
       const correct = featureEntries[i].slice(1, -1) as T.CompactnessFeatures;
-      const score = featureEntries[i][-1];
+      // const score = featureEntries[i][-1];  IGNORE
 
       const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
   
@@ -60,8 +57,7 @@ describe('Feature-ize sample shapes', () => {
       // TODO - Why only one digit matching?
       expect(features[T.CompactnessFeature.Sym_y]).toBeCloseTo(correct[T.CompactnessFeature.Sym_y], 1);
 
-      // TODO
-      // expect(features[T.CompactnessFeature.Bbox]).toBeCloseTo(correct[T.CompactnessFeature.Bbox]);
+      expect(features[T.CompactnessFeature.Bbox]).toBeCloseTo(correct[T.CompactnessFeature.Bbox]);
     }
   });
 });
