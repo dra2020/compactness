@@ -334,9 +334,9 @@ function getExteriorPoints(poly: any): T.Point[]
 // - https://mathjs.org/docs/reference/functions.html#matrix-functions
 // - https://mathjs.org/examples/matrices.js.html
 
-const { matrix, multiply, transpose, apply, min, max, concat, row, subtract, dotMultiply } = require('mathjs');
+const { matrix, multiply, transpose, apply, min, max, concat, row, subtract, dotMultiply, index, range, subset } = require('mathjs');
 
-export function minimumBoundingRectangle(poly: any): number
+export function minimumBoundingRectangle(poly: any): any
 {
   // For point addressing
   const X = 0, Y = 1;
@@ -351,7 +351,7 @@ export function minimumBoundingRectangle(poly: any): number
   // Close the loop (ring)
   chExt.push(chExt[0]);
 
-  // Edge directions - note the implict offset array indexing
+  // Edge directions - Note the implict offset array indexing
   const e: T.Point[] = chExt.slice(1).map((pt, i) => [(pt[X] - chExt[i][X]), (pt[Y] - chExt[i][Y])]);
 
   // Edge lengths
@@ -363,7 +363,9 @@ export function minimumBoundingRectangle(poly: any): number
   // Normal directions to the edges
   const w: T.Point[] = v.map(pt => [-pt[Y], pt[X]]);
 
-  // FIND THE MBR - switch to matrices & matrix operations
+  // FIND THE MBR
+
+  // Switch to MathJS matrices for matrix operations
 
   // Convex hull vertices
   const vertices = matrix(chExt);
@@ -381,13 +383,29 @@ export function minimumBoundingRectangle(poly: any): number
   const areas = dotMultiply(subtract(row(y, 0), row(y, 1)), subtract(row(x, 0), row(x, 1)));
 
   // Index of the best edge (smallest area)
-  const areasArr = areas.valueOf()[0];  // Extract the array out of MathJS
+  const areasArr = areas.valueOf()[0];           // HACK - Why do I need to do this here and not below?
   const smallestArea = Math.min( ...areasArr );
   const k = areasArr.indexOf(smallestArea);
 
   // TODO - Form a rectangle from the extremes of the best edge
+  const ix = index([0, 1, 1, 0, 0], k);          // Zero vs. one-based addressing
+  const iy = index([0, 0, 1, 1, 0], k);
+  const subX = subset(x, ix);
+  const subY = subset(y, iy);
+  const xy = concat(subX, subY);
+  const ik = index(k, range(0, 1, true));
+  const subV = subset(v, ik);
+  const subW = subset(w, ik);
+  const vw = concat(subV, subW, COLUMNS);
 
-  return ch;
+  const result = multiply(xy, vw);
+
+  // Revert back to standard TypeScript arrays
+  const points = result.valueOf().slice(0, -1);  // Remove the closing point
+
+  // Convert to standard polygon form
+
+  return [ points ];
 }
 
 // Test case @ https://stackoverflow.com/questions/13542855/algorithm-to-find-the-minimum-area-rectangle-for-given-points-in-order-to-comput/14675742#14675742
