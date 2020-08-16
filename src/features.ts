@@ -5,11 +5,6 @@
 //   benchmarks, such as circles. All else equal, more compact districts are better.
 
 
-// MathJS:
-// - https://mathjs.org/docs/datatypes/matrices.html
-// - https://mathjs.org/docs/reference/functions.html#matrix-functions
-const { array, matrix, multiply, transpose, min, max } = require('mathjs');
-
 import * as PC from 'polygon-clipping';
 import * as Poly from '@dra2020/poly';
 import * as Util from '@dra2020/util';
@@ -334,10 +329,18 @@ function getExteriorPoints(poly: any): T.Point[]
 // * AKA minimum area rectangle -or- smallest enclosing rectangle
 // * Patterned after whuber’s elegant, trig-free R implementation below
 
+// Uses MathJS:
+// - https://mathjs.org/docs/datatypes/matrices.html
+// - https://mathjs.org/docs/reference/functions.html#matrix-functions
+// - https://mathjs.org/examples/matrices.js.html
+
+const { matrix, multiply, transpose, apply, min, max, concat, row, subtract, dotMultiply } = require('mathjs');
+
 export function minimumBoundingRectangle(poly: any): number
 {
   // For point addressing
   const X = 0, Y = 1;
+  const COLUMNS = 0, ROWS = 1;
 
   // Get the convex hull polygon in standard form
   const ch: any = makeConvexHull(poly);
@@ -368,15 +371,19 @@ export function minimumBoundingRectangle(poly: any): number
   const vT = transpose(matrix(v));
   const wT = transpose(matrix(w));
 
-  // TODO - Extremes along edges
-  const x = multiply(vertices, vT);
+  // Extremes along edges
+  const x = concat(matrix([apply(multiply(vertices, vT), COLUMNS, min)]), matrix([apply(multiply(vertices, vT), COLUMNS, max)]), COLUMNS);
 
-  // TODO - Extremes normal to edges
-  const y = multiply(vertices, wT);
+  // Extremes normal to edges
+  const y = concat(matrix([apply(multiply(vertices, wT), COLUMNS, min)]), matrix([apply(multiply(vertices, wT), COLUMNS, max)]), COLUMNS);
 
-  // TODO - Areas
+  // Areas
+  const areas = dotMultiply(subtract(row(y, 0), row(y, 1)), subtract(row(x, 0), row(x, 1)));
 
-  // TODO - Index of the best edge (smallest area)
+  // Index of the best edge (smallest area)
+  const areasArr = areas.valueOf()[0];  // Extract the array out of MathJS
+  const smallestArea = Math.min( ...areasArr );
+  const k = areasArr.indexOf(smallestArea);
 
   // TODO - Form a rectangle from the extremes of the best edge
 
