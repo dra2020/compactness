@@ -383,28 +383,18 @@ export function minimumBoundingRectangle(poly: any): any
   const smallestArea = Math.min( ...areasArr );
   const k = areasArr.indexOf(smallestArea);
 
-  // TODO - Form a rectangle from the extremes of the best edge
-  const ix = index([0, 1, 1, 0, 0], k);          // Zero vs. one-based addressing
-  const iy = index([0, 0, 1, 1, 0], k);
-  const subX = subset(x, ix);
-  const subY = subset(y, iy);
-  const xy = concat(subX, subY);
-  const ik = index(k, range(0, 1, true));
-  const subV = subset(v, ik);
-  const subW = subset(w, ik);
-  const vw = concat(subV, subW, COLUMNS);
-
-  const result = multiply(xy, vw);
+  // Form a rectangle from the extremes of the best edge
+  const rect = multiply(
+    concat(subset(x, index([0, 1, 1, 0, 0], k)), subset(y, index([0, 0, 1, 1, 0], k))),
+    concat(subset(v, index(k, range(0, 1, true))), subset(w, index(k, range(0, 1, true))), COLUMNS)
+  );
 
   // Revert back to standard TypeScript arrays
-  const points = result.valueOf().slice(0, -1);  // Remove the closing point
+  const points = rect.valueOf().slice(0, -1);  // Remove the closing point
 
   // Convert to standard polygon form
-
   return [ points ];
 }
-
-// Test case @ https://stackoverflow.com/questions/13542855/algorithm-to-find-the-minimum-area-rectangle-for-given-points-in-order-to-comput/14675742#14675742
 
 /* See: https://gis.stackexchange.com/questions/22895/finding-minimum-area-rectangle-for-given-points
 
