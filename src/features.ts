@@ -9,9 +9,13 @@ import * as PC from 'polygon-clipping';
 import * as Poly from '@dra2020/poly';
 import * as Util from '@dra2020/util';
 
-import { GrahamScanner } from './graham-scan';
+// TODO - DELETE
+// import { GrahamScanner } from './graham-scan';
 
 import * as T from './types';
+
+// TODO - DELETE
+// const bUseAltHull: boolean = false;
 
 
 // FEATURES (FOR AN ML MODEL)
@@ -167,7 +171,7 @@ export function calcReock(area: number, diameter: number): number
 export function calcBoundingBox(poly: any): number
 {
   const polyArea: number = Poly.polyArea(poly);
-  const MBR: any = minimumBoundingRectangle(poly);
+  const MBR: any = Poly.minimumBoundingRectangle(poly);
   const bboxArea: number = Poly.polyArea(MBR);
 
   return polyArea / bboxArea;
@@ -258,9 +262,9 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
 
   // console.log(`Area = ${(area / 1000000).toFixed(4)}, Perimeter = ${(perimeter / 1000).toFixed(4)}, Diameter = ${(diameter / 1000).toFixed(4)}`);
 
-  // TODO - Discuss w/ Terry
-  const bUseAltHull: boolean = true;
-  const ch = bUseAltHull ? makeConvexHull(poly) : Poly.polyConvexHull(poly); 
+  const ch = Poly.polyConvexHull(poly);
+  // TODO - DELETE
+  // const ch = bUseAltHull ? makeConvexHull(poly) : Poly.polyConvexHull(poly); 
 
   const hullArea: number = Poly.polyArea(ch);
 
@@ -278,7 +282,7 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
 }
 
 
-// TODO - Move to 'poly'
+/* TODO - DELETE: Moved to 'poly'
 
 // An alternate implementation of Convex Hull using the Graham Scan algorithm
 
@@ -339,7 +343,8 @@ export function minimumBoundingRectangle(poly: any): any
   const COLUMNS = 0, ROWS = 1;
 
   // Get the convex hull polygon in standard form
-  const ch: any = makeConvexHull(poly);
+  // TODO - COMPACTNESS: Convert poly points to [x, y] points
+  const ch = bUseAltHull ? makeConvexHull(poly) : Poly.polyConvexHull(poly); 
 
   // Select the exterior points
   let chExt: T.Point[] = ch[0];
@@ -395,6 +400,7 @@ export function minimumBoundingRectangle(poly: any): any
   // Convert to standard polygon form
   return [ points ];
 }
+*/
 
 /* See: https://gis.stackexchange.com/questions/22895/finding-minimum-area-rectangle-for-given-points
 
