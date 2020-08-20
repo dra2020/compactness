@@ -9,13 +9,7 @@ import * as PC from 'polygon-clipping';
 import * as Poly from '@dra2020/poly';
 import * as Util from '@dra2020/util';
 
-// TODO - DELETE
-// import { GrahamScanner } from './graham-scan';
-
 import * as T from './types';
-
-// TODO - DELETE
-// const bUseAltHull: boolean = false;
 
 
 // FEATURES (FOR AN ML MODEL)
@@ -260,11 +254,7 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
   const perimeter: number = Poly.polyPerimeter(poly, options);
   const diameter = Poly.polyDiameter(poly, options);
 
-  // console.log(`Area = ${(area / 1000000).toFixed(4)}, Perimeter = ${(perimeter / 1000).toFixed(4)}, Diameter = ${(diameter / 1000).toFixed(4)}`);
-
   const ch = Poly.polyConvexHull(poly);
-  // TODO - DELETE
-  // const ch = bUseAltHull ? makeConvexHull(poly) : Poly.polyConvexHull(poly); 
 
   const hullArea: number = Poly.polyArea(ch);
 
@@ -280,148 +270,3 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
 
   return result;
 }
-
-
-/* TODO - DELETE: Moved to 'poly'
-
-// An alternate implementation of Convex Hull using the Graham Scan algorithm
-
-function makeConvexHull(poly: any, options?: Poly.PolyOptions): any
-{
-  let points = getExteriorPoints(poly);
-  if (points == null) return null;
-
-  let scanner = new GrahamScanner();
-
-  for (let pt of points) {
-    scanner.addPoint(pt);
-  }
-
-  const ch: T.Point[] = scanner.getHull();
-
-  return [ ch ];
-}
-
-function getExteriorPoints(poly: any): T.Point[]
-{
-  let coords: any = poly.geometry.coordinates;
-  if (Util.depthof(coords) == 4) coords = [ coords ];  // normalize to multipolygon
-  
-  let points: T.Point[] = [];
-
-  const nPolys: number = coords.length;
-  for (let i = 0; i < nPolys; i++)                     // for each polygon
-  {
-    const nRings: number = coords[i].length;
-
-    for (let j = 0; j < nRings; j++)                   // for each ring
-    {                                                  // do
-      if (j > 0) continue;                             // skip the holes
-
-      for (let pt of coords[i][j])                     // for each point
-      {                                                // do
-        points.push(pt);
-      }
-    }
-  }
- 
-  return points;
-}
-
-
-// Minimum Bounding Rectangle:
-// * AKA minimum area rectangle -or- smallest enclosing rectangle
-// * Patterned after whuber’s elegant, trig-free R implementation copies below
-// * Using MathJS for the matrix operations
-
-const { matrix, multiply, transpose, apply, min, max, concat, row, subtract, dotMultiply, index, range, subset } = require('mathjs');
-
-export function minimumBoundingRectangle(poly: any): any
-{
-  // For point addressing
-  const X = 0, Y = 1;
-  const COLUMNS = 0, ROWS = 1;
-
-  // Get the convex hull polygon in standard form
-  // TODO - COMPACTNESS: Convert poly points to [x, y] points
-  const ch = bUseAltHull ? makeConvexHull(poly) : Poly.polyConvexHull(poly); 
-
-  // Select the exterior points
-  let chExt: T.Point[] = ch[0];
-
-  // Close the loop (ring)
-  chExt.push(chExt[0]);
-
-  // Edge directions - Note the implict offset array indexing
-  const e: T.Point[] = chExt.slice(1).map((pt, i) => [(pt[X] - chExt[i][X]), (pt[Y] - chExt[i][Y])]);
-
-  // Edge lengths
-  const norms: number[] = e.map(pt => Math.sqrt((pt[X] ** 2) + (pt[Y] ** 2)));
-
-  // Unit edge directions
-  const v: T.Point[] = e.map((pt, i) => [(pt[X] / norms[i]), (pt[Y] / norms[i])]);
-
-  // Normal directions to the edges
-  const w: T.Point[] = v.map(pt => [-pt[Y], pt[X]]);
-
-  // FIND THE MBR
-
-  // Switch to MathJS matrices for matrix operations
-
-  // Convex hull vertices
-  const vertices = matrix(chExt);
-
-  const vT = transpose(matrix(v));
-  const wT = transpose(matrix(w));
-
-  // Extremes along edges
-  const x = concat(matrix([apply(multiply(vertices, vT), COLUMNS, min)]), matrix([apply(multiply(vertices, vT), COLUMNS, max)]), COLUMNS);
-
-  // Extremes normal to edges
-  const y = concat(matrix([apply(multiply(vertices, wT), COLUMNS, min)]), matrix([apply(multiply(vertices, wT), COLUMNS, max)]), COLUMNS);
-
-  // Areas
-  const areas = dotMultiply(subtract(row(y, 0), row(y, 1)), subtract(row(x, 0), row(x, 1)));
-
-  // Index of the best edge (smallest area)
-  const areasArr = areas.valueOf()[0];           // Make the 2D matrix a 1D array
-  const smallestArea = Math.min( ...areasArr );
-  const k = areasArr.indexOf(smallestArea);
-
-  // Form a rectangle from the extremes of the best edge
-  const rect = multiply(
-    concat(subset(x, index([0, 1, 1, 0, 0], k)), subset(y, index([0, 0, 1, 1, 0], k))),
-    concat(subset(v, index(k, range(0, 1, true))), subset(w, index(k, range(0, 1, true))), COLUMNS)
-  );
-
-  // Revert back to standard TypeScript arrays
-  const points = rect.valueOf().slice(0, -1);  // Remove the closing point
-
-  // Convert to standard polygon form
-  return [ points ];
-}
-*/
-
-/* See: https://gis.stackexchange.com/questions/22895/finding-minimum-area-rectangle-for-given-points
-
-MBR <- function(p) {
-  # Analyze the convex hull edges     
-  a <- chull(p)                                   # Indexes of extremal points
-  a <- c(a, a[1])                                 # Close the loop
-  e <- p[a[-1],] - p[a[-length(a)], ]             # Edge directions
-  norms <- sqrt(rowSums(e^2))                     # Edge lengths
-  v <- e / norms                                  # Unit edge directions
-  w <- cbind(-v[,2], v[,1])                       # Normal directions to the edges
-
-  # Find the MBR
-  vertices <- p[a, ]                              # Convex hull vertices
-  x <- apply(vertices %*% t(v), 2, range)         # Extremes along edges
-  y <- apply(vertices %*% t(w), 2, range)         # Extremes normal to edges
-  areas <- (y[1,]-y[2,])*(x[1,]-x[2,])            # Areas
-  k <- which.min(areas)                           # Index of the best edge (smallest area)
-
-  # Form a rectangle from the extremes of the best edge
-  cbind(x[c(1,2,2,1,1),k], y[c(1,1,2,2,1),k]) %*% rbind(v[k,], w[k,])
-}
-
-*/
