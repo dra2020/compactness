@@ -128,7 +128,7 @@ function reflectOverY(y0: number): any
 // - https://www.npmjs.com/package/geojson
 // - https://www.npmjs.com/package/shapefile
 
-export function combineTwoPolys(poly1: any, poly2: any): any
+function combineTwoPolys(poly1: any, poly2: any): any
 {
   // Terry's workaround
   let _union: any = undefined;

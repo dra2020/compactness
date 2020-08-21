@@ -7,7 +7,7 @@ import * as GeoJSON from 'geojson';
 import * as FU from '../testutil/fileutils';
 
 import { scoreShape  } from '../src/kiwysi';
-import { featureizePoly, combineTwoPolys } from '../src/features';
+import { featureizePoly } from '../src/features';
 
 import * as T from '../src/types';
 
@@ -103,6 +103,7 @@ switch (command) {
 
     break;
   }
+  /*
   case 'test': {
     // $ utils/main.js test -i './testdata/sample.geojson'
     async function doit()
@@ -121,6 +122,7 @@ switch (command) {
 
     break;
   }
+  */
   default: {
     console.log("Command not recognized.");
     break;

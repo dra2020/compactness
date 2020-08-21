@@ -3,3 +3,4 @@
 //
 
 export * from './features';
+export * from './kiwysi';

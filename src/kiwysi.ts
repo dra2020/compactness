@@ -2,6 +2,7 @@
 // KIWYSI COMPACTNESS
 //
 
+import * as GeoJSON from 'geojson';
 import * as Poly from '@dra2020/poly';
 
 import { featureizePoly } from './features';
@@ -17,6 +18,18 @@ export function scoreShape(poly: any, options?: Poly.PolyOptions): number
   const score: number = scoreFeatureSet(features);
 
   return score;
+}
+
+export function scoreShapes(shapes: GeoJSON.FeatureCollection, options?: Poly.PolyOptions): number[]
+{
+  let scores: number[] = [];
+
+  for (let i = 0; i < shapes.features.length; i++)
+  {
+    scores.push(scoreShape(shapes.features[i]));
+  }
+
+  return scores;
 }
 
 
