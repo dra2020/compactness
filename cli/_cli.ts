@@ -47,22 +47,9 @@ const input = argv.input;
 
 // Run from the project directory (sample commands inline below).
 switch (command) {
-  case 'score': {
-    // TODO
-    // $ utils/main.js score -i <shapefile>
-    // $ utils/main.js score -i './testdata/first20/first20.shp'
-
-    // scoreShape();
-    if (input)
-    {
-      console.log('TODO: Score shapes in file:', input as string);
-    }
-
-    break;
-  }
-  case 'score-shp': {
-    // $ utils/main.js score-shp -i <shapefile>
-    // $ utils/main.js score-shp -i './testdata/first20/first20.shp'
+  case 'featureize-shp': {
+    // $ utils/main.js featureize-shp -i <shapefile>
+    // $ utils/main.js featureize-shp -i './testdata/first20/first20.shp'
     async function doit()
     {
       if (input)
@@ -75,9 +62,9 @@ switch (command) {
   
     break;
   }
-  case 'score-geojson': {
-    // $ utils/main.js score-geojson -i <geojson>
-    // $ utils/main.js score-geojson -i './testdata/sample.geojson'
+  case 'featureize-geojson': {
+    // $ utils/main.js featureize-geojson -i <geojson>
+    // $ utils/main.js featureize-geojson -i './testdata/sample.geojson'
     async function doit()
     {
       if (input)
@@ -96,33 +83,12 @@ switch (command) {
     {
       const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
       const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/smartfeats_first20.csv');
-      // TODO
       compareFeatures(shapes, featureEntries);
     }
     doit();
 
     break;
   }
-  /*
-  case 'test': {
-    // $ utils/main.js test -i './testdata/sample.geojson'
-    async function doit()
-    {
-      if (input)
-      {
-        const shapes = FU.readJSON(input) as GeoJSON.FeatureCollection;
-
-        let geom1: any = shapes.features[0].geometry;
-        let geom2: any = shapes.features[1].geometry;
-        
-        combineTwoPolys(geom1.coordinates, geom2.coordinates);
-      }
-    }
-    doit();
-
-    break;
-  }
-  */
   default: {
     console.log("Command not recognized.");
     break;
