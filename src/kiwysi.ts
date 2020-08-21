@@ -2,17 +2,21 @@
 // KIWYSI COMPACTNESS
 //
 
+import * as Poly from '@dra2020/poly';
+
+import { featureizePoly } from './features';
 import * as T from './types';
 
 
-export function scoreShape(): number
+export function scoreShape(poly: any, options?: Poly.PolyOptions): number
 {
-  console.log("Hello, world!");
+  // Feature-ize the shape
+  const features: T.CompactnessFeatures = featureizePoly(poly, options);
 
-  // TODO - Feature-ize the shape
-  // TODO - Score the feature set
+  // Score the feature set
+  const score: number = scoreFeatureSet(features);
 
-  return 42;
+  return score;
 }
 
 

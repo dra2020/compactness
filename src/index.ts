@@ -1,5 +1,5 @@
 //
-// KIWYSI PACKAGE API
+// COMPACTNESS PACKAGE API
 //
 
-export * from './_api';
+export * from './features';
