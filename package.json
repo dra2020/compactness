@@ -1,8 +1,8 @@
 {
   "name": "@dra2020/compactness",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Know it when you see it compactness",
-  "main": "dist/main.js",
+  "main": "dist/compactness.bundle.js",
   "files": [
     "dist/"
   ],
