@@ -55,7 +55,7 @@ export function calcYSymmetry(poly: any): number
   return sym_y;
 }
 
-export function calcSymmetry(poly: any, transformFn: any): number
+function calcSymmetry(poly: any, transformFn: any): number
 {
   const reflectedPoints = Poly.polyUnpack(Poly.polyTransform(poly, transformFn));
   const polyPoints = poly.geometry.coordinates;
