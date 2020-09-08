@@ -77,6 +77,21 @@ switch (command) {
 
     break;
   }
+  case 'score-shp': {
+    // $ utils/main.js score-shp -i <shapefile>
+    // $ utils/main.js score-shp -i './testdata/MD-116th-Congressional/MD-116th-Congressional.shp'
+    async function doit()
+    {
+      if (input)
+      {
+        const shapes: GeoJSON.FeatureCollection = await FU.readShapefile(input);
+        reportKIWYSI(shapes);
+      }
+    }
+    doit();
+  
+    break;
+  }
   case 'verify': {
     // $ utils/main.js verify
     async function doit()
@@ -100,13 +115,12 @@ switch (command) {
 
 function reportFeatures(shapes: GeoJSON.FeatureCollection): void 
 {
-  // console.log(`Processing ${shapes.features.length} shapes in ${input}.`);
-  // console.log('');
   console.log('#', 'sym_x', 'sym_y', 'reock', 'bbox', 'polsby', 'hull', 'schwartzberg');
 
   for (let i = 0; i < shapes.features.length; i++)
   {
     const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
+
     console.log("%d, %s, %s, %s, %s, %s, %s, %s",
       i + 1,
       features[T.CompactnessFeature.Sym_x].toFixed(4),
@@ -116,6 +130,29 @@ function reportFeatures(shapes: GeoJSON.FeatureCollection): void
       features[T.CompactnessFeature.Polsby].toFixed(4),
       features[T.CompactnessFeature.Hull].toFixed(4),
       features[T.CompactnessFeature.Schwartzberg].toFixed(4)
+    );
+  }
+}
+
+function reportKIWYSI(shapes: GeoJSON.FeatureCollection): void 
+{
+  console.log('#', 'sym_x', 'sym_y', 'reock', 'bbox', 'polsby', 'hull', 'schwartzberg', 'score');
+
+  for (let i = 0; i < shapes.features.length; i++)
+  {
+    const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
+    let kiwysiScore: number = scoreShape(shapes.features[i]);
+
+    console.log("%d, %s, %s, %s, %s, %s, %s, %s, %s",
+      i + 1,
+      features[T.CompactnessFeature.Sym_x].toFixed(4),
+      features[T.CompactnessFeature.Sym_y].toFixed(4),
+      features[T.CompactnessFeature.Reock].toFixed(4),
+      features[T.CompactnessFeature.Bbox].toFixed(4),
+      features[T.CompactnessFeature.Polsby].toFixed(4),
+      features[T.CompactnessFeature.Hull].toFixed(4),
+      features[T.CompactnessFeature.Schwartzberg].toFixed(4),
+      kiwysiScore.toFixed(4)
     );
   }
 }
