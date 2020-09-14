@@ -10,6 +10,7 @@ replicates how people assess compactness.
 The 6 SmartFeatures plus Schwartzberg used in the simplified KIWYSI PCA model.
 
 ### calcReock (REOCK)
+
 export declare function calcReock(area: number, diameter: number): number;
 
 Reock is the primary measure of the dispersion of district
@@ -23,6 +24,7 @@ circle that can enclose the district.”
 where A is the area of the district and D is the diameter of the minimum bounding circle.
 
 ### calcPolsbyPopper (POLSBYPOPPER)
+
 export declare function calcPolsbyPopper(area: number, perimeter: number): number;
 
 Polsby-Popper is the primary measure of the indendentation
@@ -42,6 +44,7 @@ Hence, the measure simplifies to:
 > PP = 4π * (A / P2)
 
 ### calcConvexHullFeature (Hull(D))
+
 export declare function calcConvexHullFeature(area: number, chArea: number): number;
 
 Convex Hull is a secondary measure of the dispersion of
@@ -54,9 +57,10 @@ district.”
 where a convex hull is the minimum perimeter that encloses all points in a shape, basically the shortest
 unstretched rubber band that fits around the shape.
 
-Note: This is not THE convex hull, but rather a metric based on it.
+Note: This is not *the* convex hull, but rather a metric based on it.
 
 ### calcSchwartzberg (SCHWARTZBERG)
+
 export declare function calcSchwartzberg(area: number, perimeter: number): number;
 
 Schwartzberg is a secondary measure of the degree of
@@ -79,13 +83,14 @@ So, the circumference of the circle is:
 
 Hence:
 
-> S = 1 (P / 2π * SQRT(A / π))
-> S = (2π * SQRT(A / π)) / P
+> S = 1 (P / 2π \* SQRT(A / π))
+> S = (2π \* SQRT(A / π)) / P
 
 NOTE - But this feature matches the verbal description of P / C(feature_helpers.R).
 So, use P/C, not C/P as Azavea describes.
 
 ### calcYSymmetry (Y-SYMMETRY)
+
 export declare function calcYSymmetry(poly: any): number;
 
 The area of a district overlapping with its
@@ -93,19 +98,22 @@ reflection around a vertical line going through the centroid, divided by
 the area of the district. Values range [1–2].
 
 ### calcXSymmetry (X-SYMMETRY)
+
 export declare function calcXSymmetry(poly: any): number;
 
 The same as Y-SYMMETRY except reflect the district
 around a horizontal line going through the centroid.
 
 ### calcBoundingBox (BOUNDING-BOX)
-export delcare function calcBoundingBox(poly: any): number;
+
+export declare function calcBoundingBox(poly: any): number;
 
 Here this is defined as the ratio of the area of the
 district to the area of the minimum bounding box of the district. It's not a
 simple bounding box!
 
 ### scoreShapes
+
 export declare function scoreShapes(shapes: GeoJSON.FeatureCollection, options?: Poly.PolyOptions): number[];
 
 Take a GeoJSON feature collection of shapes and return an array 1–100 KIWYSI compactness scores.
@@ -130,4 +138,3 @@ There are three packages that are part of this repo:
 ```npm run build``` build all bundles
 
 ```npm run test``` run automated jest tests
-
