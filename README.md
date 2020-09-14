@@ -1,13 +1,24 @@
 # compactness
 
 A library of routines to calculate classic measures of compactness -- Reock,
-Polsby–Popper, and Schwartzberg -- as well as the other SmartReatures in Kaufman,
+Polsby–Popper, and Schwartzberg -- as well as the other SmartFeatures in Kaufman,
 King, and Komisarchik's "know it when you see it" (KIWYSI) compactness model that
 replicates how people assess compactness.
 
 ## Exports
 
-The 6 SmartFeatures plus Schwartzberg used in the simplified KIWYSI PCA model.
+There are 7 features in the simplified KIWYSI PCA model:
+
+* The first 4 measures below are computed using the geometric properties of the a district shape (area diameter, and perimeter) that have previously been extracted, and
+* The last 3 take the polygon
+
+Extracting the geometrict properties of district shapes allows their compactness
+to be computed when the full shapes themselves are no longer available.
+Use the [poly package](https://www.npmjs.com/package/@dra2020/poly) to extract the geometric properties.
+The properties themselves can either use geogesic (curved earth) or cartesian (flat earth) calculations.
+
+The final routine -- scoreShapes -- scores each shape in a GeoJSON feature collection
+using the simplified KIWYSI compactness model.
 
 ### calcReock (REOCK)
 
@@ -116,7 +127,13 @@ simple bounding box!
 
 export declare function scoreShapes(shapes: GeoJSON.FeatureCollection, options?: Poly.PolyOptions): number[];
 
-Take a GeoJSON feature collection of shapes and return an array 1–100 KIWYSI compactness scores.
+Takes a GeoJSON feature collection of shapes and returns an array of 1–100 KIWYSI compactness scores.
+For each shape, it:
+
+* Calculates the 7 features in the simplified KIWYSI PCA model, and
+* Then applies the simplified KIWYSI PCA model
+* Producing a 1–100 KIWYSI compactness score
+
 Note: These are *ranks* where small is better.
 
 ## Versions
