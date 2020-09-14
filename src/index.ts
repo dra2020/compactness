@@ -2,5 +2,17 @@
 // COMPACTNESS PACKAGE API
 //
 
-export * from './features';
-export * from './kiwysi';
+export
+{
+  calcXSymmetry,
+  calcYSymmetry,
+  calcReock,
+  calcBoundingBox,
+  calcPolsbyPopper,
+  calcConvexHullFeature,
+  calcSchwartzberg
+} from './features';
+export
+{
+  scoreShapes
+} from './kiwysi';

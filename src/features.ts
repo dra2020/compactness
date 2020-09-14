@@ -141,7 +141,7 @@ function combineTwoPolys(poly1: any, poly2: any): any
 }
 
 
-// FEATURE 3: REOCK -- Reock is the primary measure of the dispersion of district
+// FEATURE 3: REOCK - Reock is the primary measure of the dispersion of district
 // shapes, calculated as “the area of the distric to the area of the minimum spanning
 // circle that can enclose the district.”
 //

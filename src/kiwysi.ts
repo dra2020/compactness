@@ -26,7 +26,7 @@ export function scoreShapes(shapes: GeoJSON.FeatureCollection, options?: Poly.Po
 
   for (let i = 0; i < shapes.features.length; i++)
   {
-    scores.push(scoreShape(shapes.features[i]));
+    scores.push(scoreShape(shapes.features[i], options));
   }
 
   return scores;
