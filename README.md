@@ -43,7 +43,7 @@ export declare function calcPolsbyPopper(area: number, perimeter: number): numbe
 ```
 
 Polsby-Popper is the primary measure of the indendentation
-of district shapes, calculated as the “the ratio of the area of the district to 
+of district shapes, calculated as the “the ratio of the area of the district to
 the area of a circle whose circumference is equal to the perimeter of the district.”
 
 > PP = A / A(C)
@@ -170,3 +170,7 @@ There are three packages that are part of this repo:
 ```npm run build``` build all bundles
 
 ```npm run test``` run automated jest tests
+
+## Build status for master branch
+
+[![CircleCI](https://circleci.com/gh/dra2020/compactness.svg?style=svg&circle-token=5c5fdd1ea8b6aa5fc80ec7657b805b3953c58e00)](https://circleci.com/gh/dra2020/compactness)
