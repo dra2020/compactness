@@ -1,11 +1,13 @@
 # compactness
 
-All things compactness
+A library of routines to calculate classic measures of compactness -- Reock,
+Polsby–Popper, and Schwartzberg -- as well as the other SmartReatures in Kaufman,
+King, and Komisarchik's "know it when you see it" (KIWYSI) compactness model that
+replicates how people assess compactness.
 
 ## Exports
 
-The 6 "smart" features from Kaufman & King's "know it when you see it" (KIWYSI)
-compactness model plus Schwartzberg.
+The 6 SmartFeatures plus Schwartzberg used in the simplified KIWYSI PCA model.
 
 ### calcReock (REOCK)
 export declare function calcReock(area: number, diameter: number): number;
@@ -42,7 +44,7 @@ Hence, the measure simplifies to:
 ### calcConvexHullFeature (Hull(D))
 export declare function calcConvexHullFeature(area: number, chArea: number): number;
 
- Convex Hull is a secondary measure of the dispersion of
+Convex Hull is a secondary measure of the dispersion of
 district shapes, calculated as “the ratio of the district area to the area of
 the minimum convex bounding polygon(also known as a convex hull) enclosing the
 district.”
@@ -109,9 +111,9 @@ export declare function scoreShapes(shapes: GeoJSON.FeatureCollection, options?:
 Take a GeoJSON feature collection of shapes and return an array 1–100 KIWYSI compactness scores.
 Note: These are *ranks* where small is better.
 
-## Build status for master branch
+## Versions
 
-[![CircleCI](https://circleci.com/gh/dra2020/compactness.svg?style=svg&circle-token=5c5fdd1ea8b6aa5fc80ec7657b805b3953c58e00)](https://circleci.com/gh/dra2020/compactness)
+* 1.0.6 -- First public version
 
 ## Repo contents
 
