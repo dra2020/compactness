@@ -87,8 +87,7 @@ indentation of district shapes, calculated as “the ratio of the perimeter of t
 district to the circumference of a circle whose area is equal to the area of the
 district.”
 
-[Azavea](https://www.azavea.com/blog/2016/07/11/measuring-district-compactness-postgis/)
-defines Schwartzberg as:
+Azavea [defines Schwartzberg](https://www.azavea.com/blog/2016/07/11/measuring-district-compactness-postgis/) as:
 
 > S = 1 / (P / C)
 
@@ -146,9 +145,9 @@ export declare function scoreShapes(shapes: GeoJSON.FeatureCollection, options?:
 Takes a GeoJSON feature collection of shapes and returns an array of 1–100 KIWYSI compactness scores.
 For each shape, it:
 
-* Calculates the 7 features in the simplified KIWYSI PCA model, and
-* Then applies the simplified KIWYSI PCA model
-* Producing a 1–100 KIWYSI compactness score
+* Calculates the 7 features above
+* Then applies the simplified KIWYSI PCA model, and
+* Produces a 1–100 KIWYSI compactness score
 
 Note: These are *ranks* where small is better.
 
