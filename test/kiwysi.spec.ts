@@ -21,7 +21,7 @@ describe('Score reference shapes', () => {
 
       const prediction: number = scoreShape(shapes.features[i]);
 
-      // TODO - Why only one digit matching?
+      // TODO - Why is only one digit matching?
       expect(prediction).toBeCloseTo(score, 1);
     }
   });

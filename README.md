@@ -1,9 +1,11 @@
 # compactness
 
 A library of routines to calculate classic measures of compactness -- Reock,
-Polsby–Popper, Convex Hull, and Schwartzberg -- as well as the other SmartFeatures in Kaufman,
-King, and Komisarchik's "know it when you see it" (KIWYSI) compactness model that
-replicates how people assess compactness.
+Polsby–Popper, Convex Hull, and Schwartzberg -- as well as the other SmartFeatures
+in Kaufman, King, and Komisarchik's "know it when you see it" (KIWYSI) compactness
+model that replicates how people assess compactness
+([paper](https://gking.harvard.edu/files/gking/files/compact.pdf),
+[supplement](https://gking.harvard.edu/files/gking/files/compact_supplement.pdf)).
 
 ## Exports
 

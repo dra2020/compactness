@@ -48,11 +48,11 @@ describe('Feature-ize sample shapes', () => {
       expect(features[T.CompactnessFeature.Reock]).toBeCloseTo(correct[T.CompactnessFeature.Reock]);
       expect(features[T.CompactnessFeature.Polsby]).toBeCloseTo(correct[T.CompactnessFeature.Polsby]);
       expect(features[T.CompactnessFeature.Hull]).toBeCloseTo(correct[T.CompactnessFeature.Hull]);
-      // TODO - Why only one digit matching?
+      // TODO - Why is only one digit matching?
       expect(features[T.CompactnessFeature.Schwartzberg]).toBeCloseTo(correct[T.CompactnessFeature.Schwartzberg], 1);
 
       expect(features[T.CompactnessFeature.Sym_x]).toBeCloseTo(correct[T.CompactnessFeature.Sym_x]);
-      // TODO - Why only one digit matching?
+      // TODO - Why is only one digit matching?
       expect(features[T.CompactnessFeature.Sym_y]).toBeCloseTo(correct[T.CompactnessFeature.Sym_y], 1);
 
       expect(features[T.CompactnessFeature.Bbox]).toBeCloseTo(correct[T.CompactnessFeature.Bbox]);
@@ -78,7 +78,7 @@ describe('Score reference shapes', () => {
 
       const prediction: number = scoreFeatureSet(features);
 
-      // TODO - Why only one digit matching?
+      // TODO - Why is only one digit matching?
       expect(prediction).toBeCloseTo(score, 1);
     }
   });
