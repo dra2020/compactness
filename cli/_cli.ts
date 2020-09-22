@@ -79,7 +79,7 @@ switch (command) {
   }
   case 'score-shp': {
     // $ utils/main.js score-shp -i <shapefile>
-    // $ utils/main.js score-shp -i './testdata/MD-116th-Congressional/MD-116th-Congressional.shp'
+    // $ utils/main.js featureize-shp -i './testdata/first20/first20.shp'
     async function doit()
     {
       if (input)
