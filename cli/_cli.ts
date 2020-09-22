@@ -119,7 +119,8 @@ function reportFeatures(shapes: GeoJSON.FeatureCollection): void
 
   for (let i = 0; i < shapes.features.length; i++)
   {
-    const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
+    const poly = shapes.features[i];
+    const features: T.CompactnessFeatures = featureizePoly(poly);
 
     console.log("%d, %s, %s, %s, %s, %s, %s, %s",
       i + 1,
