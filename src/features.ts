@@ -61,7 +61,8 @@ function calcSymmetry(poly: any, transformFn: any): number
 
   let transformedPoly = Poly.polyTransform(poly, transformFn);
   transformedPoly = Poly.polyRewindRings(transformedPoly);
-  Poly.polyRewindRings(transformedPoly, true);
+  // Poly.polyRewindRings(transformedPoly, true);
+  // Poly.polyCloseRings(transformedPoly, true);
   const reflectedPoints = Poly.polyUnpack(transformedPoly);
 
   const unionedPoly = combineTwoPolys(polyPoints, reflectedPoints);
