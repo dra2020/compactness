@@ -60,7 +60,8 @@ function calcSymmetry(poly: any, transformFn: any): number
   const polyPoints = poly.geometry.coordinates;
 
   let transformedPoly = Poly.polyTransform(poly, transformFn);
-  transformedPoly = Poly.polyRewindRings(transformedPoly);
+  // TODO - REWIND
+  // transformedPoly = Poly.polyRewindRings(transformedPoly);
   // Poly.polyRewindRings(transformedPoly, true);
   // Poly.polyCloseRings(transformedPoly, true);
   const reflectedPoints = Poly.polyUnpack(transformedPoly);
@@ -253,6 +254,9 @@ export function calcSchwartzberg(area: number, perimeter: number): number
 
 export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.CompactnessFeatures
 {
+  // TODO - DELETE
+  // roundDown(poly.geometry.coordinates);
+
   if (options === undefined) options = Poly.DefaultOptions;
 
   const area: number = Poly.polyArea(poly);
@@ -275,3 +279,18 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
 
   return result;
 }
+
+
+// TODO - DELETE
+// function roundDown(o: any): void
+// {
+//   if (o.length && typeof o[0] === 'number')
+//   {
+//     for (let i = 0; i < o.length; i++)
+//       o[i] = Util.precisionRound(o[i], 6);
+//   }
+//   else
+//   {
+//     o.forEach((e: any) => {roundDown(e)});
+//   }
+// }
