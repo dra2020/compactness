@@ -5,7 +5,6 @@
 //   benchmarks, such as circles. All else equal, more compact districts are better.
 
 
-import * as PC from 'polygon-clipping';
 import * as Poly from '@dra2020/poly';
 import * as Util from '@dra2020/util';
 
@@ -66,7 +65,7 @@ function calcSymmetry(poly: any, transformFn: any): number
   // Poly.polyCloseRings(transformedPoly, true);
   const reflectedPoints = Poly.polyUnpack(transformedPoly);
 
-  const unionedPoly = combineTwoPolys(polyPoints, reflectedPoints);
+  const unionedPoly = Poly.unionPolys([polyPoints, reflectedPoints]);
 
   const area: number = Poly.polyArea(poly);
   const unionedArea: number = Poly.polyArea(unionedPoly);
@@ -126,24 +125,6 @@ function reflectOverY(y0: number): any
 
     return [x, 2 * y0 - y];
   }
-}
-
-// Combine two polygons using PC.union:
-// - https://www.npmjs.com/package/polygon-clipping
-// - https://en.wikipedia.org/wiki/GeoJSON#Geometries
-// - https://www.npmjs.com/package/geojson
-// - https://www.npmjs.com/package/shapefile
-
-function combineTwoPolys(poly1: any, poly2: any): any
-{
-  // Terry's workaround
-  let _union: any = undefined;
-  let anyPC: any = PC;
-  if (anyPC.union) _union = anyPC.union;
-  if (anyPC.default.union) _union = anyPC.default.union;
-  if (_union === undefined) throw 'Unable to load union function from polygon-clipping';
-
-  return _union(poly1, poly2);
 }
 
 
@@ -254,9 +235,6 @@ export function calcSchwartzberg(area: number, perimeter: number): number
 
 export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.CompactnessFeatures
 {
-  // TODO - DELETE
-  // roundDown(poly.geometry.coordinates);
-
   if (options === undefined) options = Poly.DefaultOptions;
 
   const area: number = Poly.polyArea(poly);
@@ -279,18 +257,3 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
 
   return result;
 }
-
-
-// TODO - DELETE
-// function roundDown(o: any): void
-// {
-//   if (o.length && typeof o[0] === 'number')
-//   {
-//     for (let i = 0; i < o.length; i++)
-//       o[i] = Util.precisionRound(o[i], 6);
-//   }
-//   else
-//   {
-//     o.forEach((e: any) => {roundDown(e)});
-//   }
-// }
