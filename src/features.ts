@@ -150,15 +150,8 @@ export function calcBoundingBox(poly: any): number
 {
   const polyArea: number = Poly.polyArea(poly);
 
-  // TODO - MATRIX
-
-  const MBR: any = Poly.minimumBoundingRectangleMathJS(poly);
+  const MBR: any = Poly.minimumBoundingRectangle(poly);
   const bboxArea: number = Poly.polyArea(MBR);
-
-  // const MBR2: any = Poly.minimumBoundingRectangle(poly);
-  // const bboxArea2: number = Poly.polyArea(MBR2);
-
-  // console.log("MBR area using MathJS =", bboxArea, "MBR area not using MathJS =", bboxArea2);
 
   return polyArea / bboxArea;
 }
