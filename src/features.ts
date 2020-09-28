@@ -149,7 +149,11 @@ export function calcReock(area: number, diameter: number): number
 export function calcBoundingBox(poly: any): number
 {
   const polyArea: number = Poly.polyArea(poly);
-  const MBR: any = Poly.minimumBoundingRectangle(poly);
+
+  // HACK
+  const mbrFn = false ? Poly.minimumBoundingRectangle : Poly.minimumBoundingRectangleMathJS;
+  const MBR: any = mbrFn(poly);
+
   const bboxArea: number = Poly.polyArea(MBR);
 
   return polyArea / bboxArea;
