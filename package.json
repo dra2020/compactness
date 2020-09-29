@@ -1,6 +1,6 @@
 {
   "name": "@dra2020/compactness",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Traditional and 'know it when you see it' compactness",
   "main": "dist/compactness.bundle.js",
   "files": [
@@ -60,9 +60,8 @@
     "yargs": "^12.0.5"
   },
   "dependencies": {
-    "@dra2020/poly": "^1.4.0",
+    "@dra2020/poly": "^1.5.0",
     "@dra2020/util": "^1.0.54",
-    "geojson": "^0.5.0",
-    "mathjs": "^7.1.0"
+    "geojson": "^0.5.0"
   }
 }

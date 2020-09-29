@@ -7,6 +7,7 @@ import * as Poly from '@dra2020/poly';
 
 import { featureizePoly } from './features';
 import * as T from './types';
+import * as M from './matrix';
 
 
 export function scoreShape(poly: any, options?: Poly.PolyOptions): number
@@ -35,7 +36,8 @@ export function scoreShapes(shapes: GeoJSON.FeatureCollection, options?: Poly.Po
 
 // SCORE THE FEATURES FROM A FEATURE-IZED SHAPE
 
-const { multiply } = require('mathjs');
+// MathJS dependency removed 09/29/2020
+// const { multiply } = require('mathjs');
 
 export function scoreFeatureSet(features: T.CompactnessFeatures): number
 {
@@ -49,7 +51,9 @@ export function scoreFeatureSet(features: T.CompactnessFeatures): number
     0.412187169816954   // schwartzberg
   ];
 
-  const score = multiply(model, features);
+  const score = M.dotProduct(model, features);
+  // MathJS dependency removed 09/29/2020
+  // const score = M.multiply(model, features);
   const normalized = (score * 11) + 50;
 
   return normalized;
