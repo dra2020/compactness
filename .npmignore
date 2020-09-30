@@ -1,8 +1,0 @@
-.circleci/
-.vscode/
-cli/
-test/
-testdata/
-testdist/
-testutil/
-utils/
