@@ -43,7 +43,7 @@ var cliConfig = {
   target: 'node',
   mode: 'development',
   output: {
-      path: path.resolve(__dirname, 'testdist'),
+      path: __dirname + 'testdist',
       filename: 'cli.js'
   },
 
@@ -70,7 +70,7 @@ var testConfig = {
     target: 'node',
     mode: 'development',
     output: {
-      path: path.resolve(__dirname, 'testdist'),
+      path: __dirname + 'testdist'
     },
 
     externals: {
