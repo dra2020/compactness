@@ -69,6 +69,9 @@ var cliConfig = {
 var testConfig = {
     target: 'node',
     mode: 'development',
+    output: {
+      path: __dirname + '/testdist'
+    },
 
     externals: {
       "yargs": "commonjs yargs"
