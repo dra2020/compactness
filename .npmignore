@@ -1,4 +1,8 @@
+.circleci/
 .vscode/
 cli/
-testdata/
 test/
+testdata/
+testdist/
+testutil/
+utils/
