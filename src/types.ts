@@ -2,7 +2,6 @@
 // TYPE DEFINITIONS
 //
 
-/* TODO */
 export type Point = [number, number];
 
 export type CompactnessFeatures = {
