@@ -36,9 +36,6 @@ export function scoreShapes(shapes: GeoJSON.FeatureCollection, options?: Poly.Po
 
 // SCORE THE FEATURES FROM A FEATURE-IZED SHAPE
 
-// MathJS dependency removed 09/29/2020
-// const { multiply } = require('mathjs');
-
 export function scoreFeatureSet(features: T.CompactnessFeatures): number
 {
   const model: number[] = [
@@ -51,9 +48,17 @@ export function scoreFeatureSet(features: T.CompactnessFeatures): number
     0.412187169816954   // schwartzberg
   ];
 
-  const score = M.dotProduct(model, features);
-  // MathJS dependency removed 09/29/2020
-  // const score = M.multiply(model, features);
+  const v: M.Vector = [
+    features.sym_x,
+    features.sym_y,
+    features.reock,
+    features.bbox,
+    features.polsby,
+    features.hull,
+    features.schwartzberg
+  ];
+
+  const score = M.dotProduct(model, v);
   const normalized = (score * 11) + 50;
 
   return normalized;

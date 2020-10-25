@@ -243,15 +243,15 @@ export function featureizePoly(poly: any, options?: Poly.PolyOptions): T.Compact
 
   const hullArea: number = Poly.polyArea(ch);
 
-  const result: T.CompactnessFeatures = [
-    calcXSymmetry(poly),
-    calcYSymmetry(poly),
-    calcReock(area, diameter),
-    calcBoundingBox(poly),
-    calcPolsbyPopper(area, perimeter),
-    calcConvexHullFeature(area, hullArea),
-    calcSchwartzberg(area, perimeter)
-  ]
+  const result: T.CompactnessFeatures = {
+    sym_x: calcXSymmetry(poly),
+    sym_y: calcYSymmetry(poly),
+    reock: calcReock(area, diameter),
+    bbox: calcBoundingBox(poly),
+    polsby: calcPolsbyPopper(area, perimeter),
+    hull: calcConvexHullFeature(area, hullArea),
+    schwartzberg: calcSchwartzberg(area, perimeter)
+  };
 
   return result;
 }

@@ -124,13 +124,13 @@ function reportFeatures(shapes: GeoJSON.FeatureCollection): void
 
     console.log("%d, %s, %s, %s, %s, %s, %s, %s",
       i + 1,
-      features[T.CompactnessFeature.Sym_x].toFixed(4),
-      features[T.CompactnessFeature.Sym_y].toFixed(4),
-      features[T.CompactnessFeature.Reock].toFixed(4),
-      features[T.CompactnessFeature.Bbox].toFixed(4),
-      features[T.CompactnessFeature.Polsby].toFixed(4),
-      features[T.CompactnessFeature.Hull].toFixed(4),
-      features[T.CompactnessFeature.Schwartzberg].toFixed(4)
+      features.sym_x.toFixed(4),
+      features.sym_y.toFixed(4),
+      features.reock.toFixed(4),
+      features.bbox.toFixed(4),
+      features.polsby.toFixed(4),
+      features.hull.toFixed(4),
+      features.schwartzberg.toFixed(4)
     );
   }
 }
@@ -146,13 +146,13 @@ function reportKIWYSI(shapes: GeoJSON.FeatureCollection): void
 
     console.log("%d, %s, %s, %s, %s, %s, %s, %s, %s",
       i + 1,
-      features[T.CompactnessFeature.Sym_x].toFixed(4),
-      features[T.CompactnessFeature.Sym_y].toFixed(4),
-      features[T.CompactnessFeature.Reock].toFixed(4),
-      features[T.CompactnessFeature.Bbox].toFixed(4),
-      features[T.CompactnessFeature.Polsby].toFixed(4),
-      features[T.CompactnessFeature.Hull].toFixed(4),
-      features[T.CompactnessFeature.Schwartzberg].toFixed(4),
+      features.sym_x.toFixed(4),
+      features.sym_y.toFixed(4),
+      features.reock.toFixed(4),
+      features.bbox.toFixed(4),
+      features.polsby.toFixed(4),
+      features.hull.toFixed(4),
+      features.schwartzberg.toFixed(4),
       kiwysiScore.toFixed(4)
     );
   }
@@ -174,49 +174,47 @@ function compareFeatures(shapes: GeoJSON.FeatureCollection, featureEntries: T.Fe
     const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
     console.log("%s = %s | %s | %s | %s | %s | %s | %s <<< Calc'd",
       pad(i + 1, 2),
-      features[T.CompactnessFeature.Sym_x].toFixed(6),
-      features[T.CompactnessFeature.Sym_y].toFixed(6),
-      features[T.CompactnessFeature.Reock].toFixed(6),
-      features[T.CompactnessFeature.Bbox].toFixed(6),
-      features[T.CompactnessFeature.Polsby].toFixed(6),
-      features[T.CompactnessFeature.Hull].toFixed(6),
-      features[T.CompactnessFeature.Schwartzberg].toFixed(6)
+      features.sym_x.toFixed(6),
+      features.sym_y.toFixed(6),
+      features.reock.toFixed(6),
+      features.bbox.toFixed(6),
+      features.polsby.toFixed(6),
+      features.hull.toFixed(6),
+      features.schwartzberg.toFixed(6)
     );
 
     // The correct results
-    const n = featureEntries[i][0];
-    const correct = featureEntries[i].slice(1, -1) as T.CompactnessFeatures;
-    const score = featureEntries[i][-1];
+    const n = featureEntries[i].n;
+    const correct = featureEntries[i].features;
+    const score = featureEntries[i].score;
 
     console.log("     %s | %s | %s | %s | %s | %s | %s <<< Correct",
-      correct[T.CompactnessFeature.Sym_x].toFixed(6),
-      correct[T.CompactnessFeature.Sym_y].toFixed(6),
-      correct[T.CompactnessFeature.Reock].toFixed(6),
-      correct[T.CompactnessFeature.Bbox].toFixed(6),
-      correct[T.CompactnessFeature.Polsby].toFixed(6),
-      correct[T.CompactnessFeature.Hull].toFixed(6),
-      correct[T.CompactnessFeature.Schwartzberg].toFixed(6)
+      correct.sym_x.toFixed(6),
+      correct.sym_y.toFixed(6),
+      correct.reock.toFixed(6),
+      correct.bbox.toFixed(6),
+      correct.polsby.toFixed(6),
+      correct.hull.toFixed(6),
+      correct.schwartzberg.toFixed(6)
     );
 
-    // Delta percentages
-    let delta: number[] = [];
-    for (let j = 0; j < features.length; j++)
-    {
-      delta.push(((features[j] - correct[j]) / correct[j]) * 100);
-    }
-
     console.log("     %s | %s | %s | %s | %s | %s | %s <<< Delta %",
-      getNumberWithSign(delta[T.CompactnessFeature.Sym_x], 1) + "%   ",
-      getNumberWithSign(delta[T.CompactnessFeature.Sym_y], 1) + "%   ",
-      getNumberWithSign(delta[T.CompactnessFeature.Reock], 1) + "%   ",
-      getNumberWithSign(delta[T.CompactnessFeature.Bbox], 1) + "%   ",
-      getNumberWithSign(delta[T.CompactnessFeature.Polsby], 1) + "%   ",
-      getNumberWithSign(delta[T.CompactnessFeature.Hull], 1) + "%   ",
-      getNumberWithSign(delta[T.CompactnessFeature.Schwartzberg], 1)  + "%   "
+      getNumberWithSign(delta(features.sym_x, correct.sym_x), 1) + "%   ",
+      getNumberWithSign(delta(features.sym_y, correct.sym_y), 1) + "%   ",
+      getNumberWithSign(delta(features.reock, correct.reock), 1) + "%   ",
+      getNumberWithSign(delta(features.bbox, correct.bbox), 1) + "%   ",
+      getNumberWithSign(delta(features.polsby, correct.polsby), 1) + "%   ",
+      getNumberWithSign(delta(features.hull, correct.hull), 1) + "%   ",
+      getNumberWithSign(delta(features.schwartzberg, correct.schwartzberg), 1)  + "%   "
     );
   }
 
   console.log(hr);
+}
+
+function delta(computed: number, correct: number): number
+{
+  return ((computed - correct) / correct) * 100
 }
 
 function pad(num: number, size: number): string {

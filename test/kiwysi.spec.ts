@@ -11,13 +11,13 @@ import * as T from '../src/types'
 describe('Score reference shapes', () => {
   test('Using async/await', async () =>
   {
-    const featureEntries = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+    const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/smartfeats_first20.csv');
     const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
 
     for (let i in featureEntries)
     {
-      const featureEntry: number[] = featureEntries[i];
-      const score: number = featureEntry[featureEntry.length-1];
+      const featureEntry: T.FeaturesEntry = featureEntries[i];
+      const score: number = featureEntry.score;
 
       const prediction: number = scoreShape(shapes.features[i]);
 

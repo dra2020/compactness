@@ -36,17 +36,19 @@ export function readFeatureSets(file: string): T.FeaturesEntry[]
 
   for (let dictRow of csvArray)
   {
-    const featuresEntry: T.FeaturesEntry = [
-      Number(dictRow['n']),
-      Number(dictRow['sym_x']),
-      Number(dictRow['sym_y']),
-      Number(dictRow['reock']),
-      Number(dictRow['bbox']),
-      Number(dictRow['polsby']),
-      Number(dictRow['hull']),
-      Number(dictRow['schwartzberg']),
-      Number(dictRow['score'])
-    ];
+    const featuresEntry: T.FeaturesEntry = {
+      n: Number(dictRow['n']),
+      features: {
+        sym_x: Number(dictRow['sym_x']),
+        sym_y: Number(dictRow['sym_y']),
+        reock: Number(dictRow['reock']),
+        bbox: Number(dictRow['bbox']),
+        polsby: Number(dictRow['polsby']),
+        hull: Number(dictRow['hull']),
+        schwartzberg: Number(dictRow['schwartzberg']),
+      },
+      score: Number(dictRow['score'])
+    };
 
     featureEntries.push(featuresEntry);
   }
