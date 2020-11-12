@@ -2,12 +2,22 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
+workflows:
+  version: 2
+  build-and-test-workflow:
+    jobs:
+      - build:
+          context:
+            - docker-hub-creds
+
 jobs:
   build:
     docker:
       # specify the version you desire here
       - image: circleci/node:10.17.0
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASSWORD
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
