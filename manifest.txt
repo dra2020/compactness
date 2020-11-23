@@ -1,17 +1,17 @@
 
-> @dra2020/compactness@1.1.5 prepare .
+> @dra2020/compactness@1.1.6 prepare .
 > npm run build
 
 
-> @dra2020/compactness@1.1.5 build /Users/alecramsay/src/compactness
+> @dra2020/compactness@1.1.6 build /Users/alecramsay/src/compactness
 > webpack
 
-Hash: af34b9094a92fffd92976ecb76053a7ca29e8a76eaea6eb32aedccb1dfcd
+Hash: 498ff4d5c3dbd715e44e8edfba071e60d34bd9cd92cec32872018f805b24
 Version: webpack 4.43.0
 Child
-    Hash: af34b9094a92fffd9297
-    Time: 2073ms
-    Built at: 11/05/2020 10:51:23 AM
+    Hash: 498ff4d5c3dbd715e44e
+    Time: 1952ms
+    Built at: 11/23/2020 11:09:09 AM
                         Asset       Size   Chunks                   Chunk Names
         compactness.bundle.js   15.7 KiB  library  [emitted]        library
     compactness.bundle.js.map   20.9 KiB  library  [emitted] [dev]  library
@@ -28,9 +28,9 @@ Child
     [@dra2020/poly] external "@dra2020/poly" 42 bytes {library} [built]
     [@dra2020/util] external "@dra2020/util" 42 bytes {library} [built]
 Child
-    Hash: 6ecb76053a7ca29e8a76
-    Time: 2669ms
-    Built at: 11/05/2020 10:51:24 AM
+    Hash: 8edfba071e60d34bd9cd
+    Time: 2603ms
+    Built at: 11/23/2020 11:09:10 AM
                               Asset       Size  Chunks                   Chunk Names
               ../dist/cli/_cli.d.ts   11 bytes          [emitted]        
           ../dist/src/features.d.ts  673 bytes          [emitted]        
@@ -54,9 +54,9 @@ Child
     [yargs] external "yargs" 42 bytes {main} [built]
         + 82 hidden modules
 Child
-    Hash: eaea6eb32aedccb1dfcd
-    Time: 2703ms
-    Built at: 11/05/2020 10:51:24 AM
+    Hash: 92cec32872018f805b24
+    Time: 2602ms
+    Built at: 11/23/2020 11:09:10 AM
                     Asset       Size  Chunks             Chunk Names
     ../dist/features.d.ts  673 bytes          [emitted]  
        ../dist/index.d.ts  186 bytes          [emitted]  
@@ -71,4 +71,4 @@ Child
     [./src/matrix.ts] 502 bytes {main} [built]
     [util] external "util" 42 bytes {main} [built]
         + 45 hidden modules
-+ @dra2020/compactness@1.1.5
++ @dra2020/compactness@1.1.6
