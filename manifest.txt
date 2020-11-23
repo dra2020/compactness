@@ -1,17 +1,17 @@
 
-> @dra2020/compactness@1.1.6 prepare .
+> @dra2020/compactness@1.1.7 prepare .
 > npm run build
 
 
-> @dra2020/compactness@1.1.6 build /Users/alecramsay/src/compactness
+> @dra2020/compactness@1.1.7 build /Users/alecramsay/src/compactness
 > webpack
 
 Hash: 498ff4d5c3dbd715e44e8edfba071e60d34bd9cd92cec32872018f805b24
 Version: webpack 4.43.0
 Child
     Hash: 498ff4d5c3dbd715e44e
-    Time: 1952ms
-    Built at: 11/23/2020 11:09:09 AM
+    Time: 1929ms
+    Built at: 11/23/2020 11:10:54 AM
                         Asset       Size   Chunks                   Chunk Names
         compactness.bundle.js   15.7 KiB  library  [emitted]        library
     compactness.bundle.js.map   20.9 KiB  library  [emitted] [dev]  library
@@ -29,8 +29,8 @@ Child
     [@dra2020/util] external "@dra2020/util" 42 bytes {library} [built]
 Child
     Hash: 8edfba071e60d34bd9cd
-    Time: 2603ms
-    Built at: 11/23/2020 11:09:10 AM
+    Time: 2611ms
+    Built at: 11/23/2020 11:10:54 AM
                               Asset       Size  Chunks                   Chunk Names
               ../dist/cli/_cli.d.ts   11 bytes          [emitted]        
           ../dist/src/features.d.ts  673 bytes          [emitted]        
@@ -55,8 +55,8 @@ Child
         + 82 hidden modules
 Child
     Hash: 92cec32872018f805b24
-    Time: 2602ms
-    Built at: 11/23/2020 11:09:10 AM
+    Time: 2609ms
+    Built at: 11/23/2020 11:10:54 AM
                     Asset       Size  Chunks             Chunk Names
     ../dist/features.d.ts  673 bytes          [emitted]  
        ../dist/index.d.ts  186 bytes          [emitted]  
@@ -71,4 +71,4 @@ Child
     [./src/matrix.ts] 502 bytes {main} [built]
     [util] external "util" 42 bytes {main} [built]
         + 45 hidden modules
-+ @dra2020/compactness@1.1.6
++ @dra2020/compactness@1.1.7
