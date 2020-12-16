@@ -9,6 +9,7 @@ workflows:
       - build:
           context:
             - docker-hub-creds
+            - npm-creds
 
 jobs:
   build:
@@ -36,7 +37,11 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: npm install
+      - run:
+          name: Install and Build
+          command: |
+              npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+              npm install
 
       - save_cache:
           paths:
