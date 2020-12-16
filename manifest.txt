@@ -1,74 +1,71 @@
 
-> @dra2020/compactness@1.1.7 prepare .
+> @dra2020/compactness@2.0.0 prepare .
 > npm run build
 
 
-> @dra2020/compactness@1.1.7 build /Users/alecramsay/src/compactness
+> @dra2020/compactness@2.0.0 build /Users/alecramsay/src/compactness
 > webpack
 
-Hash: 498ff4d5c3dbd715e44e8edfba071e60d34bd9cd92cec32872018f805b24
-Version: webpack 4.43.0
-Child
-    Hash: 498ff4d5c3dbd715e44e
-    Time: 1929ms
-    Built at: 11/23/2020 11:10:54 AM
-                        Asset       Size   Chunks                   Chunk Names
-        compactness.bundle.js   15.7 KiB  library  [emitted]        library
-    compactness.bundle.js.map   20.9 KiB  library  [emitted] [dev]  library
-                features.d.ts  673 bytes           [emitted]        
-                   index.d.ts  186 bytes           [emitted]        
-                  kiwysi.d.ts  380 bytes           [emitted]        
-                  matrix.d.ts  105 bytes           [emitted]        
-                   types.d.ts  342 bytes           [emitted]        
-    Entrypoint library = compactness.bundle.js compactness.bundle.js.map
-    [./src/features.ts] 7.52 KiB {library} [built]
-    [./src/index.ts] 604 bytes {library} [built]
-    [./src/kiwysi.ts] 1.59 KiB {library} [built]
-    [./src/matrix.ts] 502 bytes {library} [built]
-    [@dra2020/poly] external "@dra2020/poly" 42 bytes {library} [built]
-    [@dra2020/util] external "@dra2020/util" 42 bytes {library} [built]
-Child
-    Hash: 8edfba071e60d34bd9cd
-    Time: 2611ms
-    Built at: 11/23/2020 11:10:54 AM
-                              Asset       Size  Chunks                   Chunk Names
-              ../dist/cli/_cli.d.ts   11 bytes          [emitted]        
-          ../dist/src/features.d.ts  673 bytes          [emitted]        
-             ../dist/src/index.d.ts  186 bytes          [emitted]        
-            ../dist/src/kiwysi.d.ts  380 bytes          [emitted]        
-            ../dist/src/matrix.d.ts  105 bytes          [emitted]        
-             ../dist/src/types.d.ts  342 bytes          [emitted]        
-    ../dist/testutil/fileutils.d.ts  399 bytes          [emitted]        
-                             cli.js    457 KiB    main  [emitted]        main
-                         cli.js.map    478 KiB    main  [emitted] [dev]  main
-    Entrypoint main = cli.js cli.js.map
-    [./cli/_cli.ts] 7.39 KiB {main} [built]
-    [./src/features.ts] 7.52 KiB {main} [built]
-    [./src/kiwysi.ts] 1.59 KiB {main} [built]
-    [./src/matrix.ts] 502 bytes {main} [built]
-    [./testutil/fileutils.ts] 2.95 KiB {main} [built]
-    [fs] external "fs" 42 bytes {main} [built]
-    [path] external "path" 42 bytes {main} [built]
-    [stream] external "stream" 42 bytes {main} [built]
-    [util] external "util" 42 bytes {main} [built]
-    [yargs] external "yargs" 42 bytes {main} [built]
-        + 82 hidden modules
-Child
-    Hash: 92cec32872018f805b24
-    Time: 2609ms
-    Built at: 11/23/2020 11:10:54 AM
-                    Asset       Size  Chunks             Chunk Names
-    ../dist/features.d.ts  673 bytes          [emitted]  
-       ../dist/index.d.ts  186 bytes          [emitted]  
-      ../dist/kiwysi.d.ts  380 bytes          [emitted]  
-      ../dist/matrix.d.ts  105 bytes          [emitted]  
-       ../dist/types.d.ts  342 bytes          [emitted]  
-                  main.js    382 KiB    main  [emitted]  main
-    Entrypoint main = main.js
-    [./src/features.ts] 7.52 KiB {main} [built]
-    [./src/index.ts] 604 bytes {main} [built]
-    [./src/kiwysi.ts] 1.59 KiB {main} [built]
-    [./src/matrix.ts] 502 bytes {main} [built]
-    [util] external "util" 42 bytes {main} [built]
-        + 45 hidden modules
-+ @dra2020/compactness@1.1.7
+[webpack-cli] Compilation finished
+[webpack-cli] Compilation finished
+[webpack-cli] Compilation finished
+asset compactness.bundle.js 15.5 KiB [compared for emit] (name: library) 1 related asset
+asset features.d.ts 673 bytes [compared for emit]
+asset kiwysi.d.ts 380 bytes [compared for emit]
+asset types.d.ts 342 bytes [compared for emit]
+asset index.d.ts 186 bytes [compared for emit]
+asset matrix.d.ts 105 bytes [compared for emit]
+cacheable modules 12.4 KiB
+  ./src/index.ts 1.39 KiB [built] [code generated]
+  ./src/features.ts 8.29 KiB [built] [code generated]
+  ./src/kiwysi.ts 2.23 KiB [built] [code generated]
+  ./src/matrix.ts 531 bytes [built] [code generated]
+modules by path external "@dra2020/ 84 bytes
+  external "@dra2020/poly" 42 bytes [built] [code generated]
+  external "@dra2020/util" 42 bytes [built] [code generated]
+webpack 5.10.3 compiled successfully in 2676 ms
+
+assets by path ../dist/src/*.ts 1.65 KiB
+  asset ../dist/src/features.d.ts 673 bytes [compared for emit]
+  asset ../dist/src/kiwysi.d.ts 380 bytes [compared for emit]
+  asset ../dist/src/types.d.ts 342 bytes [compared for emit]
+  asset ../dist/src/index.d.ts 186 bytes [compared for emit]
+  asset ../dist/src/matrix.d.ts 105 bytes [compared for emit]
+asset cli.js 547 KiB [compared for emit] (name: main) 1 related asset
+asset ../dist/testutil/fileutils.d.ts 399 bytes [compared for emit]
+asset ../dist/cli/_cli.d.ts 11 bytes [compared for emit]
+runtime modules 668 bytes 3 modules
+modules by path ./node_modules/ 427 KiB 102 modules
+modules by path ./src/*.ts 11 KiB
+  ./src/kiwysi.ts 2.23 KiB [built] [code generated]
+  ./src/features.ts 8.29 KiB [built] [code generated]
+  ./src/matrix.ts 531 bytes [built] [code generated]
+./cli/_cli.ts 7.95 KiB [built] [code generated]
+external "yargs" 42 bytes [built] [code generated]
+./testutil/fileutils.ts 3.63 KiB [built] [code generated]
+external "fs" 42 bytes [built] [code generated]
+external "path" 42 bytes [built] [code generated]
+external "stream" 42 bytes [built] [code generated]
+webpack 5.10.3 compiled successfully in 3870 ms
+
+asset main.js 475 KiB [compared for emit] (name: main)
+asset ../dist/features.d.ts 673 bytes [compared for emit]
+asset ../dist/kiwysi.d.ts 380 bytes [compared for emit]
+asset ../dist/types.d.ts 342 bytes [compared for emit]
+asset ../dist/index.d.ts 186 bytes [compared for emit]
+asset ../dist/matrix.d.ts 105 bytes [compared for emit]
+runtime modules 668 bytes 3 modules
+modules by path ./node_modules/@dra2020/ 292 KiB
+  modules by path ./node_modules/@dra2020/poly/ 213 KiB 41 modules
+  modules by path ./node_modules/@dra2020/topojson-client/src/*.js 22.6 KiB 20 modules
+  ./node_modules/@dra2020/util/dist/util.js 42.2 KiB [built] [code generated]
+  ./node_modules/@dra2020/fsm/dist/fsm.js 14.7 KiB [built] [code generated]
+modules by path ./src/*.ts 12.4 KiB
+  ./src/index.ts 1.39 KiB [built] [code generated]
+  ./src/features.ts 8.29 KiB [built] [code generated]
+  ./src/kiwysi.ts 2.23 KiB [built] [code generated]
+  ./src/matrix.ts 531 bytes [built] [code generated]
+./node_modules/polygon-clipping/dist/polygon-clipping.esm.js 59.9 KiB [built] [code generated]
+./node_modules/splaytree/dist/splay.esm.js 17.4 KiB [built] [code generated]
+webpack 5.10.3 compiled successfully in 3867 ms
++ @dra2020/compactness@2.0.0
