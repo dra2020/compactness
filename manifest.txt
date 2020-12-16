@@ -1,9 +1,9 @@
 
-> @dra2020/compactness@2.0.0 prepare .
+> @dra2020/compactness@2.0.1 prepare .
 > npm run build
 
 
-> @dra2020/compactness@2.0.0 build /Users/alecramsay/src/compactness
+> @dra2020/compactness@2.0.1 build /Users/alecramsay/src/compactness
 > webpack
 
 [webpack-cli] Compilation finished
@@ -23,7 +23,7 @@ cacheable modules 12.4 KiB
 modules by path external "@dra2020/ 84 bytes
   external "@dra2020/poly" 42 bytes [built] [code generated]
   external "@dra2020/util" 42 bytes [built] [code generated]
-webpack 5.10.3 compiled successfully in 2676 ms
+webpack 5.10.3 compiled successfully in 2638 ms
 
 assets by path ../dist/src/*.ts 1.65 KiB
   asset ../dist/src/features.d.ts 673 bytes [compared for emit]
@@ -46,7 +46,7 @@ external "yargs" 42 bytes [built] [code generated]
 external "fs" 42 bytes [built] [code generated]
 external "path" 42 bytes [built] [code generated]
 external "stream" 42 bytes [built] [code generated]
-webpack 5.10.3 compiled successfully in 3870 ms
+webpack 5.10.3 compiled successfully in 3988 ms
 
 asset main.js 475 KiB [compared for emit] (name: main)
 asset ../dist/features.d.ts 673 bytes [compared for emit]
@@ -67,5 +67,5 @@ modules by path ./src/*.ts 12.4 KiB
   ./src/matrix.ts 531 bytes [built] [code generated]
 ./node_modules/polygon-clipping/dist/polygon-clipping.esm.js 59.9 KiB [built] [code generated]
 ./node_modules/splaytree/dist/splay.esm.js 17.4 KiB [built] [code generated]
-webpack 5.10.3 compiled successfully in 3867 ms
-+ @dra2020/compactness@2.0.0
+webpack 5.10.3 compiled successfully in 3990 ms
++ @dra2020/compactness@2.0.1
