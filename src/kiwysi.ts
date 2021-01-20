@@ -3,7 +3,7 @@
 //
 
 import * as GeoJSON from 'geojson';
-import * as Poly from '@dra2020/poly';
+import { Poly } from '@dra2020/baseclient';
 
 import { featureizePoly } from './features';
 import * as T from './types';

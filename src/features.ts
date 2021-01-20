@@ -5,8 +5,7 @@
 //   benchmarks, such as circles. All else equal, more compact districts are better.
 
 
-import * as Poly from '@dra2020/poly';
-import * as Util from '@dra2020/util';
+import { Util, Poly } from '@dra2020/baseclient';
 
 import * as T from './types';
 
