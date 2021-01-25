@@ -57,14 +57,15 @@ describe('Feature-ize first 20 sample shapes', () => {
   });
 });
 
-/*
+
 describe('Feature-ize evenly-spaced 20 sample shapes', () => {
   test('Using async/await', async () =>
   {
     const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/evenlyspaced20/evenlyspaced20.csv');
     const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/evenlyspaced20/evenlyspaced20.shp');
 
-    for (let i = 0; i < shapes.features.length; i++)
+    const start = 0;
+    for (let i = start; i < shapes.features.length; i++)
     {
       const correct = featureEntries[i].features;
       const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
@@ -84,7 +85,7 @@ describe('Feature-ize evenly-spaced 20 sample shapes', () => {
     }
   });
 });
-*/
+
 
 // TEST SCORING REFERENCE SHAPES (FEATURE-IZE + SCORE)
 
