@@ -38,6 +38,7 @@ export function scoreShapes(shapes: GeoJSON.FeatureCollection, options?: Poly.Po
 
 export function scoreFeatureSet(features: T.CompactnessFeatures): number
 {
+  // NOTE - Original, incorrect, model (15 decimal places)
   const model: number[] = [
     0.317566717356693,  // sym_x
     0.32545234315137,   // sym_y
@@ -47,6 +48,20 @@ export function scoreFeatureSet(features: T.CompactnessFeatures): number
     0.420085928286392,  // hull
     0.412187169816954   // schwartzberg
   ];
+
+  /* Revised model - 01/25/21 (10 decimal places)
+  const model: number[] = [
+    3.0428861122,       // sym_x
+    4.5060390447,       // sym_y
+    -22.7768820155,     // reock
+    -24.1176096770,     // bbox
+    -107.9434473497,    // polsby
+    -67.1088897240,     // hull
+    -1.2981693414       // schwartzberg
+  ];
+
+  const intercept: number = 145.6420811716;
+  */
 
   const v: M.Vector = [
     features.sym_x,

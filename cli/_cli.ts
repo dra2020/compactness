@@ -97,7 +97,7 @@ switch (command) {
     async function doit()
     {
       const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
-      const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+      const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/first20/smartfeats_first20.csv');
       compareFeatures(shapes, featureEntries);
     }
     doit();
