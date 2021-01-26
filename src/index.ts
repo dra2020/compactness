@@ -12,7 +12,13 @@ export
   calcConvexHullFeature,
   calcSchwartzberg
 } from './features';
+
 export
 {
   scoreShapes
 } from './kiwysi';
+
+export
+{
+  PCAModel
+} from './types';
