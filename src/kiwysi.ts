@@ -27,7 +27,9 @@ export function scoreShapes(shapes: GeoJSON.FeatureCollection, pca: T.PCAModel, 
 
   for (let i = 0; i < shapes.features.length; i++)
   {
-    scores.push(scoreShape(shapes.features[i], pca, options));
+    const rawScore = scoreShape(shapes.features[i], pca, options);
+    const rangedScore = Math.min(Math.max(rawScore, 1), 100);
+    scores.push(rangedScore);
   }
 
   return scores;
@@ -69,7 +71,6 @@ function applyPCAModel(features: T.CompactnessFeatures): number
 
   const score = M.dotProduct(model, v) + intercept;
   const normalized = score;
-  // const normalized = (score * 11) + 50;
 
   return normalized;
 }

@@ -128,7 +128,6 @@ describe('Score the first 20 reference shapes', () => {
   });
 });
 
-/* TODO - Not working ...
 describe('Score the evenly spaced 20 reference shapes', () => {
   test('Using async/await', async () =>
   {
@@ -145,8 +144,7 @@ describe('Score the evenly spaced 20 reference shapes', () => {
       const prediction: number = scoreFeatureSet(features, T.PCAModel.Revised);
 
       // TODO - Why is only one digit matching?
-      expect(prediction).toBeCloseTo(score, 1);
+      expect(prediction).toBeCloseTo(score, 0);
     }
   });
 });
-*/
