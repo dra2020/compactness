@@ -141,7 +141,7 @@ simple bounding box!
 ### scoreShapes
 
 ``` TypeScript
-export declare function scoreShapes(shapes: GeoJSON.FeatureCollection, options?: Poly.PolyOptions): number[];
+export declare function scoreShapes(shapes: GeoJSON.FeatureCollection, pca: T.PCAModel, options?: Poly.PolyOptions): number[];
 ```
 
 Takes a GeoJSON feature collection of shapes and returns an array of 1–100 KIWYSI compactness scores.

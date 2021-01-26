@@ -10,24 +10,24 @@ import * as T from './types';
 import * as M from './matrix';
 
 
-export function scoreShape(poly: any, options?: Poly.PolyOptions): number
+export function scoreShape(poly: any, pca: T.PCAModel, options?: Poly.PolyOptions): number
 {
   // Feature-ize the shape
   const features: T.CompactnessFeatures = featureizePoly(poly, options);
 
   // Score the feature set
-  const score: number = scoreFeatureSet(features);
+  const score: number = scoreFeatureSet(features, pca);
 
   return score;
 }
 
-export function scoreShapes(shapes: GeoJSON.FeatureCollection, options?: Poly.PolyOptions): number[]
+export function scoreShapes(shapes: GeoJSON.FeatureCollection, pca: T.PCAModel, options?: Poly.PolyOptions): number[]
 {
   let scores: number[] = [];
 
   for (let i = 0; i < shapes.features.length; i++)
   {
-    scores.push(scoreShape(shapes.features[i], options));
+    scores.push(scoreShape(shapes.features[i], pca, options));
   }
 
   return scores;
@@ -36,20 +36,15 @@ export function scoreShapes(shapes: GeoJSON.FeatureCollection, options?: Poly.Po
 
 // SCORE THE FEATURES FROM A FEATURE-IZED SHAPE
 
-export function scoreFeatureSet(features: T.CompactnessFeatures): number
+export function scoreFeatureSet(features: T.CompactnessFeatures, pca: T.PCAModel): number
 {
-  // NOTE - Original, incorrect, model (15 decimal places)
-  const model: number[] = [
-    0.317566717356693,  // sym_x
-    0.32545234315137,   // sym_y
-    0.32799567316863,   // reock
-    0.411560782484889,  // bbox
-    0.412187169816954,  // polsby
-    0.420085928286392,  // hull
-    0.412187169816954   // schwartzberg
-  ];
+  if (pca == T.PCAModel.Revised) return applyPCAModel(features);
+  else return applyPCAModel_ORIGINAL(features);
+}
 
-  /* Revised model - 01/25/21 (10 decimal places)
+// Revised 01/25/21
+function applyPCAModel(features: T.CompactnessFeatures): number
+{
   const model: number[] = [
     3.0428861122,       // sym_x
     4.5060390447,       // sym_y
@@ -61,7 +56,36 @@ export function scoreFeatureSet(features: T.CompactnessFeatures): number
   ];
 
   const intercept: number = 145.6420811716;
-  */
+
+  const v: M.Vector = [
+    features.sym_x,
+    features.sym_y,
+    features.reock,
+    features.bbox,
+    features.polsby,
+    features.hull,
+    features.schwartzberg
+  ];
+
+  const score = M.dotProduct(model, v) + intercept;
+  const normalized = score;
+  // const normalized = (score * 11) + 50;
+
+  return normalized;
+}
+
+// The original, INCORRECT, model
+function applyPCAModel_ORIGINAL(features: T.CompactnessFeatures): number
+{
+  const model: number[] = [
+    0.317566717356693,  // sym_x
+    0.32545234315137,   // sym_y
+    0.32799567316863,   // reock
+    0.411560782484889,  // bbox
+    0.412187169816954,  // polsby
+    0.420085928286392,  // hull
+    0.412187169816954   // schwartzberg
+  ];
 
   const v: M.Vector = [
     features.sym_x,
@@ -78,6 +102,4 @@ export function scoreFeatureSet(features: T.CompactnessFeatures): number
 
   return normalized;
 }
-
-
 

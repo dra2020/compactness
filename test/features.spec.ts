@@ -9,7 +9,7 @@ import * as T from '../src/types'
 
 // TEST SCORING REFERENCE FEATURE-IZED SHAPES
 
-describe('Score reference feature sets', () => {
+describe('Score the feature sets for the first 20 reference shapes', () => {
   const featureEntries = FU.readFeatureSets('testdata/first20/smartfeats_first20.csv');
 
   test('Loop', () =>
@@ -20,7 +20,25 @@ describe('Score reference feature sets', () => {
       const featureSet: T.CompactnessFeatures = featureEntry.features;
       const score: number = featureEntry.score;
 
-      const prediction: number = scoreFeatureSet(featureSet);
+      const prediction: number = scoreFeatureSet(featureSet, T.PCAModel.Original);
+
+      expect(prediction).toBeCloseTo(score);
+    }
+  });
+});
+
+describe('Score the feature sets for the evenly spaced 20 reference shapes', () => {
+  const featureEntries = FU.readFeatureSets('testdata/evenlyspaced20/evenlyspaced20.csv');
+
+  test('Loop', () =>
+  {
+    for (let i in featureEntries)
+    {
+      const featureEntry: T.FeaturesEntry = featureEntries[i];
+      const featureSet: T.CompactnessFeatures = featureEntry.features;
+      const score: number = featureEntry.score;
+
+      const prediction: number = scoreFeatureSet(featureSet, T.PCAModel.Revised);
 
       expect(prediction).toBeCloseTo(score);
     }
@@ -30,7 +48,7 @@ describe('Score reference feature sets', () => {
 
 // TEST FEATURE-IZING REFERENCE SHAPES 
 
-describe('Feature-ize first 20 sample shapes', () => {
+describe('Feature-ize the first 20 reference shapes', () => {
   test('Using async/await', async () =>
   {
     const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/first20/smartfeats_first20.csv');
@@ -58,7 +76,7 @@ describe('Feature-ize first 20 sample shapes', () => {
 });
 
 
-describe('Feature-ize evenly-spaced 20 sample shapes', () => {
+describe('Feature-ize the evenly-spaced 20 reference shapes', () => {
   test('Using async/await', async () =>
   {
     const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/evenlyspaced20/evenlyspaced20.csv');
@@ -89,7 +107,7 @@ describe('Feature-ize evenly-spaced 20 sample shapes', () => {
 
 // TEST SCORING REFERENCE SHAPES (FEATURE-IZE + SCORE)
 
-describe('Score reference shapes', () => {
+describe('Score the first 20 reference shapes', () => {
   test('Using async/await', async () =>
   {
     const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/first20/smartfeats_first20.csv');
@@ -102,10 +120,33 @@ describe('Score reference shapes', () => {
       const featureEntry: T.FeaturesEntry = featureEntries[i];
       const score: number = featureEntry.score;
 
-      const prediction: number = scoreFeatureSet(features);
+      const prediction: number = scoreFeatureSet(features, T.PCAModel.Original);
 
       // TODO - Why is only one digit matching?
       expect(prediction).toBeCloseTo(score, 1);
     }
   });
 });
+
+/* TODO - Not working ...
+describe('Score the evenly spaced 20 reference shapes', () => {
+  test('Using async/await', async () =>
+  {
+    const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/evenlyspaced20/evenlyspaced20.csv');
+    const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/evenlyspaced20/evenlyspaced20.shp');
+
+    for (let i in featureEntries)
+    {
+      const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
+
+      const featureEntry: T.FeaturesEntry = featureEntries[i];
+      const score: number = featureEntry.score;
+
+      const prediction: number = scoreFeatureSet(features, T.PCAModel.Revised);
+
+      // TODO - Why is only one digit matching?
+      expect(prediction).toBeCloseTo(score, 1);
+    }
+  });
+});
+*/

@@ -142,7 +142,7 @@ function reportKIWYSI(shapes: GeoJSON.FeatureCollection): void
   for (let i = 0; i < shapes.features.length; i++)
   {
     const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
-    let kiwysiScore: number = scoreShape(shapes.features[i]);
+    let kiwysiScore: number = scoreShape(shapes.features[i], T.PCAModel.Revised);
 
     console.log("%d, %s, %s, %s, %s, %s, %s, %s, %s",
       i + 1,
