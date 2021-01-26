@@ -79,7 +79,8 @@ switch (command) {
   }
   case 'score-shp': {
     // $ utils/main.js score-shp -i <shapefile>
-    // $ utils/main.js featureize-shp -i './testdata/first20/first20.shp'
+    // $ utils/main.js score-shp -i './testdata/first20/first20.shp'
+    // $ utils/main.js score-shp -i './testdata/evenlyspaced20/evenlyspaced20.shp'
     async function doit()
     {
       if (input)
@@ -97,7 +98,7 @@ switch (command) {
     async function doit()
     {
       const shapes: GeoJSON.FeatureCollection = await FU.readShapefile('./testdata/first20/first20.shp');
-      const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/smartfeats_first20.csv');
+      const featureEntries: T.FeaturesEntry[] = FU.readFeatureSets('testdata/first20/smartfeats_first20.csv');
       compareFeatures(shapes, featureEntries);
     }
     doit();
@@ -142,7 +143,7 @@ function reportKIWYSI(shapes: GeoJSON.FeatureCollection): void
   for (let i = 0; i < shapes.features.length; i++)
   {
     const features: T.CompactnessFeatures = featureizePoly(shapes.features[i]);
-    let kiwysiScore: number = scoreShape(shapes.features[i]);
+    let kiwysiScore: number = scoreShape(shapes.features[i], T.PCAModel.Revised);
 
     console.log("%d, %s, %s, %s, %s, %s, %s, %s, %s",
       i + 1,
