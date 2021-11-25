@@ -19,7 +19,7 @@ import * as T from './types';
 // 2 - sym_y (Y-SYMMETRY)
 // 3 - reock (REOCK)
 // 4 - bbox (BOUNDING-BOX)
-// 5 - polsby (POPOLSBYPOPPERLSBY)
+// 5 - polsby (POLSBYPOPPER)
 // 6 - hull (Hull(D))
 // 7 - schwartzberg (SCHWARTZBERG)
 
