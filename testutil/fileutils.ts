@@ -4,8 +4,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-const parse = require('csv-parse');         // 11-14-22 -- Modified to handle updated 'csv-parse'
-// import parse from 'csv-parse/lib/sync';
+import parse from 'csv-parse/lib/sync';
 import * as GeoJSON from 'geojson';
 
 import * as T from '../src/types'

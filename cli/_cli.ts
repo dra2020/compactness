@@ -33,8 +33,7 @@ let argv = yargs
   .demandOption([],  // None, so naked 'verify' command works
     'Please specify all the args.')
   .help()
-  .parseSync();  // 11-14-22 -- Modified to handle updated 'yargs'
-// .argv;
+  .argv;
 
 
 // PROCESS COMMAND LINE ARGS
