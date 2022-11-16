@@ -6,8 +6,8 @@ import yargs from 'yargs';
 import * as GeoJSON from 'geojson';
 import * as FU from '../testutil/fileutils';
 
-import { scoreShape  } from '../src/kiwysi';
-import { featureizePoly } from '../src/features';
+import {scoreShape} from '../src/kiwysi';
+import {featureizePoly} from '../src/features';
 
 import * as T from '../src/types';
 
@@ -33,7 +33,8 @@ let argv = yargs
   .demandOption([],  // None, so naked 'verify' command works
     'Please specify all the args.')
   .help()
-  .argv;
+  .parseSync();  // 11-14-22 -- Modified to handle updated 'yargs'
+// .argv;
 
 
 // PROCESS COMMAND LINE ARGS
@@ -46,7 +47,8 @@ const input = argv.input;
 // EXECUTE THE COMMAND
 
 // Run from the project directory (sample commands inline below).
-switch (command) {
+switch (command)
+{
   case 'featureize-shp': {
     // $ utils/main.js featureize-shp -i <shapefile>
     // $ utils/main.js featureize-shp -i './testdata/first20/first20.shp'
@@ -59,7 +61,7 @@ switch (command) {
       }
     }
     doit();
-  
+
     break;
   }
   case 'featureize-geojson': {
@@ -90,7 +92,7 @@ switch (command) {
       }
     }
     doit();
-  
+
     break;
   }
   case 'verify': {
@@ -206,7 +208,7 @@ function compareFeatures(shapes: GeoJSON.FeatureCollection, featureEntries: T.Fe
       getNumberWithSign(delta(features.bbox, correct.bbox), 1) + "%   ",
       getNumberWithSign(delta(features.polsby, correct.polsby), 1) + "%   ",
       getNumberWithSign(delta(features.hull, correct.hull), 1) + "%   ",
-      getNumberWithSign(delta(features.schwartzberg, correct.schwartzberg), 1)  + "%   "
+      getNumberWithSign(delta(features.schwartzberg, correct.schwartzberg), 1) + "%   "
     );
   }
 
@@ -218,14 +220,17 @@ function delta(computed: number, correct: number): number
   return ((computed - correct) / correct) * 100
 }
 
-function pad(num: number, size: number): string {
-  var s = num+"";
+function pad(num: number, size: number): string
+{
+  var s = num + "";
   while (s.length < size) s = " " + s;
   return s;
 }
 
-function getNumberWithSign(input: number, decimals: number): string {
-  if (input === 0) {
+function getNumberWithSign(input: number, decimals: number): string
+{
+  if (input === 0)
+  {
     return "0"
   }
 

@@ -4,7 +4,8 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import parse from 'csv-parse/lib/sync';
+const parse = require('csv-parse');         // 11-14-22 -- Modified to handle updated 'csv-parse'
+// import parse from 'csv-parse/lib/sync';
 import * as GeoJSON from 'geojson';
 
 import * as T from '../src/types'
@@ -29,7 +30,7 @@ function fileToPath(file: string): string
 
 export function readFeatureSets(file: string): T.FeaturesEntry[]
 {
-  let featureEntries: T.FeaturesEntry[] = []; 
+  let featureEntries: T.FeaturesEntry[] = [];
 
   const fullPath: string = fileToPath(file);
   const csvArray: any = readCSV(fullPath);
@@ -73,8 +74,10 @@ export function readShapefile(file: string): Promise<GeoJSON.FeatureCollection>
 
 // HELPERS TO LOAD SAMPLE DATA FROM DISK
 
-export function readCSV(file: string): any {
-  try {
+export function readCSV(file: string): any
+{
+  try
+  {
     let input: string = fs.readFileSync(file, 'utf8');
     let dictRows: any = parse(input, {
       columns: true,
@@ -82,30 +85,37 @@ export function readCSV(file: string): any {
     });
     return dictRows;
   }
-  catch (err) {
+  catch (err)
+  {
     console.log("Error reading CSV file ...");
     return null;
   }
 }
 
-export function readJSONcareful(file: string): any {
-  try {
+export function readJSONcareful(file: string): any
+{
+  try
+  {
     let s: string = fs.readFileSync(file, 'utf8');
     let o: any = JSON.parse(s);
     return o;
   }
-  catch (err) {
+  catch (err)
+  {
     console.log("Error reading JSON file ...");
     return null;
   }
 }
 
-export function readJSON(file: string): any {
+export function readJSON(file: string): any
+{
   let fullPath: string;
-  if (path.isAbsolute(file)) {
+  if (path.isAbsolute(file))
+  {
     fullPath = file;
   }
-  else {
+  else
+  {
     fullPath = path.resolve(file);
   }
 
